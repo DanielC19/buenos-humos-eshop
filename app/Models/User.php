@@ -26,11 +26,6 @@ use Illuminate\Validation\Rule;
  */
 class User extends Authenticatable
 {
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<string>
-     */
     protected $fillable = [
         'name',
         'lastname',
@@ -41,11 +36,6 @@ class User extends Authenticatable
         'password',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
@@ -128,11 +118,6 @@ class User extends Authenticatable
         $this->attributes['role'] = $role;
     }
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, mixed>
-     */
     protected function casts(): array
     {
         return [
