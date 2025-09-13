@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Enums\UserRole;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Validation\Rule;
 
 /**
  * Author: Daniel Correa
@@ -49,6 +50,18 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public static function rules(): array
+    {
+        return [
+            'name' => ['required', 'string', 'max:255'],
+            'lastname' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'phone' => ['required', 'string', 'max:20'],
+            'birthdate' => ['required', 'date', Rule::date()->beforeOrEqual(today()->subYears(18))],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ];
+    }
 
     public function getBirthdate(): string
     {
