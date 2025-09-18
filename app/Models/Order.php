@@ -40,10 +40,10 @@ class Order extends Model
     {
         return [
             'status' => ['required', 'string', 'max:100'],
-            'subtotal' => ['required', 'integer'],
-            'tax' => ['required', 'integer'],
-            'shipping' => ['required', 'integer'],
-            'total' => ['required', 'integer'],
+            'subtotal' => ['required', 'numeric'],
+            'tax' => ['required', 'numeric'],
+            'shipping' => ['required', 'numeric'],
+            'total' => ['required', 'numeric'],
             'paymentId' => ['required', 'string', 'max:255'],
             'user' => ['required', 'integer', 'exists:users,id'],
         ];
