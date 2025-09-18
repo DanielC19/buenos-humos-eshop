@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('status', 100);
+            $table->enum('status', OrderStatus::cases())->default(OrderStatus::VALIDATING);
             $table->integer('subtotal');
             $table->integer('tax');
             $table->integer('shipping');

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\OrderStatus;
 use app\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * Author: Daniel Arango
  *
  * @property int $id
- * @property string $status
+ * @property OrderStatus $status
  * @property int $subtotal
  * @property int $tax
  * @property int $shipping
@@ -128,6 +129,7 @@ class Order extends Model
     {
         return [
             'userId' => 'User',
+            'status' => OrderStatus::class,
         ];
     }
 }
