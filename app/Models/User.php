@@ -53,6 +53,11 @@ class User extends Authenticatable
         ];
     }
 
+    public function isAdmin(): bool
+    {
+        return $this->attributes['role'] === UserRole::ADMIN;
+    }
+
     public function getBirthdate(): string
     {
         return $this->attributes['birthdate'];
