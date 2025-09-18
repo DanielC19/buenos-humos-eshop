@@ -128,7 +128,6 @@ class Order extends Model
     protected function casts(): array
     {
         return [
-            'userId' => 'User',
             'status' => OrderStatus::class,
         ];
     }
