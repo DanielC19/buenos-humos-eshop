@@ -6,7 +6,6 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Author: Lucas Higuita
@@ -24,10 +23,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class ProductReview extends Model
 {
-    use SoftDeletes;
-
-    protected $table = 'product_reviews';
-
     protected $fillable = [
         'product_id',
         'user_id',
@@ -49,6 +44,7 @@ class ProductReview extends Model
     {
         return (int)$this->attributes['product_id'];
     }
+
     public function setProductId(int $productId): void 
     {
         $this->attributes['product_id'] = $productId;
@@ -58,6 +54,7 @@ class ProductReview extends Model
     {
         return (int)$this->attributes['user_id'];
     }
+
     public function setUserId(int $userId): void 
     {
         $this->attributes['user_id'] = $userId;
@@ -67,6 +64,7 @@ class ProductReview extends Model
     {
         return (int)$this->attributes['score'];
     }
+
     public function setScore(int $score): void 
     {
         $this->attributes['score'] = $score;
@@ -76,6 +74,7 @@ class ProductReview extends Model
     {
         return $this->attributes['comment'] ?? null;
     }
+    
     public function setComment(?string $comment): void 
     {
         $this->attributes['comment'] = $comment;
