@@ -45,7 +45,6 @@ class ProductReview extends Model
         ];
     }
 
-    // Getters/Setters
     public function getProductId(): int 
     {
         return (int)$this->attributes['product_id'];
