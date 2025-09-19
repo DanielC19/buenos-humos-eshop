@@ -32,7 +32,6 @@ class ProductCategory extends Model
         'banner',
     ];
 
-    /** Validación (se usa en controllers con $request->validate(ProductCategory::rules())) */
     public static function rules(): array
     {
         return [
@@ -42,7 +41,6 @@ class ProductCategory extends Model
         ];
     }
 
-    // Getters/Setters con type hints
     public function getName(): string
     {
         return (string)$this->attributes['name'];
