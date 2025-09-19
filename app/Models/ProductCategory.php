@@ -6,7 +6,6 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Author: Lucas Higuita
@@ -22,10 +21,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class ProductCategory extends Model
 {
-    use SoftDeletes;
-
-    protected $table = 'product_categories';
-
     protected $fillable = [
         'name',
         'description',
@@ -43,7 +38,7 @@ class ProductCategory extends Model
 
     public function getName(): string
     {
-        return (string)$this->attributes['name'];
+        return $this->attributes['name'];
     }
     public function setName(string $name): void
     {
