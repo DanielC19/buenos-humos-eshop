@@ -10,16 +10,14 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('product_reviews', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('product_id');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedTinyInteger('score');  // 1..5
+            $table->id();
+            $table->unsignedTinyInteger('score');
             $table->text('comment')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
 
             $table->index(['product_id', 'user_id', 'score']);
         });

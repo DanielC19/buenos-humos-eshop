@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Product       $product
  * @property User          $user
  */
+
 class ProductReview extends Model
 {
     protected $fillable = [
