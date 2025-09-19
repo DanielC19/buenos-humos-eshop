@@ -42,7 +42,7 @@ class ProductReview extends Model
 
     public function getProductId(): int 
     {
-        return (int)$this->attributes['product_id'];
+        return $this->attributes['product_id'];
     }
 
     public function setProductId(int $productId): void 
@@ -52,7 +52,7 @@ class ProductReview extends Model
 
     public function getUserId(): int 
     {
-        return (int)$this->attributes['user_id'];
+        return $this->attributes['user_id'];
     }
 
     public function setUserId(int $userId): void 
@@ -62,7 +62,7 @@ class ProductReview extends Model
 
     public function getScore(): int 
     {
-        return (int)$this->attributes['score'];
+        return $this->attributes['score'];
     }
 
     public function setScore(int $score): void 
