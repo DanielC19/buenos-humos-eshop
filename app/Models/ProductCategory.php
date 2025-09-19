@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon|null         $deleted_at
  * @property Product[]           $Products
  */
+
 class ProductCategory extends Model
 {
     protected $fillable = [
@@ -40,6 +41,7 @@ class ProductCategory extends Model
     {
         return $this->attributes['name'];
     }
+
     public function setName(string $name): void
     {
         $this->attributes['name'] = $name;
@@ -49,6 +51,7 @@ class ProductCategory extends Model
     {
         return $this->attributes['description'] ?? null;
     }
+
     public function setDescription(?string $description): void
     {
         $this->attributes['description'] = $description;
@@ -58,6 +61,7 @@ class ProductCategory extends Model
     {
         return $this->attributes['banner'] ?? null;
     }
+    
     public function setBanner(?string $banner): void
     {
         $this->attributes['banner'] = $banner;
