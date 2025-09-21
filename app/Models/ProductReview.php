@@ -10,18 +10,16 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Author: Lucas Higuita
  *
- * @property int           $id
- * @property int           $product_id
- * @property int           $user_id
- * @property int           $score
- * @property string|null   $comment
- * @property Carbon|null   $created_at
- * @property Carbon|null   $updated_at
- * @property Carbon|null   $deleted_at
- * @property Product       $product
- * @property User          $user
+ * @property int $id
+ * @property int $product_id
+ * @property int $user_id
+ * @property int $score
+ * @property string|null $comment
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ * @property Product $product
+ * @property User $user
  */
-
 class ProductReview extends Model
 {
     protected $fillable = [
@@ -35,59 +33,49 @@ class ProductReview extends Model
     {
         return [
             'product_id' => ['required', 'integer', 'exists:products,id'],
-            'user_id'    => ['required', 'integer', 'exists:users,id'],
-            'score'      => ['required', 'integer', 'min:1', 'max:5'],
-            'comment'    => ['nullable', 'string'],
+            'user_id' => ['required', 'integer', 'exists:users,id'],
+            'score' => ['required', 'integer', 'min:1', 'max:5'],
+            'comment' => ['nullable', 'string'],
         ];
     }
 
-    public function getProductId(): int 
+    public function getProductId(): int
     {
         return $this->attributes['product_id'];
     }
 
-    public function setProductId(int $productId): void 
+    public function setProductId(int $productId): void
     {
         $this->attributes['product_id'] = $productId;
     }
 
-    public function getUserId(): int 
+    public function getUserId(): int
     {
         return $this->attributes['user_id'];
     }
 
-    public function setUserId(int $userId): void 
+    public function setUserId(int $userId): void
     {
         $this->attributes['user_id'] = $userId;
     }
 
-    public function getScore(): int 
+    public function getScore(): int
     {
         return $this->attributes['score'];
     }
 
-    public function setScore(int $score): void 
+    public function setScore(int $score): void
     {
         $this->attributes['score'] = $score;
     }
 
-    public function getComment(): ?string 
+    public function getComment(): ?string
     {
         return $this->attributes['comment'] ?? null;
     }
-    
-    public function setComment(?string $comment): void 
+
+    public function setComment(?string $comment): void
     {
         $this->attributes['comment'] = $comment;
-    }
-
-    protected function casts(): array
-    {
-        return [
-            'product_id' => 'integer',
-            'user_id'    => 'integer',
-            'score'      => 'integer',
-            'deleted_at' => 'datetime',
-        ];
     }
 }
