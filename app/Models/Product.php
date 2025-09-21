@@ -12,17 +12,17 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property string $name
- * @property string|null $description
+ * @property string $description
  * @property int $price
  * @property string $sku
- * @property string $brand
+ * @property string|null $brand
  * @property string|null $image
  * @property int $stock
- * @property int $category_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
- * @property ProductCategory $category
+ * @property ProductCategory $product_category
+ * @property int $category_id
  * @property OrderedProduct[] $orderedProducts
  * @property ProductReview[] $reviews
  */
@@ -36,7 +36,9 @@ class Product extends Model
         'brand',
         'image',
         'stock',
+        'product_category',
         'category_id',
+        'reviews',
     ];
 
     public static function rules(): array
@@ -49,6 +51,7 @@ class Product extends Model
             'brand' => ['required', 'string', 'max:150'],
             'image' => ['nullable', 'string', 'max:255'],
             'stock' => ['required', 'integer', 'min:0'],
+            'product_category' => ['required', 'integer', 'exists:product_categories,id'],
             'category_id' => ['required', 'integer', 'exists:product_categories,id'],
         ];
     }

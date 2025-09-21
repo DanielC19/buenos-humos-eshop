@@ -14,17 +14,14 @@ return new class extends Migration
             $table->id();
             $table->string('name', 255);
             $table->text('description');
-            $table->integer('price')->default(0);
+            $table->integer('price');
             $table->string('sku', 100)->unique();
-            $table->string('brand', 150)->nullable(false);
+            $table->string('brand', 150)->nullable();
             $table->string('image', 255)->nullable();
             $table->integer('stock')->default(0);
+            $table->foreignId('category_id')->constrained('product_categories')->onDelete('restrict');
             $table->timestamps();
-            $table->foreign('category_id')
-                ->references('id')->on('product_categories')
-                ->onDelete('restrict');
-
-            $table->index(['name', 'brand']);
+            $table->softDeletes();
         });
     }
 
