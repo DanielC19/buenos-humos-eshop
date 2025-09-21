@@ -6,15 +6,16 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Author: Lucas Higuita
  *
  * @property int $id
- * @property int $product_id
- * @property int $user_id
  * @property int $score
  * @property string|null $comment
+ * @property int $product_id
+ * @property int $user_id
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property Product $product
@@ -77,5 +78,15 @@ class ProductReview extends Model
     public function setComment(?string $comment): void
     {
         $this->attributes['comment'] = $comment;
+    }
+
+    public function product(): BelongsTo
+    {
+        return $this->belongsTo(Product::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }
