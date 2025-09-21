@@ -10,30 +10,30 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Author: Lucas Higuita
  *
- * @property int                 $id
- * @property string              $name
- * @property string|null         $description
- * @property string|null         $banner
- * @property Carbon|null         $created_at
- * @property Carbon|null         $updated_at
- * @property Carbon|null         $deleted_at
- * @property Product[]           $Products
+ * @property int $id
+ * @property string $name
+ * @property string|null $description
+ * @property string|null $banner
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ * @property Product[] $products
  */
-
 class ProductCategory extends Model
 {
     protected $fillable = [
         'name',
         'description',
         'banner',
+        'products',
     ];
 
     public static function rules(): array
     {
         return [
-            'name'        => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
-            'banner'      => ['nullable', 'string', 'max:255'],
+            'banner' => ['nullable', 'string', 'max:255'],
+            'products' => ['nullable', 'array'],
         ];
     }
 
@@ -61,16 +61,26 @@ class ProductCategory extends Model
     {
         return $this->attributes['banner'] ?? null;
     }
-    
+
     public function setBanner(?string $banner): void
     {
         $this->attributes['banner'] = $banner;
     }
 
+    public function getProducts(): array
+    {
+        return $this->attributes['products'] ?? [];
+    }
+
+    public function setProducts(array $products): void
+    {
+        $this->attributes['products'] = $products;
+    }
+
     protected function casts(): array
     {
         return [
-            'deleted_at' => 'datetime',
+            'products' => 'array',
         ];
     }
 }
