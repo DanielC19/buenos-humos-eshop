@@ -36,9 +36,6 @@ class Product extends Model
         'brand',
         'image',
         'stock',
-        'product_category',
-        'category_id',
-        'reviews',
     ];
 
     public static function rules(): array
@@ -51,9 +48,6 @@ class Product extends Model
             'brand' => ['nullable', 'string', 'max:150'],
             'image' => ['nullable', 'string', 'max:255'],
             'stock' => ['required', 'integer', 'min:0'],
-            'product_category' => ['required', 'integer', 'exists:product_categories,id'],
-            'category_id' => ['required', 'integer', 'exists:product_categories,id'],
-            'reviews' => ['nullable', 'array'],
         ];
     }
 
