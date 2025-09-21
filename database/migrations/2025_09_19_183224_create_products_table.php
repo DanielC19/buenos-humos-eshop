@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('image', 255)->nullable();
             $table->integer('stock')->default(0);
             $table->foreignId('category_id')->constrained('product_categories')->onDelete('restrict');
+            $table->json('reviews')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

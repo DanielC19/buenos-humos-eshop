@@ -48,17 +48,18 @@ class Product extends Model
             'description' => ['required', 'string'],
             'price' => ['required', 'numeric', 'min:0'],
             'sku' => ['required', 'string', 'max:100', 'unique:products,sku'],
-            'brand' => ['required', 'string', 'max:150'],
+            'brand' => ['nullable', 'string', 'max:150'],
             'image' => ['nullable', 'string', 'max:255'],
             'stock' => ['required', 'integer', 'min:0'],
             'product_category' => ['required', 'integer', 'exists:product_categories,id'],
             'category_id' => ['required', 'integer', 'exists:product_categories,id'],
+            'reviews' => ['nullable', 'array'],
         ];
     }
 
     public function getName(): string
     {
-        return (string) $this->attributes['name'];
+        return $this->attributes['name'];
     }
 
     public function getDescription(): ?string
@@ -68,17 +69,17 @@ class Product extends Model
 
     public function getPrice(): int
     {
-        return (int) $this->attributes['price'];
+        return $this->attributes['price'];
     }
 
     public function getSku(): string
     {
-        return (string) $this->attributes['sku'];
+        return $this->attributes['sku'];
     }
 
     public function getBrand(): string
     {
-        return (string) $this->attributes['brand'];
+        return $this->attributes['brand'];
     }
 
     public function getImage(): ?string
@@ -88,12 +89,12 @@ class Product extends Model
 
     public function getStock(): int
     {
-        return (int) $this->attributes['stock'];
+        return $this->attributes['stock'];
     }
 
     public function getCategoryId(): int
     {
-        return (int) $this->attributes['category_id'];
+        return $this->attributes['category_id'];
     }
 
     public function setName(string $name): void
