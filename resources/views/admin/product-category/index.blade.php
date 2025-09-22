@@ -78,7 +78,7 @@
                                                   method="POST"
                                                   style="display: inline;">
                                                 @csrf
-                                                @method('POST')
+                                                @method('DELETE')
                                                 <button type="submit"
                                                         class="btn btn-outline-danger"
                                                         title="{{ __('Delete') }}"
