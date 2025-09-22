@@ -1,117 +1,150 @@
 @extends('layouts.app')
 
 @section('content')
-    <!-- Products Header Section -->
-    <section class="py-5 bg-light">
-        <div class="container">
-            <div class="text-center">
-                <h1 class="display-4 fw-bold mb-3">{{ __('Our Products') }}</h1>
-                <p class="lead text-muted">{{ __('Discover our complete collection of premium smoking products and accessories') }}</p>
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">{{ __('Products Management') }}</h2>
+        <a href="{{ route('admin.product.create') }}" class="btn btn-primary">
+            <i class="fas fa-plus me-2"></i>{{ __('Add Product') }}
+        </a>
+    </div>
+
+    @if($viewData['products']->isEmpty())
+        <div class="card">
+            <div class="card-body text-center py-5">
+                <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
+                <h4 class="text-muted">{{ __('No products found') }}</h4>
+                <p class="text-muted">{{ __('Start by creating your first product.') }}</p>
+                <a href="{{ route('admin.product.create') }}" class="btn btn-primary">
+                    <i class="fas fa-plus me-2"></i>{{ __('Create Product') }}
+                </a>
             </div>
         </div>
-    </section>
-
-    <!-- Products Grid Section -->
-    <section class="py-5">
-        <div class="container">
-            @if($viewData['products']->isEmpty())
-                <div class="text-center py-5">
-                    <div class="mb-4">
-                        <i class="fas fa-box-open fa-4x text-muted"></i>
+    @else
+        <div class="card">
+            <div class="card-header bg-white">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h5 class="mb-0">{{ __('Products List') }}</h5>
+                        <small class="text-muted">{{ $viewData['products']->count() }} {{ __('products total') }}</small>
                     </div>
-                    <h3 class="text-muted">{{ __('No products found') }}</h3>
-                    <p class="text-muted">{{ __('Check back later for new products or contact us for special requests.') }}</p>
-                </div>
-            @else
-                <div class="row">
-                    @foreach($viewData['products'] as $product)
-                        <div class="col-lg-3 col-md-6 mb-4">
-                            <div class="product-card h-100">
-                                <div class="product-image">
-                                    @if($product->getImage())
-                                        <img src="{{ asset('storage/' . $product->getImage()) }}" alt="{{ $product->getName() }}" class="img-fluid">
-                                    @else
-                                        <div class="d-flex align-items-center justify-content-center h-100">
-                                            <i class="fas fa-leaf fa-3x text-muted"></i>
-                                        </div>
-                                    @endif
-
-                                    <!-- Stock Badge -->
-                                    @if($product->getStock() <= 0)
-                                        <div class="position-absolute top-0 end-0 m-2">
-                                            <span class="badge bg-danger">{{ __('Out of Stock') }}</span>
-                                        </div>
-                                    @elseif($product->getStock() <= 5)
-                                        <div class="position-absolute top-0 end-0 m-2">
-                                            <span class="badge bg-warning">{{ __('Low Stock') }}</span>
-                                        </div>
-                                    @endif
-                                </div>
-
-                                <div class="p-3 d-flex flex-column">
-                                    <h6 class="fw-bold mb-2">{{ $product->getName() }}</h6>
-
-                                    @if($product->getBrand())
-                                        <p class="text-muted small mb-2">
-                                            <i class="fas fa-tag me-1"></i>{{ $product->getBrand() }}
-                                        </p>
-                                    @endif
-
-                                    <p class="text-muted small mb-3 flex-grow-1">{{ Str::limit($product->getDescription(), 80) }}</p>
-
-                                    <!-- Category -->
-                                    @if($product->productCategory)
-                                        <div class="mb-2">
-                                            <span class="badge bg-primary bg-opacity-10 text-primary">
-                                                {{ $product->productCategory->name }}
-                                            </span>
-                                        </div>
-                                    @endif
-
-                                    <!-- Price and SKU -->
-                                    <div class="d-flex justify-content-between align-items-center mb-3">
-                                        <span class="price fw-bold text-success">${{ number_format($product->getPrice() / 100, 2) }}</span>
-                                        <small class="text-muted">SKU: {{ $product->getSku() }}</small>
-                                    </div>
-
-                                    <!-- Stock Info -->
-                                    <div class="mb-3">
-                                        <small class="text-muted">
-                                            <i class="fas fa-box me-1"></i>
-                                            @if($product->getStock() > 0)
-                                                <span class="text-success">{{ $product->getStock() }} {{ __('in stock') }}</span>
-                                            @else
-                                                <span class="text-danger">{{ __('Out of stock') }}</span>
-                                            @endif
-                                        </small>
-                                    </div>
-
-                                    <!-- Add to Cart Button -->
-                                    <div class="mt-auto">
-                                        @if($product->getStock() > 0)
-                                            <form action="#" method="POST" class="w-100">
-                                                @csrf
-                                                <button type="submit" class="btn btn-primary-custom w-100">
-                                                    <i class="fas fa-cart-plus me-2"></i>{{ __('Add to Cart') }}
-                                                </button>
-                                            </form>
-                                        @else
-                                            <button class="btn btn-outline-secondary w-100" disabled>
-                                                <i class="fas fa-times me-2"></i>{{ __('Out of Stock') }}
-                                            </button>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="col-auto">
+                        <div class="input-group input-group-sm" style="width: 250px;">
+                            <input type="text" class="form-control" placeholder="{{ __('Search products...') }}" id="searchInput">
+                            <button class="btn btn-outline-secondary" type="button">
+                                <i class="fas fa-search"></i>
+                            </button>
                         </div>
-                    @endforeach
+                    </div>
                 </div>
-
-                <!-- Pagination or Load More -->
-                <div class="text-center mt-5">
-                    <p class="text-muted">{{ __('Showing') }} {{ $viewData['products']->count() }} {{ __('products') }}</p>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>{{ __('Product') }}</th>
+                                <th>{{ __('SKU') }}</th>
+                                <th>{{ __('Category') }}</th>
+                                <th>{{ __('Price') }}</th>
+                                <th>{{ __('Stock') }}</th>
+                                <th>{{ __('Status') }}</th>
+                                <th width="120">{{ __('Actions') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($viewData['products'] as $product)
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-shrink-0 me-3">
+                                                @if($product->getImage())
+                                                    <img src="{{ asset('storage/' . $product->getImage()) }}"
+                                                         alt="{{ $product->getName() }}"
+                                                         class="rounded"
+                                                         style="width: 50px; height: 50px; object-fit: cover;">
+                                                @else
+                                                    <div class="bg-light rounded d-flex align-items-center justify-content-center"
+                                                         style="width: 50px; height: 50px;">
+                                                        <i class="fas fa-image text-muted"></i>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-1">{{ $product->getName() }}</h6>
+                                                @if($product->getBrand())
+                                                    <small class="text-muted">{{ $product->getBrand() }}</small>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <code class="bg-light px-2 py-1 rounded">{{ $product->getSku() }}</code>
+                                    </td>
+                                    <td>
+                                        @if($product->productCategory)
+                                            <span class="badge bg-secondary">{{ $product->productCategory->name }}</span>
+                                        @else
+                                            <span class="text-muted">{{ __('No category') }}</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <strong>${{ number_format($product->getPrice() / 100, 2) }}</strong>
+                                    </td>
+                                    <td>
+                                        <span class="badge {{ $product->getStock() > 0 ? 'bg-success' : 'bg-danger' }}">
+                                            {{ $product->getStock() }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        @if($product->getStock() <= 0)
+                                            <span class="badge bg-danger">{{ __('Out of Stock') }}</span>
+                                        @elseif($product->getStock() <= 5)
+                                            <span class="badge bg-warning">{{ __('Low Stock') }}</span>
+                                        @else
+                                            <span class="badge bg-success">{{ __('In Stock') }}</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm">
+                                            <a href="#" class="btn btn-outline-primary" title="{{ __('Edit') }}">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a href="#" class="btn btn-outline-info" title="{{ __('View') }}">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            <button class="btn btn-outline-danger" title="{{ __('Delete') }}"
+                                                    onclick="confirmDelete({{ $product->id }})">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
-            @endif
+            </div>
         </div>
-    </section>
+    @endif
+</div>
+
+<script>
+document.getElementById('searchInput').addEventListener('keyup', function() {
+    const searchValue = this.value.toLowerCase();
+    const tableRows = document.querySelectorAll('tbody tr');
+
+    tableRows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(searchValue) ? '' : 'none';
+    });
+});
+
+function confirmDelete(productId) {
+    if (confirm('{{ __("Are you sure you want to delete this product?") }}')) {
+        // Add delete functionality here
+        console.log('Delete product:', productId);
+    }
+}
+</script>
 @endsection
