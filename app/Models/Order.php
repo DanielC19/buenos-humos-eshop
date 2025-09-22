@@ -22,7 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property User $user
- * @property orederedProducts[] $orderedProducts
+ * @property OrderedProducts[] $orderedProducts
  */
 class Order extends Model
 {
@@ -54,12 +54,6 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    /*
-    *    public function orderedProducts()
-    *    {
-    *         return $this->hasMany(OrderedProduct::class);
-    *    }
-    */
     public function getStatus(): string
     {
         return $this->attributes['status'];
@@ -130,5 +124,10 @@ class Order extends Model
         return [
             'status' => OrderStatus::class,
         ];
+    }
+
+    protected function orderedProducts()
+    {
+        return $this->hasMany(OrderedProduct::class);
     }
 }

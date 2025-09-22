@@ -150,4 +150,9 @@ class Product extends Model
     {
         return $this->hasMany(ProductReview::class);
     }
+
+    public function orderedProducts(): HasMany
+    {
+        return $this->hasMany(OrderedProduct::class);
+    }
 }
