@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Enums\UserRole;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Validation\Rule;
@@ -28,6 +29,8 @@ use Illuminate\Validation\Rule;
  */
 class User extends Authenticatable
 {
+    use HasFactory;
+
     protected $fillable = [
         'name',
         'lastname',
@@ -53,6 +56,11 @@ class User extends Authenticatable
             'birthdate' => ['required', 'date', Rule::date()->beforeOrEqual(today()->subYears(18))],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ];
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->attributes['role'] === UserRole::ADMIN;
     }
 
     public function getBirthdate(): string
