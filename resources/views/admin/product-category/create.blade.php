@@ -94,20 +94,20 @@
                 <div class="card-body">
                     <ul class="list-unstyled mb-0">
                         <li class="mb-2">
-                            <span class="badge bg-light text-dark me-2">Pipes</span>
-                            <small class="text-muted">Glass pipes, water pipes, etc.</small>
+                            <span class="badge bg-light text-dark me-2">{{ __('Pipes') }}</span>
+                            <small class="text-muted">{{ __('Glass pipes, water pipes, etc.') }}</small>
                         </li>
                         <li class="mb-2">
-                            <span class="badge bg-light text-dark me-2">Papers</span>
-                            <small class="text-muted">Rolling papers and wraps</small>
+                            <span class="badge bg-light text-dark me-2">{{ __('Papers') }}</span>
+                            <small class="text-muted">{{ __('Rolling papers and wraps') }}</small>
                         </li>
                         <li class="mb-2">
-                            <span class="badge bg-light text-dark me-2">Accessories</span>
-                            <small class="text-muted">Grinders, lighters, storage</small>
+                            <span class="badge bg-light text-dark me-2">{{ __('Accessories') }}</span>
+                            <small class="text-muted">{{ __('Grinders, lighters, storage') }}</small>
                         </li>
                         <li class="mb-0">
-                            <span class="badge bg-light text-dark me-2">Vaporizers</span>
-                            <small class="text-muted">Electronic vaping devices</small>
+                            <span class="badge bg-light text-dark me-2">{{ __('Vaporizers') }}</span>
+                            <small class="text-muted">{{ __('Electronic vaping devices') }}</small>
                         </li>
                     </ul>
                 </div>
