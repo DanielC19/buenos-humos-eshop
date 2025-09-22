@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\ProductCategory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,12 +16,12 @@ class ProductCategoryController extends Controller
     {
         $viewData['categories'] = ProductCategory::all();
 
-        return view('productCategory.index')->with('viewData', $viewData);
+        return view('admin.product-category.index')->with('viewData', $viewData);
     }
 
     public function create(): View
     {
-        return view('productCategory.create');
+        return view('admin.product-category.create');
     }
 
     public function destroy(int $category_id): RedirectResponse
@@ -35,7 +36,7 @@ class ProductCategoryController extends Controller
     {
         $viewData['category'] = ProductCategory::findOrFail($category_id);
 
-        return view('productCategory.edit')->with('viewData', $viewData);
+        return view('product-category.edit')->with('viewData', $viewData);
     }
 
     public function update(Request $request, int $category_id): RedirectResponse
