@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Enums\UserRole;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Validation\Rule;
 
@@ -24,6 +25,7 @@ use Illuminate\Validation\Rule;
  * @property string|null $remember_token
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property ProductReview[] $productReviews
  */
 class User extends Authenticatable
 {
@@ -133,5 +135,10 @@ class User extends Authenticatable
             'role' => UserRole::class,
             'password' => 'hashed',
         ];
+    }
+
+    public function productReviews(): HasMany
+    {
+        return $this->hasMany(ProductReview::class);
     }
 }
