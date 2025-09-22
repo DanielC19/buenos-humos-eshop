@@ -15,6 +15,10 @@ class HomeController extends Controller
 
     public function index(): View
     {
-        return view('home');
+        // Obtener todos los productos
+        $products = \App\Models\Product::all();
+        // Si tienes un campo 'featured', puedes usar:
+        // $products = \App\Models\Product::where('featured', true)->get();
+        return view('home.index', compact('products'));
     }
 }
