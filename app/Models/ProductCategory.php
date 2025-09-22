@@ -39,6 +39,11 @@ class ProductCategory extends Model
         ];
     }
 
+    public function getId(): int
+    {
+        return $this->attributes['id'];
+    }
+
     public function getName(): string
     {
         return $this->attributes['name'];

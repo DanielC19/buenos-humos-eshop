@@ -36,7 +36,7 @@ class ProductCategoryController extends Controller
     {
         $viewData['category'] = ProductCategory::findOrFail($category_id);
 
-        return view('product-category.edit')->with('viewData', $viewData);
+        return view('admin.product-category.edit')->with('viewData', $viewData);
     }
 
     public function update(Request $request, int $category_id): RedirectResponse

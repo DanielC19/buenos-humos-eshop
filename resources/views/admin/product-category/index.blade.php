@@ -46,7 +46,7 @@
                             @foreach($viewData['categories'] as $category)
                                 <tr>
                                     <td>
-                                        <span class="badge bg-light text-dark">{{ $category->id }}</span>
+                                        <span class="badge bg-light text-dark">{{ $category->getId() }}</span>
                                     </td>
                                     <td>
                                         <div>
@@ -69,12 +69,12 @@
                                     </td>
                                     <td>
                                         <div class="btn-group btn-group-sm">
-                                            <a href="{{ route('admin.product-category.edit', $category->id) }}"
+                                            <a href="{{ route('admin.product-category.edit', $category->getId()) }}"
                                                class="btn btn-outline-primary"
                                                title="{{ __('Edit') }}">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <form action="{{ route('admin.product-category.destroy', $category->id) }}"
+                                            <form action="{{ route('admin.product-category.destroy', $category->getId()) }}"
                                                   method="POST"
                                                   style="display: inline;">
                                                 @csrf
