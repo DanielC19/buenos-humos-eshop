@@ -22,7 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property User $user
- * @property orderedProducts[] $orderedProducts
+ * @property OrderedProducts[] $orderedProducts
  */
 class Order extends Model
 {

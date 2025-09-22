@@ -17,6 +17,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $id
  * @property int $amount
  * @property int $price
+ * @property int $order_id
+ * @property int $product_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
@@ -54,12 +56,12 @@ class OrderedProduct extends Model
         return $this->attributes['price'];
     }
 
-    public function getProduct_id(): int
+    public function getProductId(): int
     {
         return $this->attributes['product_id'];
     }
 
-    public function getOrder_id(): int
+    public function getOrderId(): int
     {
         return $this->attributes['order_id'];
     }
@@ -74,14 +76,14 @@ class OrderedProduct extends Model
         $this->attributes['price'] = $price;
     }
 
-    public function setProduct_id(int $product_id): void
+    public function setProductId(int $productId): void
     {
-        $this->attributes['product_id'] = $product_id;
+        $this->attributes['product_id'] = $productId;
     }
 
-    public function setOrder_id(int $order_id): void
+    public function setOrderId(int $orderId): void
     {
-        $this->attributes['order_id'] = $order_id;
+        $this->attributes['order_id'] = $orderId;
     }
 
     public function order(): BelongsTo
