@@ -19,8 +19,7 @@ return new class extends Migration
             $table->string('brand', 150)->nullable();
             $table->string('image', 255)->nullable();
             $table->integer('stock')->default(0);
-            $table->foreignId('category_id')->constrained('product_categories')->onDelete('restrict');
-            $table->json('reviews')->nullable();
+            $table->foreignId('product_category_id')->constrained()->onDelete('restrict');
             $table->timestamps();
             $table->softDeletes();
         });
