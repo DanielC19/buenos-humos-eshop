@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use Illuminate\View\View;
+use App\Models\Product;
 
 class HomeController extends Controller
 {
@@ -15,6 +16,12 @@ class HomeController extends Controller
 
     public function index(): View
     {
-        return view('home');
+
+        $products = Product::all();
+
+        $viewData = [];
+        $viewData['products'] = $products;
+
+        return view('home.index')->with('viewData', $viewData);
     }
 }

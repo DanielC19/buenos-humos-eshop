@@ -18,62 +18,88 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Buenos Humos') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="{{ route('home.index') }}">
+                <i class="fas fa-rocket me-2"></i>{{ __('Buenos Humos') }}
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('home.index') }}">{{ __('Home') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">{{ __('Products') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">{{ __('Categories') }}</a>
+                    </li>
+                    @auth
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::user()->name }}
+                            </a>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Inicio de sesión') }}</a>
-                                </li>
-                            @endif
-
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Registro') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" onclick="document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" onclick="document.getElementById('logout-form').submit();">
-                                        {{ __('Cerrar sesión') }}
-                                    </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </div>
+                        </li>
+                    @else
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                        </li>
+                    @endauth
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main class="py-4">
+        @yield('content')
+    </main>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
+    <footer class="footer">
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="text-success mb-3">
+                        <i class="fas fa-rocket me-2"></i>{{ __('Buenos Humos') }}
+                    </h5>
+                    <p>{{ __('Your trusted smoke shop with the best products for a premium experience.') }}</p>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h6 class="mb-3">{{ __('Products') }}</h6>
+                    <div class="footer-links d-flex flex-column gap-2">
+                        <a href="#" class="d-block">{{ __('Herbs') }}</a>
+                        <a href="#" class="d-block">{{ __('Accessories') }}</a>
+                        <a href="#" class="d-block">{{ __('Pipes') }}</a>
+                        <a href="#" class="d-block">{{ __('Vaporizers') }}</a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h6 class="mb-3">{{ __('Developers') }}</h6>
+                    <div class="footer-links">
+                        <p class="mb-2"><i class="fas fa-user me-2"></i>{{ __('Daniel Correa') }}</p>
+                        <p class="mb-2"><i class="fas fa-user me-2"></i>{{ __('Daniel Arango') }}</p>
+                        <p class="mb-2"><i class="fas fa-user me-2"></i>{{ __('Lucas Higuita') }}</p>
+                    </div>
                 </div>
             </div>
-        </nav>
-
-        <main class="py-4">
-            @yield('content')
-        </main>
-    </div>
+            <hr class="my-4">
+            <div class="row align-items-center">
+                <div class="col-md-12 text-center">
+                    <p class="mb-0">&copy; {{ date('Y') }} {{ __('Buenos Humos') }}. {{ __('All rights reserved.') }}</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
