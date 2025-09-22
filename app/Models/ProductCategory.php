@@ -16,8 +16,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $name
  * @property string|null $description
  * @property string|null $banner
- * @property Carbon $created_at
- * @property Carbon $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property Product[] $products
  */
 class ProductCategory extends Model
@@ -37,6 +37,16 @@ class ProductCategory extends Model
             'description' => ['nullable', 'string'],
             'banner' => ['nullable', 'string', 'max:255'],
         ];
+    }
+
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
+    }
+
+    public function getId(): int
+    {
+        return $this->attributes['id'];
     }
 
     public function getName(): string
@@ -79,8 +89,13 @@ class ProductCategory extends Model
         $this->attributes['products'] = $products;
     }
 
-    public function products(): HasMany
+    public function getCreatedAt(): ?Carbon
     {
-        return $this->hasMany(Product::class);
+        return $this->attributes['created_at'] ? Carbon::parse($this->attributes['created_at']) : null;
+    }
+
+    public function getUpdatedAt(): ?Carbon
+    {
+        return $this->attributes['updated_at'] ? Carbon::parse($this->attributes['updated_at']) : null;
     }
 }
