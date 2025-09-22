@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Author: Lucas Higuita
@@ -18,13 +19,13 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $brand
  * @property string|null $image
  * @property int $stock
+ * @property int $category_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
- * @property ProductCategory $product_category
- * @property int $category_id
+ * @property ProductCategory $productCategory
  * @property OrderedProduct[] $orderedProducts
- * @property ProductReview[] $reviews
+ * @property ProductReview[] $productReviews
  */
 class Product extends Model
 {
@@ -134,5 +135,10 @@ class Product extends Model
     public function checkStock(int $quantity = 1): bool
     {
         return $this->getStock() >= $quantity;
+    }
+
+    public function productReviews(): HasMany
+    {
+        return $this->hasMany(ProductReview::class);
     }
 }
