@@ -24,25 +24,25 @@ class ProductCategoryController extends Controller
         return view('admin.product-category.create');
     }
 
-    public function destroy(int $category_id): RedirectResponse
+    public function destroy(int $categoryId): RedirectResponse
     {
-        $category = ProductCategory::findOrFail($category_id);
+        $category = ProductCategory::findOrFail($categoryId);
         $category->delete();
 
         return redirect()->route('admin.product-category.index');
     }
 
-    public function edit(int $category_id): View
+    public function edit(int $categoryId): View
     {
-        $viewData['category'] = ProductCategory::findOrFail($category_id);
+        $viewData['category'] = ProductCategory::findOrFail($categoryId);
 
         return view('admin.product-category.edit')->with('viewData', $viewData);
     }
 
-    public function update(Request $request, int $category_id): RedirectResponse
+    public function update(Request $request, int $categoryId): RedirectResponse
     {
         $request->validate(ProductCategory::rules());
-        $category = ProductCategory::findOrFail($category_id);
+        $category = ProductCategory::findOrFail($categoryId);
         $category->setName($request->name);
         $category->setDescription($request->description);
         $category->save();

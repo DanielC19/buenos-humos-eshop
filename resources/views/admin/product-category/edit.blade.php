@@ -18,7 +18,7 @@
 
     <div class="row">
         <div class="col-lg-8">
-            <form action="{{ route('admin.product-category.update', $viewData['category']->id) }}" method="POST">
+            <form action="{{ route('admin.product-category.update', $viewData['category']->getId()) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="card">
@@ -75,7 +75,7 @@
                 <div class="card-body">
                     <div class="mb-3">
                         <h6 class="text-primary">{{ __('Category ID') }}</h6>
-                        <span class="badge bg-light text-dark">{{ $viewData['category']->id }}</span>
+                        <span class="badge bg-light text-dark">{{ $viewData['category']->getId() }}</span>
                     </div>
                     <div class="mb-3">
                         <h6 class="text-primary">{{ __('Current Name') }}</h6>
@@ -88,8 +88,8 @@
                     <div class="mb-3">
                         <h6 class="text-primary">{{ __('Created') }}</h6>
                         <small class="text-muted">
-                            @if($viewData['category']->created_at)
-                                {{ $viewData['category']->created_at->format('M d, Y \a\t H:i') }}
+                            @if($viewData['category']->getCreatedAt())
+                                {{ $viewData['category']->getCreatedAt()->format('M d, Y \a\t H:i') }}
                             @else
                                 {{ __('N/A') }}
                             @endif
@@ -98,8 +98,8 @@
                     <div class="mb-0">
                         <h6 class="text-primary">{{ __('Last Updated') }}</h6>
                         <small class="text-muted">
-                            @if($viewData['category']->updated_at)
-                                {{ $viewData['category']->updated_at->format('M d, Y \a\t H:i') }}
+                            @if($viewData['category']->getUpdatedAt())
+                                {{ $viewData['category']->getUpdatedAt()->format('M d, Y \a\t H:i') }}
                             @else
                                 {{ __('N/A') }}
                             @endif
@@ -130,7 +130,7 @@
                 </div>
                 <div class="card-body">
                     <p class="text-muted small mb-3">{{ __('Once you delete a category, there is no going back. Please be certain.') }}</p>
-                    <form action="{{ route('admin.product-category.destroy', $viewData['category']->id) }}"
+                    <form action="{{ route('admin.product-category.destroy', $viewData['category']->getId()) }}"
                           method="POST">
                         @csrf
                         @method('DELETE')
