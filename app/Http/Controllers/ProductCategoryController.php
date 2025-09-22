@@ -28,7 +28,7 @@ class ProductCategoryController extends Controller
         $category = ProductCategory::findOrFail($category_id);
         $category->delete();
 
-        return redirect()->route('admin.productCategory.index');
+        return redirect()->route('admin.product-category.index');
     }
 
     public function edit(int $category_id): View
@@ -46,7 +46,7 @@ class ProductCategoryController extends Controller
         $category->setDescription($request->description);
         $category->save();
 
-        return redirect()->route('admin.productCategory.index');
+        return redirect()->route('admin.product-category.index');
     }
 
     public function store(Request $request): RedirectResponse
@@ -57,6 +57,6 @@ class ProductCategoryController extends Controller
         $category->setDescription($request->description);
         $category->save();
 
-        return redirect()->route('admin.productCategory.index');
+        return redirect()->route('admin.product-category.index');
     }
 }

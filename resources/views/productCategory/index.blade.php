@@ -4,7 +4,7 @@
 <div class="container-fluid py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="mb-0">{{ __('Product Categories Management') }}</h2>
-        <a href="{{ route('admin.productCategory.create') }}" class="btn btn-primary">
+        <a href="{{ route('admin.product-category.create') }}" class="btn btn-primary">
             <i class="fas fa-plus me-2"></i>{{ __('Add Category') }}
         </a>
     </div>
@@ -15,7 +15,7 @@
                 <i class="fas fa-folder-open fa-3x text-muted mb-3"></i>
                 <h4 class="text-muted">{{ __('No categories found') }}</h4>
                 <p class="text-muted">{{ __('Start by creating your first product category.') }}</p>
-                <a href="{{ route('admin.productCategory.create') }}" class="btn btn-primary">
+                <a href="{{ route('admin.product-category.create') }}" class="btn btn-primary">
                     <i class="fas fa-plus me-2"></i>{{ __('Create Category') }}
                 </a>
             </div>
@@ -69,12 +69,12 @@
                                     </td>
                                     <td>
                                         <div class="btn-group btn-group-sm">
-                                            <a href="{{ route('admin.productCategory.edit', $category->id) }}"
+                                            <a href="{{ route('admin.product-category.edit', $category->id) }}"
                                                class="btn btn-outline-primary"
                                                title="{{ __('Edit') }}">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <form action="{{ route('admin.productCategory.destroy', $category->id) }}"
+                                            <form action="{{ route('admin.product-category.destroy', $category->id) }}"
                                                   method="POST"
                                                   style="display: inline;">
                                                 @csrf

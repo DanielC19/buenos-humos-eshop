@@ -9,7 +9,7 @@
                     <h2 class="mb-0">{{ __('Edit Category') }}</h2>
                     <p class="text-muted mb-0">{{ __('Modify category information') }}</p>
                 </div>
-                <a href="{{ route('admin.productCategory.index') }}" class="btn btn-outline-secondary">
+                <a href="{{ route('admin.product-category.index') }}" class="btn btn-outline-secondary">
                     <i class="fas fa-arrow-left me-2"></i>{{ __('Back to Categories') }}
                 </a>
             </div>
@@ -18,7 +18,7 @@
 
     <div class="row">
         <div class="col-lg-8">
-            <form action="{{ route('admin.productCategory.update', $viewData['category']->id) }}" method="POST">
+            <form action="{{ route('admin.product-category.update', $viewData['category']->id) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="card">
@@ -130,7 +130,7 @@
                 </div>
                 <div class="card-body">
                     <p class="text-muted small mb-3">{{ __('Once you delete a category, there is no going back. Please be certain.') }}</p>
-                    <form action="{{ route('admin.productCategory.destroy', $viewData['category']->id) }}"
+                    <form action="{{ route('admin.product-category.destroy', $viewData['category']->id) }}"
                           method="POST">
                         @csrf
                         @method('DELETE')
