@@ -6,6 +6,8 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Author: Lucas Higuita
@@ -18,16 +20,18 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $brand
  * @property string|null $image
  * @property int $stock
+ * @property int $product_category_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
  * @property ProductCategory $product_category
- * @property int $category_id
  * @property OrderedProduct[] $orderedProducts
  * @property ProductReview[] $reviews
  */
 class Product extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'name',
         'description',
@@ -134,5 +138,10 @@ class Product extends Model
     public function checkStock(int $quantity = 1): bool
     {
         return $this->getStock() >= $quantity;
+    }
+
+    public function productCategory(): BelongsTo
+    {
+        return $this->belongsTo(ProductCategory::class, 'product_category_id');
     }
 }

@@ -6,6 +6,8 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Author: Lucas Higuita
@@ -20,11 +22,12 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ProductCategory extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'name',
         'description',
         'banner',
-        'products',
     ];
 
     public static function rules(): array
@@ -33,7 +36,6 @@ class ProductCategory extends Model
             'name' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'banner' => ['nullable', 'string', 'max:255'],
-            'products' => ['nullable', 'array'],
         ];
     }
 
@@ -77,10 +79,8 @@ class ProductCategory extends Model
         $this->attributes['products'] = $products;
     }
 
-    protected function casts(): array
+    public function products(): HasMany
     {
-        return [
-            'products' => 'array',
-        ];
+        return $this->hasMany(Product::class);
     }
 }
