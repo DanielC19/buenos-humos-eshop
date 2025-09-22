@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Enums\UserRole;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Validation\Rule;
 
@@ -26,6 +27,8 @@ use Illuminate\Validation\Rule;
  */
 class User extends Authenticatable
 {
+    use HasFactory;
+
     protected $fillable = [
         'name',
         'lastname',
