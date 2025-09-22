@@ -1,65 +1,117 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mx-auto px-4 py-8">
-        <h1 class="text-3xl font-bold mb-6">{{ __('Products') }}</h1>
-
-        @if($viewData['products']->isEmpty())
-            <div class="text-center py-12">
-                <p class="text-gray-500 text-lg">{{ __('No products found.') }}</p>
+    <!-- Products Header Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center">
+                <h1 class="display-4 fw-bold mb-3">{{ __('Our Products') }}</h1>
+                <p class="lead text-muted">{{ __('Discover our complete collection of premium smoking products and accessories') }}</p>
             </div>
-        @else
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                @foreach($viewData['products'] as $product)
-                    <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-                        @if($product->getImage())
-                            <img src="{{ $product->getImage() }}" alt="{{ $product->getName() }}" class="w-full h-48 object-cover">
-                        @else
-                            <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
-                                <span class="text-gray-500">{{ __('No Image') }}</span>
-                            </div>
-                        @endif
+        </div>
+    </section>
 
-                        <div class="p-4">
-                            <h3 class="text-lg font-semibold mb-2 text-gray-800">{{ $product->getName() }}</h3>
-
-                            @if($product->getBrand())
-                                <p class="text-sm text-gray-600 mb-2">{{ $product->getBrand() }}</p>
-                            @endif
-
-                            <p class="text-gray-600 text-sm mb-3 line-clamp-3">{{ Str::limit($product->getDescription(), 100) }}</p>
-
-                            <div class="flex justify-between items-center mb-3">
-                                <span class="text-2xl font-bold text-green-600">${{ number_format($product->getPrice() / 100, 2) }}</span>
-                                <span class="text-sm text-gray-500">SKU: {{ $product->getSku() }}</span>
-                            </div>
-
-                            <div class="flex justify-between items-center mb-3">
-                                @if($product->productCategory)
-                                    <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">{{ $product->productCategory->name }}</span>
-                                @endif
-
-                                <span class="text-sm {{ $product->getStock() > 0 ? 'text-green-600' : 'text-red-600' }}">
-                                    @if($product->getStock() > 0)
-                                        {{ $product->getStock() }} in stock
-                                    @else
-                                        Out of stock
-                                    @endif
-                                </span>
-                            </div>
-
-                            <button class="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors duration-300 {{ $product->getStock() <= 0 ? 'opacity-50 cursor-not-allowed' : '' }}"
-                                    {{ $product->getStock() <= 0 ? 'disabled' : '' }}>
-                                @if($product->getStock() > 0)
-                                    {{ __('Add to Cart') }}
-                                @else
-                                    {{ __('Out of Stock') }}
-                                @endif
-                            </button>
-                        </div>
+    <!-- Products Grid Section -->
+    <section class="py-5">
+        <div class="container">
+            @if($viewData['products']->isEmpty())
+                <div class="text-center py-5">
+                    <div class="mb-4">
+                        <i class="fas fa-box-open fa-4x text-muted"></i>
                     </div>
-                @endforeach
-            </div>
-        @endif
-    </div>
+                    <h3 class="text-muted">{{ __('No products found') }}</h3>
+                    <p class="text-muted">{{ __('Check back later for new products or contact us for special requests.') }}</p>
+                </div>
+            @else
+                <div class="row">
+                    @foreach($viewData['products'] as $product)
+                        <div class="col-lg-3 col-md-6 mb-4">
+                            <div class="product-card h-100">
+                                <div class="product-image">
+                                    @if($product->getImage())
+                                        <img src="{{ asset('storage/' . $product->getImage()) }}" alt="{{ $product->getName() }}" class="img-fluid">
+                                    @else
+                                        <div class="d-flex align-items-center justify-content-center h-100">
+                                            <i class="fas fa-leaf fa-3x text-muted"></i>
+                                        </div>
+                                    @endif
+
+                                    <!-- Stock Badge -->
+                                    @if($product->getStock() <= 0)
+                                        <div class="position-absolute top-0 end-0 m-2">
+                                            <span class="badge bg-danger">{{ __('Out of Stock') }}</span>
+                                        </div>
+                                    @elseif($product->getStock() <= 5)
+                                        <div class="position-absolute top-0 end-0 m-2">
+                                            <span class="badge bg-warning">{{ __('Low Stock') }}</span>
+                                        </div>
+                                    @endif
+                                </div>
+
+                                <div class="p-3 d-flex flex-column">
+                                    <h6 class="fw-bold mb-2">{{ $product->getName() }}</h6>
+
+                                    @if($product->getBrand())
+                                        <p class="text-muted small mb-2">
+                                            <i class="fas fa-tag me-1"></i>{{ $product->getBrand() }}
+                                        </p>
+                                    @endif
+
+                                    <p class="text-muted small mb-3 flex-grow-1">{{ Str::limit($product->getDescription(), 80) }}</p>
+
+                                    <!-- Category -->
+                                    @if($product->productCategory)
+                                        <div class="mb-2">
+                                            <span class="badge bg-primary bg-opacity-10 text-primary">
+                                                {{ $product->productCategory->name }}
+                                            </span>
+                                        </div>
+                                    @endif
+
+                                    <!-- Price and SKU -->
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <span class="price fw-bold text-success">${{ number_format($product->getPrice() / 100, 2) }}</span>
+                                        <small class="text-muted">SKU: {{ $product->getSku() }}</small>
+                                    </div>
+
+                                    <!-- Stock Info -->
+                                    <div class="mb-3">
+                                        <small class="text-muted">
+                                            <i class="fas fa-box me-1"></i>
+                                            @if($product->getStock() > 0)
+                                                <span class="text-success">{{ $product->getStock() }} {{ __('in stock') }}</span>
+                                            @else
+                                                <span class="text-danger">{{ __('Out of stock') }}</span>
+                                            @endif
+                                        </small>
+                                    </div>
+
+                                    <!-- Add to Cart Button -->
+                                    <div class="mt-auto">
+                                        @if($product->getStock() > 0)
+                                            <form action="#" method="POST" class="w-100">
+                                                @csrf
+                                                <button type="submit" class="btn btn-primary-custom w-100">
+                                                    <i class="fas fa-cart-plus me-2"></i>{{ __('Add to Cart') }}
+                                                </button>
+                                            </form>
+                                        @else
+                                            <button class="btn btn-outline-secondary w-100" disabled>
+                                                <i class="fas fa-times me-2"></i>{{ __('Out of Stock') }}
+                                            </button>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+                <!-- Pagination or Load More -->
+                <div class="text-center mt-5">
+                    <p class="text-muted">{{ __('Showing') }} {{ $viewData['products']->count() }} {{ __('products') }}</p>
+                </div>
+            @endif
+        </div>
+    </section>
 @endsection
