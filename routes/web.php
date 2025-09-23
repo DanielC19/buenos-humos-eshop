@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Auth;
@@ -20,3 +21,4 @@ Route::post('product/cart/add', [ProductController::class, 'addToCart'])->name('
 Route::delete('product/cart/remove', [ProductController::class, 'removeFromCart'])->name('product.cart.remove');
 
 Route::get('cart', [ProductController::class, 'cart'])->name('product.cart');
+Route::post('order/success', [OrderController::class, 'success'])->name('order.success');

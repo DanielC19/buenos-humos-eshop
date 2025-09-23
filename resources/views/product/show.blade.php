@@ -10,6 +10,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
+            @if(session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
             <div class="row">
                 <div class="col-lg-6 mb-4">
                     <div class="product-image-large">
@@ -45,7 +51,7 @@
                                 @csrf
                                 <div class="quantity-selector">
                                     <label for="quantity" class="form-label">{{ __('Quantity') }}</label>
-                                    <input type="number" class="form-control" id="quantity" name="quantity" value="1" min="1" max="10">
+                                    <input type="number" class="form-control" id="quantity" name="quantity" value="1" min="1">
                                 </div>
                                 <div class="add-to-cart-btn">
                                     <input type="hidden" name="productId" value="{{ $viewData['product']->getId() }}">

@@ -50,4 +50,19 @@ class CartService
 
         return $subtotal + $tax + self::$SHIPPING_COST;
     }
+
+    public function checkStock(): bool
+    {
+        foreach ($this->products as $product) {
+            $productId = $product->getId();
+            if (isset($this->cartProducts[$productId])) {
+                $quantity = $this->cartProducts[$productId];
+                if ($product->getStock() < $quantity) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
 }

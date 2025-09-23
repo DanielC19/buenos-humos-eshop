@@ -9,6 +9,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
+            @if(session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
             @if(!empty($viewData['cartProducts']) && count($viewData['products']) > 0)
                 <div class="row">
                     <!-- Cart Items -->
@@ -82,9 +88,12 @@
                                         <strong class="text-success">${{ number_format($viewData['total'], 2) }}</strong>
                                     </div>
                                     <div class="d-grid gap-2">
-                                        <button class="btn btn-primary-custom btn-lg">
-                                            <i class="fas fa-credit-card me-2"></i>{{ __('Proceed to Checkout') }}
-                                        </button>
+                                        <form action="{{ route('order.success') }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-primary-custom btn-lg w-100">
+                                                <i class="fas fa-credit-card me-2"></i>{{ __('Buy') }}
+                                            </button>
+                                        </form>
                                         <a href="{{ route('product.index') }}" class="btn btn-outline-primary">
                                             <i class="fas fa-arrow-left me-2"></i>{{ __('Continue Shopping') }}
                                         </a>

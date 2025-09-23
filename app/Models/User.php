@@ -63,6 +63,11 @@ class User extends Authenticatable
         return $this->getRole() === UserRole::ADMIN;
     }
 
+    public function getId(): int
+    {
+        return $this->attributes['id'];
+    }
+
     public function getBirthdate(): string
     {
         return $this->attributes['birthdate'];

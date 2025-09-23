@@ -56,7 +56,12 @@ class ProductController extends Controller
     public function addToCart(Request $request): RedirectResponse
     {
         $productId = $request->input('productId');
-        $quantity = $request->input('quantity');
+        $quantity = (int) $request->input('quantity');
+
+        $product = Product::findOrFail($productId);
+        if (! $product->checkStock($quantity)) {
+            return redirect()->back()->with('error', 'Insufficient stock for the requested quantity.');
+        }
 
         $cart = session()->get('cart', []);
         $cart[$productId] = $quantity;
