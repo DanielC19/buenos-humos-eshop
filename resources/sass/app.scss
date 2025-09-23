@@ -26,6 +26,10 @@ body {
     background-color: #f8fafc;
 }
 
+.main-content {
+    min-height: 80vh;
+}
+
 .navbar-custom {
     background: linear-gradient(135deg, var(--primary-purple) 0%, var(--dark-purple) 100%);
     padding: 1rem 0;
