@@ -1,35 +1,24 @@
 @extends('layouts.app')
 
 @section('content')
-    <!-- Category Header Section -->
-    <section class="hero-section py-5">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-8">
-                    <div class="hero-content">
-                        <h1 class="display-4 fw-bold mb-4">{{ $viewData['category']->getName() }}</h1>
-                        <p class="lead mb-4">{{ $viewData['category']->getDescription() }}</p>
-                        <div class="d-flex align-items-center gap-3">
-                            <span class="badge bg-primary-custom fs-6">
-                                {{ count($viewData['products']) }} {{ __('Products Available') }}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="text-center">
-                        @if ($viewData['category']->getBanner())
-                            <img src="{{ $viewData['category']->getBanner() }}" alt="Buenos Humos Logo" class="astronaut-logo">
-                        @endif
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Products Section -->
     <section class="py-5">
         <div class="container">
+            <!-- Simple Search and Filter -->
+            <div class="row mb-4">
+                <div class="col-md-8">
+                    <form method="GET" action="{{ route('product.index', request()->all()) }}" class="d-flex">
+                        <input type="text" class="form-control" name="search" placeholder="Search products..." value="{{ request('search') }}">
+                        <button type="submit" class="btn btn-primary-custom ms-2">Search</button>
+                    </form>
+                </div>
+                <div class="col-md-4 text-end">
+                    <a href="{{ route('product.index', ['mostSold' => !request('mostSold')] + request()->all()) }}"
+                       class="btn {{ request('mostSold') ? 'btn-primary-custom' : 'btn-outline-custom' }}">
+                        Most Sold
+                    </a>
+                </div>
+            </div>
+
             @if(count($viewData['products']) > 0)
                 <div class="row">
                     @foreach($viewData['products'] as $product)
@@ -75,7 +64,7 @@
                     <div class="empty-state">
                         <i class="fas fa-box-open fa-4x text-muted mb-4"></i>
                         <h3 class="text-muted">{{ __('No Products Found') }}</h3>
-                        <p class="text-muted">{{ __('This category doesn\'t have products.') }}</p>
+                        <p class="text-muted">{{ __('Try adjusting your search or filter settings.') }}</p>
                         <a href="{{ route('home.index') }}" class="btn btn-primary-custom mt-3">
                             <i class="fas fa-arrow-left me-2"></i>{{ __('Back to Home') }}
                         </a>
