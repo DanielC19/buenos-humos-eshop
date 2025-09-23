@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\Admin\ProductCategoryController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
@@ -16,7 +16,7 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
         Route::put('/update/{category_id}', [ProductCategoryController::class, 'update'])->name('update');
     });
 
-    Route::prefix('products')->name('products.')->group(function (): void {
+    Route::prefix('product')->name('product.')->group(function (): void {
         Route::get('/', [ProductController::class, 'index'])->name('index');
         Route::get('/create', [ProductController::class, 'create'])->name('create');
         Route::post('/store', [ProductController::class, 'store'])->name('store');

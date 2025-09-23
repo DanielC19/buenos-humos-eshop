@@ -117,9 +117,9 @@
                                         required>
                                     <option value="">{{ __('Select a category') }}</option>
                                     @foreach($viewData['categories'] ?? [] as $category)
-                                        <option value="{{ $category->id }}"
-                                                {{ old('product_category_id') == $category->id ? 'selected' : '' }}>
-                                            {{ $category->name }}
+                                        <option value="{{ $category->getId() }}"
+                                                {{ old('product_category_id') == $category->getId() ? 'selected' : '' }}>
+                                            {{ $category->getName() }}
                                         </option>
                                     @endforeach
                                 </select>

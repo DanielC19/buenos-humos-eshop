@@ -131,9 +131,9 @@ class Product extends Model
         $this->attributes['stock'] = $stock;
     }
 
-    public function setCategoryId(int $categoryId): void
+    public function setProductCategoryId(int $categoryId): void
     {
-        $this->attributes['category_id'] = $categoryId;
+        $this->attributes['product_category_id'] = $categoryId;
     }
 
     public function checkStock(int $quantity = 1): bool
