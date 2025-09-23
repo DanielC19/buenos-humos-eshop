@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * Author: Lucas Higuita
@@ -44,13 +45,19 @@ class Product extends Model
         'product_category_id',
     ];
 
-    public static function rules(): array
+    public static function rules(?int $productId = null): array
     {
+        if ($productId === null) {
+            $productId = '';
+        } else {
+            $productId = ','.$productId;
+        }
+
         return [
             'name' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
             'price' => ['required', 'numeric', 'min:1'],
-            'sku' => ['required', 'string', 'max:100', 'unique:products,sku'],
+            'sku' => ['required', 'string', 'max:100', 'unique:products,sku'.$productId],
             'brand' => ['nullable', 'string', 'max:150'],
             'image' => ['nullable', 'url', 'max:500'],
             'stock' => ['required', 'integer', 'min:0'],
@@ -58,18 +65,24 @@ class Product extends Model
         ];
     }
 
-    public static function updateRules(int $productId): array
+    public static function searchAndOrder(?string $search = null, ?string $mostSold = null, ?int $pagination = 20): LengthAwarePaginator
     {
-        return [
-            'name' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string'],
-            'price' => ['required', 'numeric', 'min:1'],
-            'sku' => ['required', 'string', 'max:100', 'unique:products,sku,'.$productId],
-            'brand' => ['nullable', 'string', 'max:150'],
-            'image' => ['nullable', 'url', 'max:500'],
-            'stock' => ['required', 'integer', 'min:0'],
-            'product_category_id' => ['required', 'integer', 'exists:product_categories,id'],
-        ];
+        $query = self::query();
+
+        if ($search) {
+            $query->where('name', 'like', "%$search%")
+                ->orWhere('description', 'like', "%$search%")
+                ->orWhere('brand', 'like', "%$search%");
+        }
+
+        if ($mostSold) {
+            $query->withCount('orderedProducts')
+                ->orderByDesc('ordered_products_count');
+        } else {
+            $query->orderBy('name');
+        }
+
+        return $query->paginate($pagination);
     }
 
     public function getId(): int

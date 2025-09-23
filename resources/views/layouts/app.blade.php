@@ -32,13 +32,10 @@
                         <a class="nav-link" href="{{ route('home.index') }}">{{ __('Home') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">{{ __('Products') }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">{{ __('Categories') }}</a>
+                        <a class="nav-link" href="{{ route('product.index') }}">{{ __('Products') }}</a>
                     </li>
                     @auth
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown ms-2">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->name }}
                             </a>
