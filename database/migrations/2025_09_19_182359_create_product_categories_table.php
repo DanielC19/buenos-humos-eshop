@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('banner')->nullable();
             $table->json('products')->nullable();
             $table->timestamps();
-            $table->index('name');
+            $table->softDeletes();
         });
     }
 
