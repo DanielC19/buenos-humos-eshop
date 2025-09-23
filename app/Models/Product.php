@@ -52,7 +52,21 @@ class Product extends Model
             'price' => ['required', 'numeric', 'min:1'],
             'sku' => ['required', 'string', 'max:100', 'unique:products,sku'],
             'brand' => ['nullable', 'string', 'max:150'],
-            'image' => ['nullable', 'string', 'max:255'],
+            'image' => ['nullable', 'url', 'max:500'],
+            'stock' => ['required', 'integer', 'min:0'],
+            'product_category_id' => ['required', 'integer', 'exists:product_categories,id'],
+        ];
+    }
+
+    public static function updateRules(int $productId): array
+    {
+        return [
+            'name' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string'],
+            'price' => ['required', 'numeric', 'min:1'],
+            'sku' => ['required', 'string', 'max:100', 'unique:products,sku,'.$productId],
+            'brand' => ['nullable', 'string', 'max:150'],
+            'image' => ['nullable', 'url', 'max:500'],
             'stock' => ['required', 'integer', 'min:0'],
             'product_category_id' => ['required', 'integer', 'exists:product_categories,id'],
         ];

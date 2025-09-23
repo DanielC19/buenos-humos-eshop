@@ -59,7 +59,7 @@
                                         <div class="d-flex align-items-center">
                                             <div class="flex-shrink-0 me-3">
                                                 @if($product->getImage())
-                                                    <img src="{{ asset('storage/' . $product->getImage()) }}"
+                                                    <img src="{{ $product->getImage() }}"
                                                          alt="{{ $product->getName() }}"
                                                          class="rounded"
                                                          style="width: 50px; height: 50px; object-fit: cover;">

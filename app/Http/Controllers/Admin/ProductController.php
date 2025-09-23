@@ -57,7 +57,8 @@ class ProductController extends Controller
 
     public function update(Request $request, int $product_id): RedirectResponse
     {
-        $productData = $request->validate(Product::rules());
+        $productData = $request->validate(Product::updateRules($product_id));
+        $productData['price'] = $productData['price'] * 100;
         $product = Product::findOrFail($product_id);
         $product->update($productData);
 
