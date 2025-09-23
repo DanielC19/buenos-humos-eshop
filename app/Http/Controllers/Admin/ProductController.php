@@ -46,18 +46,18 @@ class ProductController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        $request->validate(Product::rules());
+        $productData = $request->validate(Product::rules());
+        $productData['price'] = $productData['price'] * 100;
+        Product::create($productData);
 
-        $product = new Product;
-        $product->setName($request->name);
-        $product->setDescription($request->description);
-        $product->setPrice((int) $request->price * 100);
-        $product->setStock((int) $request->stock);
-        $product->setSku($request->sku);
-        $product->setProductCategoryId((int) $request->product_category_id);
-        $product->setBrand($request->brand);
-        $product->setImage($request->image);
-        $product->save();
+        return redirect()->route('admin.product.index');
+    }
+
+    public function update(Request $request, int $product_id): RedirectResponse
+    {
+        $productData = $request->validate(Product::rules());
+        $product = Product::findOrFail($product_id);
+        $product->update($productData);
 
         return redirect()->route('admin.product.index');
     }

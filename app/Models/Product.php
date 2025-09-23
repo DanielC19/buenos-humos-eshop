@@ -41,6 +41,7 @@ class Product extends Model
         'brand',
         'image',
         'stock',
+        'product_category_id',
     ];
 
     public static function rules(): array
@@ -48,11 +49,12 @@ class Product extends Model
         return [
             'name' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
-            'price' => ['required', 'numeric', 'min:0'],
+            'price' => ['required', 'numeric', 'min:1'],
             'sku' => ['required', 'string', 'max:100', 'unique:products,sku'],
             'brand' => ['nullable', 'string', 'max:150'],
             'image' => ['nullable', 'string', 'max:255'],
             'stock' => ['required', 'integer', 'min:0'],
+            'product_category_id' => ['required', 'integer', 'exists:product_categories,id'],
         ];
     }
 
