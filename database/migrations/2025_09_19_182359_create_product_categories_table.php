@@ -15,7 +15,6 @@ return new class extends Migration
             $table->string('name', 255);
             $table->string('description')->nullable();
             $table->string('banner')->nullable();
-            $table->json('products')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

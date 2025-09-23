@@ -42,18 +42,26 @@ class Product extends Model
         'brand',
         'image',
         'stock',
+        'product_category_id',
     ];
 
-    public static function rules(): array
+    public static function rules(?int $productId = null): array
     {
+        if ($productId === null) {
+            $productId = '';
+        } else {
+            $productId = ','.$productId;
+        }
+
         return [
             'name' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
-            'price' => ['required', 'numeric', 'min:0'],
-            'sku' => ['required', 'string', 'max:100', 'unique:products,sku'],
+            'price' => ['required', 'numeric', 'min:1'],
+            'sku' => ['required', 'string', 'max:100', 'unique:products,sku'.$productId],
             'brand' => ['nullable', 'string', 'max:150'],
-            'image' => ['nullable', 'string', 'max:255'],
+            'image' => ['nullable', 'url', 'max:500'],
             'stock' => ['required', 'integer', 'min:0'],
+            'product_category_id' => ['required', 'integer', 'exists:product_categories,id'],
         ];
     }
 
@@ -119,7 +127,17 @@ class Product extends Model
 
     public function getCategoryId(): int
     {
-        return $this->attributes['category_id'];
+        return $this->attributes['product_category_id'];
+    }
+
+    public function getCreatedAt(): ?Carbon
+    {
+        return $this->attributes['created_at'] ? Carbon::parse($this->attributes['created_at']) : null;
+    }
+
+    public function getUpdatedAt(): ?Carbon
+    {
+        return $this->attributes['updated_at'] ? Carbon::parse($this->attributes['updated_at']) : null;
     }
 
     public function setName(string $name): void
@@ -157,9 +175,9 @@ class Product extends Model
         $this->attributes['stock'] = $stock;
     }
 
-    public function setCategoryId(int $categoryId): void
+    public function setProductCategoryId(int $categoryId): void
     {
-        $this->attributes['category_id'] = $categoryId;
+        $this->attributes['product_category_id'] = $categoryId;
     }
 
     public function checkStock(int $quantity = 1): bool
