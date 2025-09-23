@@ -18,7 +18,7 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container">
             <a class="navbar-brand" href="{{ route('home.index') }}">
                 <i class="fas fa-rocket me-2"></i>{{ __('Buenos Humos') }}
@@ -32,13 +32,10 @@
                         <a class="nav-link" href="{{ route('home.index') }}">{{ __('Home') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">{{ __('Products') }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">{{ __('Categories') }}</a>
+                        <a class="nav-link" href="{{ route('product.index') }}">{{ __('Products') }}</a>
                     </li>
                     @auth
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown ms-2">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->name }}
                             </a>
@@ -62,7 +59,8 @@
             </div>
         </div>
     </nav>
-    <main class="py-4">
+
+    <main class="main-content">
         @yield('content')
     </main>
 
@@ -74,15 +72,6 @@
                         <i class="fas fa-rocket me-2"></i>{{ __('Buenos Humos') }}
                     </h5>
                     <p>{{ __('Your trusted smoke shop with the best products for a premium experience.') }}</p>
-                </div>
-                <div class="col-lg-2 col-md-6 mb-4">
-                    <h6 class="mb-3">{{ __('Products') }}</h6>
-                    <div class="footer-links d-flex flex-column gap-2">
-                        <a href="#" class="d-block">{{ __('Herbs') }}</a>
-                        <a href="#" class="d-block">{{ __('Accessories') }}</a>
-                        <a href="#" class="d-block">{{ __('Pipes') }}</a>
-                        <a href="#" class="d-block">{{ __('Vaporizers') }}</a>
-                    </div>
                 </div>
                 <div class="col-lg-2 col-md-6 mb-4">
                     <h6 class="mb-3">{{ __('Developers') }}</h6>

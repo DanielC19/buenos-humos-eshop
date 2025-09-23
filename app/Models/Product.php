@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * Author: Lucas Higuita
@@ -54,6 +55,31 @@ class Product extends Model
             'image' => ['nullable', 'string', 'max:255'],
             'stock' => ['required', 'integer', 'min:0'],
         ];
+    }
+
+    public static function searchAndOrder(?string $search = null, ?string $mostSold = null, ?int $pagination = 20): LengthAwarePaginator
+    {
+        $query = self::query();
+
+        if ($search) {
+            $query->where('name', 'like', "%$search%")
+                ->orWhere('description', 'like', "%$search%")
+                ->orWhere('brand', 'like', "%$search%");
+        }
+
+        if ($mostSold) {
+            $query->withCount('orderedProducts')
+                ->orderByDesc('ordered_products_count');
+        } else {
+            $query->orderBy('name');
+        }
+
+        return $query->paginate($pagination);
+    }
+
+    public function getId(): int
+    {
+        return $this->attributes['id'];
     }
 
     public function getName(): string

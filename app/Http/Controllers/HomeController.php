@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Illuminate\View\View;
 use App\Models\Product;
+use App\Models\ProductCategory;
+use Illuminate\View\View;
 
 class HomeController extends Controller
 {
@@ -16,11 +17,12 @@ class HomeController extends Controller
 
     public function index(): View
     {
-
         $products = Product::all();
+        $categories = ProductCategory::all();
 
         $viewData = [];
         $viewData['products'] = $products;
+        $viewData['categories'] = $categories;
 
         return view('home.index')->with('viewData', $viewData);
     }
