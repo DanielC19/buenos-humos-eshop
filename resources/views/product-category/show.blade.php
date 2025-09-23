@@ -35,7 +35,7 @@
                     @foreach($viewData['products'] as $product)
                         <div class="col-lg-3 col-md-6 mb-4">
                             <div class="product-card">
-                                <a href="{{ route('product.show', $product->getId()) }}" class="text-decoration-none">
+                                <a href="{{ route('product.show', $product->getId()) }}">
                                     <div class="product-image">
                                         @if($product->getImage())
                                             <img src="{{ asset('storage/' . $product->getImage()) }}" alt="{{ $product->getName() }}" class="img-fluid">
