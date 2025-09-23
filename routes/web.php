@@ -15,3 +15,4 @@ Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('product-category/{category_id}', [ProductCategoryController::class, 'show'])->name('product-category.show');
 
 Route::get('product', [ProductController::class, 'index'])->name('product.index');
+Route::get('product/{product_id}', [ProductController::class, 'show'])->name('product.show');
