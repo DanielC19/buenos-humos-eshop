@@ -71,7 +71,7 @@ class Product extends Model
             $query->withCount('orderedProducts')
                 ->orderByDesc('ordered_products_count');
         } else {
-            $query->inRandomOrder();
+            $query->orderBy('name');
         }
 
         return $query->paginate($pagination);
