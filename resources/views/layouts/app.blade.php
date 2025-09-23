@@ -34,6 +34,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('product.index') }}">{{ __('Products') }}</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('product.cart') }}">{{ __('Cart') }}</a>
+                    </li>
                     @auth
                         <li class="nav-item dropdown ms-5">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

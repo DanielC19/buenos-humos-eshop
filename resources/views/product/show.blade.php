@@ -4,6 +4,12 @@
     <!-- Product Details -->
     <section class="py-5">
         <div class="container">
+            @if(session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
             <div class="row">
                 <div class="col-lg-6 mb-4">
                     <div class="product-image-large">
@@ -35,13 +41,14 @@
 
                         <!-- Add to Cart Form -->
                         <div class="cart-section mb-4">
-                            <form action="#" method="POST" class="d-flex align-items-center gap-3">
+                            <form action="{{ route('product.cart.add') }}" method="POST" class="d-flex align-items-center gap-3">
                                 @csrf
                                 <div class="quantity-selector">
                                     <label for="quantity" class="form-label">{{ __('Quantity') }}</label>
                                     <input type="number" class="form-control" id="quantity" name="quantity" value="1" min="1" max="10">
                                 </div>
                                 <div class="add-to-cart-btn">
+                                    <input type="hidden" name="productId" value="{{ $viewData['product']->getId() }}">
                                     <button type="submit" class="btn btn-primary-custom btn-lg">
                                         <i class="fas fa-cart-plus me-2"></i>{{ __('Add to Cart') }}
                                     </button>

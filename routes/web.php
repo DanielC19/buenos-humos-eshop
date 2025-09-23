@@ -16,3 +16,7 @@ Route::get('product-category/{category_id}', [ProductCategoryController::class, 
 
 Route::get('product', [ProductController::class, 'index'])->name('product.index');
 Route::get('product/{product_id}', [ProductController::class, 'show'])->name('product.show');
+Route::post('product/cart/add', [ProductController::class, 'addToCart'])->name('product.cart.add');
+Route::delete('product/cart/remove', [ProductController::class, 'removeFromCart'])->name('product.cart.remove');
+
+Route::get('cart', [ProductController::class, 'cart'])->name('product.cart');
