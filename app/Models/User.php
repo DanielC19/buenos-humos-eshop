@@ -60,7 +60,7 @@ class User extends Authenticatable
 
     public function isAdmin(): bool
     {
-        return $this->attributes['role'] === UserRole::ADMIN;
+        return $this->getRole() === UserRole::ADMIN;
     }
 
     public function getBirthdate(): string
@@ -95,7 +95,7 @@ class User extends Authenticatable
 
     public function getRole(): UserRole
     {
-        return $this->attributes['role'];
+        return UserRole::from($this->attributes['role']);
     }
 
     public function setBirthdate(string $birthdate): void
@@ -128,6 +128,11 @@ class User extends Authenticatable
         $this->attributes['role'] = $role;
     }
 
+    public function productReviews(): HasMany
+    {
+        return $this->hasMany(ProductReview::class);
+    }
+
     protected function casts(): array
     {
         return [
@@ -135,10 +140,5 @@ class User extends Authenticatable
             'role' => UserRole::class,
             'password' => 'hashed',
         ];
-    }
-
-    public function productReviews(): HasMany
-    {
-        return $this->hasMany(ProductReview::class);
     }
 }
