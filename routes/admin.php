@@ -2,11 +2,14 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', [AdminController::class, 'index'])->name('index');
+
     Route::prefix('product-category')->name('product-category.')->group(function (): void {
         Route::get('/', [ProductCategoryController::class, 'index'])->name('index');
         Route::get('/create', [ProductCategoryController::class, 'create'])->name('create');

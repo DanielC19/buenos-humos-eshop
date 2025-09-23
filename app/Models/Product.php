@@ -85,6 +85,11 @@ class Product extends Model
         return $query->paginate($pagination);
     }
 
+    public function checkStock(int $quantity = 1): bool
+    {
+        return $this->getStock() >= $quantity;
+    }
+
     public function getId(): int
     {
         return $this->attributes['id'];
@@ -178,11 +183,6 @@ class Product extends Model
     public function setProductCategoryId(int $categoryId): void
     {
         $this->attributes['product_category_id'] = $categoryId;
-    }
-
-    public function checkStock(int $quantity = 1): bool
-    {
-        return $this->getStock() >= $quantity;
     }
 
     public function productCategory(): BelongsTo

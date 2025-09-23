@@ -18,7 +18,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $tax
  * @property int $shipping
  * @property int $total
- * @property string $paymentId
+ * @property string $payment_id
+ * @property int $user_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property User $user
@@ -32,8 +33,8 @@ class Order extends Model
         'tax',
         'shipping',
         'total',
-        'paymentId',
-        'user',
+        'payment_id',
+        'user_id',
     ];
 
     public static function rules(): array
@@ -44,14 +45,19 @@ class Order extends Model
             'tax' => ['required', 'numeric'],
             'shipping' => ['required', 'numeric'],
             'total' => ['required', 'numeric'],
-            'paymentId' => ['required', 'string', 'max:255'],
-            'user' => ['required', 'integer', 'exists:users,id'],
+            'payment_id' => ['required', 'string', 'max:255'],
+            'user_id' => ['required', 'integer', 'exists:users,id'],
         ];
     }
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getId(): int
+    {
+        return $this->attributes['id'];
     }
 
     public function getStatus(): string
@@ -76,17 +82,17 @@ class Order extends Model
 
     public function getTotal(): int
     {
-        return $this->attributes['subtotal'] + $this->attributes['tax'] + $this->attributes['shipping'];
+        return (int) $this->attributes['total'];
     }
 
     public function getPaymentId(): string
     {
-        return $this->attributes['paymentId'];
+        return $this->attributes['payment_id'];
     }
 
     public function getUserId(): int
     {
-        return $this->attributes['userId'];
+        return $this->attributes['user_id'];
     }
 
     public function setStatus(string $status): void
@@ -109,14 +115,19 @@ class Order extends Model
         $this->attributes['shipping'] = $shipping;
     }
 
+    public function setTotal(int $total): void
+    {
+        $this->attributes['total'] = $total;
+    }
+
     public function setPaymentId(string $paymentId): void
     {
-        $this->attributes['paymentId'] = $paymentId;
+        $this->attributes['payment_id'] = $paymentId;
     }
 
     public function setUserId(int $userId): void
     {
-        $this->attributes['userId'] = $userId;
+        $this->attributes['user_id'] = $userId;
     }
 
     protected function casts(): array
