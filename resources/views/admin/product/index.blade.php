@@ -107,16 +107,21 @@
                                     </td>
                                     <td>
                                         <div class="btn-group btn-group-sm">
-                                            <a href="#" class="btn btn-outline-primary" title="{{ __('Edit') }}">
+                                            <a href="{{ route('admin.product.edit', $product->getId()) }}" class="btn btn-outline-primary" title="{{ __('Edit') }}">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <a href="#" class="btn btn-outline-info" title="{{ __('View') }}">
-                                                <i class="fas fa-eye"></i>
-                                            </a>
-                                            <button class="btn btn-outline-danger" title="{{ __('Delete') }}"
-                                                    onclick="confirmDelete({{ $product->id }})">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
+                                            <form action="{{ route('admin.product.destroy', $product->getId()) }}"
+                                                  method="POST"
+                                                  style="display: inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                        class="btn btn-outline-danger"
+                                                        title="{{ __('Delete') }}"
+                                                        onclick="return confirm('{{ __('Are you sure you want to delete this category?') }}')">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>

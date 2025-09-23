@@ -29,7 +29,7 @@ class ProductController extends Controller
         return view('admin.product.create')->with('viewData', $viewData);
     }
 
-    public function delete(int $product_id): RedirectResponse
+    public function destroy(int $product_id): RedirectResponse
     {
         $product = Product::findOrFail($product_id);
         $product->delete();
@@ -39,6 +39,8 @@ class ProductController extends Controller
 
     public function edit(int $product_id): View
     {
+        $viewData = [];
+        $viewData['categories'] = ProductCategory::all();
         $viewData['product'] = Product::findOrFail($product_id);
 
         return view('admin.product.edit')->with('viewData', $viewData);

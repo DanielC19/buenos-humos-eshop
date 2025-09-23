@@ -58,6 +58,11 @@ class Product extends Model
         ];
     }
 
+    public function getId(): int
+    {
+        return $this->attributes['id'];
+    }
+
     public function getName(): string
     {
         return $this->attributes['name'];
@@ -95,7 +100,7 @@ class Product extends Model
 
     public function getCategoryId(): int
     {
-        return $this->attributes['category_id'];
+        return $this->attributes['product_category_id'];
     }
 
     public function setName(string $name): void

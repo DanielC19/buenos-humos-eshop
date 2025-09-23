@@ -20,5 +20,8 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('/', [ProductController::class, 'index'])->name('index');
         Route::get('/create', [ProductController::class, 'create'])->name('create');
         Route::post('/store', [ProductController::class, 'store'])->name('store');
+        Route::delete('/delete/{product_id}', [ProductController::class, 'destroy'])->name('destroy');
+        Route::get('/edit/{product_id}', [ProductController::class, 'edit'])->name('edit');
+        Route::put('/update/{product_id}', [ProductController::class, 'update'])->name('update');
     });
 });
