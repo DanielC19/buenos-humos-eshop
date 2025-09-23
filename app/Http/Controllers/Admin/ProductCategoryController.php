@@ -41,22 +41,19 @@ class ProductCategoryController extends Controller
 
     public function update(Request $request, int $categoryId): RedirectResponse
     {
-        $request->validate(ProductCategory::rules());
+        $categoryData = $request->validate(ProductCategory::rules());
+
         $category = ProductCategory::findOrFail($categoryId);
-        $category->setName($request->name);
-        $category->setDescription($request->description);
-        $category->save();
+        $category->update($categoryData);
 
         return redirect()->route('admin.product-category.index');
     }
 
     public function store(Request $request): RedirectResponse
     {
-        $request->validate(ProductCategory::rules());
-        $category = new ProductCategory;
-        $category->setName($request->name);
-        $category->setDescription($request->description);
-        $category->save();
+        $categoryData = $request->validate(ProductCategory::rules());
+
+        ProductCategory::create($categoryData);
 
         return redirect()->route('admin.product-category.index');
     }
