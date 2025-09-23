@@ -221,15 +221,49 @@ body {
     display: block;
 }
 
+.category-icon-large {
+    font-size: 6rem;
+    color: var(--bs-primary);
+    opacity: 0.1;
+}
+
+.placeholder-image {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa;
+    font-size: 3rem;
+    color: #dee2e6;
+}
+
+.empty-state {
+    padding: 3rem 1rem;
+}
+
+.btn-primary-custom {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.btn-primary-custom:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+.bg-primary-custom {
+    background-color: #28a745 !important;
+}
+
 @media (max-width: 768px) {
     .hero-section {
         padding: 60px 0;
     }
-    
+
     .hero-section h1 {
         font-size: 2rem;
     }
-    
+
     .category-card {
         margin-bottom: 2rem;
     }

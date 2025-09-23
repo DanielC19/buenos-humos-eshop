@@ -65,7 +65,7 @@
                             </div>
                             <div class="p-3">
                                 <h6>{{ $product->getName() }}</h6>
-                                <p class="text-muted small">{{ Str::limit($product->getDescription(), 60) }}</p>
+                                <p class="text-muted small">{{ $product->getDescription() }}</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <span class="price">${{ number_format($product->getPrice(), 2) }}</span>
                                     <form action="#" method="POST" class="d-inline">
