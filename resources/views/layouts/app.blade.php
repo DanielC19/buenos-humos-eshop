@@ -18,7 +18,7 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container">
             <a class="navbar-brand" href="{{ route('home.index') }}">
                 <i class="fas fa-rocket me-2"></i>{{ __('Buenos Humos') }}
@@ -62,7 +62,8 @@
             </div>
         </div>
     </nav>
-    <main class="py-4">
+
+    <main class="main-content">
         @yield('content')
     </main>
 
@@ -74,15 +75,6 @@
                         <i class="fas fa-rocket me-2"></i>{{ __('Buenos Humos') }}
                     </h5>
                     <p>{{ __('Your trusted smoke shop with the best products for a premium experience.') }}</p>
-                </div>
-                <div class="col-lg-2 col-md-6 mb-4">
-                    <h6 class="mb-3">{{ __('Products') }}</h6>
-                    <div class="footer-links d-flex flex-column gap-2">
-                        <a href="#" class="d-block">{{ __('Herbs') }}</a>
-                        <a href="#" class="d-block">{{ __('Accessories') }}</a>
-                        <a href="#" class="d-block">{{ __('Pipes') }}</a>
-                        <a href="#" class="d-block">{{ __('Vaporizers') }}</a>
-                    </div>
                 </div>
                 <div class="col-lg-2 col-md-6 mb-4">
                     <h6 class="mb-3">{{ __('Developers') }}</h6>
