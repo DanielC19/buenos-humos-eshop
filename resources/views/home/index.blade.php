@@ -39,9 +39,9 @@
                                 </div>
                                 <h5>{{ $category->getName() }}</h5>
                                 <p class="text-muted">{{ $category->getDescription() }}</p>
-                                <a href="#" class="btn btn-sm btn-outline-primary">
+                                <button class="btn btn-sm btn-outline-primary">
                                     {{ __('See Products') }}
-                                </a>
+                                </button>
                             </div>
                         </a>
                     </div>
@@ -61,7 +61,7 @@
                             <div class="product-card">
                                 <div class="product-image">
                                     @if($product->getImage())
-                                        <img src="{{ asset('storage/' . $product->getImage()) }}" alt="{{ $product->getName() }}" class="img-fluid">
+                                        <img src="{{ $product->getImage() }}" alt="{{ $product->getName() }}" class="img-fluid">
                                     @else
                                         <i class="fas fa-leaf"></i>
                                     @endif

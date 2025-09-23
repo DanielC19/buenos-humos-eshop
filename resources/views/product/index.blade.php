@@ -8,13 +8,13 @@
                 <div class="col-md-8">
                     <form method="GET" action="{{ route('product.index', request()->all()) }}" class="d-flex">
                         <input type="text" class="form-control" name="search" placeholder="Search products..." value="{{ request('search') }}">
-                        <button type="submit" class="btn btn-primary-custom ms-2">Search</button>
+                        <button type="submit" class="btn btn-primary-custom ms-2">{{ __('Search') }}</button>
                     </form>
                 </div>
                 <div class="col-md-4 text-end">
                     <a href="{{ route('product.index', ['mostSold' => !request('mostSold')] + request()->all()) }}"
                        class="btn {{ request('mostSold') ? 'btn-primary-custom' : 'btn-outline-custom' }}">
-                        Most Sold
+                        {{ __('Most Sold') }}
                     </a>
                 </div>
             </div>
@@ -27,7 +27,7 @@
                                 <a href="{{ route('product.show', $product->getId()) }}">
                                     <div class="product-image">
                                         @if($product->getImage())
-                                            <img src="{{ asset('storage/' . $product->getImage()) }}" alt="{{ $product->getName() }}" class="img-fluid">
+                                            <img src="{{ $product->getImage() }}" alt="{{ $product->getName() }}" class="img-fluid">
                                         @else
                                             <i class="fas fa-leaf"></i>
                                         @endif

@@ -8,8 +8,8 @@
                 <div class="col-lg-6 mb-4">
                     <div class="product-image-large">
                         @if($viewData['product']->getImage())
-                            <img src="{{ asset('storage/' . $viewData['product']->getImage()) }}" 
-                                 alt="{{ $viewData['product']->getName() }}" 
+                            <img src="{{ $viewData['product']->getImage() }}"
+                                 alt="{{ $viewData['product']->getName() }}"
                                  class="img-fluid rounded shadow">
                         @else
                             <div class="placeholder-image-large">
@@ -23,7 +23,7 @@
                 <div class="col-lg-6">
                     <div class="product-details">
                         <h1 class="h2 mb-3">{{ $viewData['product']->getName() }}</h1>
-                        
+
                         <div class="price-section mb-4">
                             <span class="price-large">${{ number_format($viewData['product']->getPrice(), 2) }}</span>
                         </div>
