@@ -204,8 +204,8 @@
                     <div class="mb-3">
                         <h6 class="text-primary">{{ __('Created') }}</h6>
                         <small class="text-muted">
-                            @if($viewData['product']->created_at)
-                                {{ $viewData['product']->created_at->format('M d, Y \a\t H:i') }}
+                            @if($viewData['product']->getCreatedAt())
+                                {{ $viewData['product']->getCreatedAt()->format('M d, Y \a\t H:i') }}
                             @else
                                 {{ __('N/A') }}
                             @endif
@@ -214,8 +214,8 @@
                     <div class="mb-0">
                         <h6 class="text-primary">{{ __('Last Updated') }}</h6>
                         <small class="text-muted">
-                            @if($viewData['product']->updated_at)
-                                {{ $viewData['product']->updated_at->format('M d, Y \a\t H:i') }}
+                            @if($viewData['product']->getUpdatedAt())
+                                {{ $viewData['product']->getUpdatedAt()->format('M d, Y \a\t H:i') }}
                             @else
                                 {{ __('N/A') }}
                             @endif

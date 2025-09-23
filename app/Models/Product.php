@@ -130,6 +130,16 @@ class Product extends Model
         return $this->attributes['product_category_id'];
     }
 
+    public function getCreatedAt(): ?Carbon
+    {
+        return $this->attributes['created_at'] ? Carbon::parse($this->attributes['created_at']) : null;
+    }
+
+    public function getUpdatedAt(): ?Carbon
+    {
+        return $this->attributes['updated_at'] ? Carbon::parse($this->attributes['updated_at']) : null;
+    }
+
     public function setName(string $name): void
     {
         $this->attributes['name'] = $name;

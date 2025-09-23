@@ -83,7 +83,7 @@
                                     </td>
                                     <td>
                                         @if($product->productCategory)
-                                            <span class="badge bg-secondary">{{ $product->productCategory->name }}</span>
+                                            <span class="badge bg-secondary">{{ $product->productCategory->getName() }}</span>
                                         @else
                                             <span class="text-muted">{{ __('No category') }}</span>
                                         @endif
@@ -133,23 +133,4 @@
         </div>
     @endif
 </div>
-
-<script>
-document.getElementById('searchInput').addEventListener('keyup', function() {
-    const searchValue = this.value.toLowerCase();
-    const tableRows = document.querySelectorAll('tbody tr');
-
-    tableRows.forEach(row => {
-        const text = row.textContent.toLowerCase();
-        row.style.display = text.includes(searchValue) ? '' : 'none';
-    });
-});
-
-function confirmDelete(productId) {
-    if (confirm('{{ __("Are you sure you want to delete this product?") }}')) {
-        // Add delete functionality here
-        console.log('Delete product:', productId);
-    }
-}
-</script>
 @endsection
