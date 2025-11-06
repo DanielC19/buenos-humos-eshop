@@ -60,8 +60,8 @@
                                     </td>
                                     <td>
                                         <small class="text-muted">
-                                            @if($category->created_at)
-                                                {{ $category->created_at->format('M d, Y') }}
+                                            @if($category->getCreatedAt())
+                                                {{ $category->getCreatedAt()->format('M d, Y') }}
                                             @else
                                                 {{ __('N/A') }}
                                             @endif
