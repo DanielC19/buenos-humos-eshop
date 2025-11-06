@@ -22,7 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property User $user
- * @property OrderedProducts[] $orderedProducts
+ * @property OrderedProduct[] $orderedProducts
  */
 class Order extends Model
 {
@@ -117,6 +117,21 @@ class Order extends Model
     public function setUserId(int $userId): void
     {
         $this->attributes['userId'] = $userId;
+    }
+
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): void
+    {
+        $this->user()->associate($user);
+    }
+
+    public function getOrderedProducts()
+    {
+        return $this->orderedProducts;
     }
 
     protected function casts(): array

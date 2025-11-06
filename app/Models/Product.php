@@ -180,6 +180,26 @@ class Product extends Model
         $this->attributes['product_category_id'] = $categoryId;
     }
 
+    public function getProductCategory(): ProductCategory
+    {
+        return $this->productCategory;
+    }
+
+    public function setProductCategory(ProductCategory $productCategory): void
+    {
+        $this->productCategory()->associate($productCategory);
+    }
+
+    public function getProductReviews()
+    {
+        return $this->productReviews;
+    }
+
+    public function getOrderedProducts()
+    {
+        return $this->orderedProducts;
+    }
+
     public function checkStock(int $quantity = 1): bool
     {
         return $this->getStock() >= $quantity;

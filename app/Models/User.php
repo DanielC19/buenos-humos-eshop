@@ -128,6 +128,16 @@ class User extends Authenticatable
         $this->attributes['role'] = $role;
     }
 
+    public function getProductReviews()
+    {
+        return $this->productReviews;
+    }
+
+    public function productReviews(): HasMany
+    {
+        return $this->hasMany(ProductReview::class);
+    }
+
     protected function casts(): array
     {
         return [
@@ -135,10 +145,5 @@ class User extends Authenticatable
             'role' => UserRole::class,
             'password' => 'hashed',
         ];
-    }
-
-    public function productReviews(): HasMany
-    {
-        return $this->hasMany(ProductReview::class);
     }
 }

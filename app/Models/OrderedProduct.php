@@ -86,6 +86,26 @@ class OrderedProduct extends Model
         $this->attributes['order_id'] = $orderId;
     }
 
+    public function getOrder(): Order
+    {
+        return $this->order;
+    }
+
+    public function setOrder(Order $order): void
+    {
+        $this->order()->associate($order);
+    }
+
+    public function getProduct(): Product
+    {
+        return $this->product;
+    }
+
+    public function setProduct(Product $product): void
+    {
+        $this->product()->associate($product);
+    }
+
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);

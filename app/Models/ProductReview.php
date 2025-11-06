@@ -80,6 +80,26 @@ class ProductReview extends Model
         $this->attributes['comment'] = $comment;
     }
 
+    public function getProduct(): Product
+    {
+        return $this->product;
+    }
+
+    public function setProduct(Product $product): void
+    {
+        $this->product()->associate($product);
+    }
+
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): void
+    {
+        $this->user()->associate($user);
+    }
+
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
