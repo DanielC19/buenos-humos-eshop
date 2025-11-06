@@ -7,7 +7,10 @@ namespace App\Models;
 use App\Enums\OrderStatus;
 use app\Models\User;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Author: Daniel Arango
@@ -23,7 +26,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property User $user
- * @property OrderedProducts[] $orderedProducts
+ * @property OrderedProduct[] $orderedProducts
  */
 class Order extends Model
 {
@@ -36,6 +39,13 @@ class Order extends Model
         'payment_id',
         'user_id',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'status' => OrderStatus::class,
+        ];
+    }
 
     public static function rules(): array
     {
@@ -50,9 +60,11 @@ class Order extends Model
         ];
     }
 
-    public function user()
+    // setters & getters
+
+    public function getId(): int
     {
-        return $this->belongsTo(User::class);
+        return $this->attributes['id'];
     }
 
     public function getId(): int
@@ -65,39 +77,14 @@ class Order extends Model
         return $this->attributes['status'];
     }
 
-    public function getSubtotal(): int
-    {
-        return $this->attributes['subtotal'];
-    }
-
-    public function getTax(): int
-    {
-        return $this->attributes['tax'];
-    }
-
-    public function getShipping(): int
-    {
-        return $this->attributes['shipping'];
-    }
-
-    public function getTotal(): int
-    {
-        return (int) $this->attributes['total'];
-    }
-
-    public function getPaymentId(): string
-    {
-        return $this->attributes['payment_id'];
-    }
-
-    public function getUserId(): int
-    {
-        return $this->attributes['user_id'];
-    }
-
     public function setStatus(string $status): void
     {
         $this->attributes['status'] = $status;
+    }
+
+    public function getSubtotal(): int
+    {
+        return $this->attributes['subtotal'];
     }
 
     public function setSubtotal(int $subtotal): void
@@ -105,9 +92,19 @@ class Order extends Model
         $this->attributes['subtotal'] = $subtotal;
     }
 
+    public function getTax(): int
+    {
+        return $this->attributes['tax'];
+    }
+
     public function setTax(int $tax): void
     {
         $this->attributes['tax'] = $tax;
+    }
+
+    public function getShipping(): int
+    {
+        return $this->attributes['shipping'];
     }
 
     public function setShipping(int $shipping): void
@@ -115,29 +112,66 @@ class Order extends Model
         $this->attributes['shipping'] = $shipping;
     }
 
-    public function setTotal(int $total): void
+    public function getPaymentId(): string
     {
-        $this->attributes['total'] = $total;
+        return $this->attributes['payment_id'];
     }
 
     public function setPaymentId(string $paymentId): void
     {
-        $this->attributes['payment_id'] = $paymentId;
+        $this->attributes['paymentId'] = $paymentId;
+    }
+
+    public function getUserId(): int
+    {
+        return $this->attributes['user_id'];
     }
 
     public function setUserId(int $userId): void
     {
-        $this->attributes['user_id'] = $userId;
+        $this->attributes['userId'] = $userId;
     }
 
-    protected function casts(): array
+    public function getUser(): User
     {
-        return [
-            'status' => OrderStatus::class,
-        ];
+        return User::find($this->getUserId());
     }
 
-    protected function orderedProducts()
+    public function setUser(User $user): void
+    {
+        $this->user()->associate($user);
+    }
+
+    public function getOrderedProducts(): Collection
+    {
+        return OrderedProduct::where('order_id', $this->getId())->get();
+    }
+
+    public function getCreatedAt(): ?Carbon
+    {
+        return $this->attributes['created_at'] ? Carbon::parse($this->attributes['created_at']) : null;
+    }
+
+    public function getUpdatedAt(): ?Carbon
+    {
+        return $this->attributes['updated_at'] ? Carbon::parse($this->attributes['updated_at']) : null;
+    }
+
+    // utils
+
+    public function getTotal(): int
+    {
+        return $this->attributes['subtotal'] + $this->attributes['tax'] + $this->attributes['shipping'];
+    }
+
+    // relationships
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function orderedProducts(): HasMany
     {
         return $this->hasMany(OrderedProduct::class);
     }

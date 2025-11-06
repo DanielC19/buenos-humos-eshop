@@ -36,6 +36,13 @@ class OrderedProduct extends Model
         'product_id',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'deleted_at' => 'datetime',
+        ];
+    }
+
     public static function rules(): array
     {
         return [
@@ -46,24 +53,16 @@ class OrderedProduct extends Model
         ];
     }
 
+    // setters & getters
+
+    public function getId(): int
+    {
+        return $this->attributes['id'];
+    }
+
     public function getAmount(): int
     {
         return $this->attributes['amount'];
-    }
-
-    public function getPrice(): int
-    {
-        return $this->attributes['price'];
-    }
-
-    public function getProductId(): int
-    {
-        return $this->attributes['product_id'];
-    }
-
-    public function getOrderId(): int
-    {
-        return $this->attributes['order_id'];
     }
 
     public function setAmount(int $amount): void
@@ -71,9 +70,29 @@ class OrderedProduct extends Model
         $this->attributes['amount'] = $amount;
     }
 
+    public function getPrice(): int
+    {
+        return $this->attributes['price'];
+    }
+
     public function setPrice(int $price): void
     {
         $this->attributes['price'] = $price;
+    }
+
+    public function getOrderId(): int
+    {
+        return $this->attributes['order_id'];
+    }
+
+    public function setOrderId(int $orderId): void
+    {
+        $this->attributes['order_id'] = $orderId;
+    }
+
+    public function getProductId(): int
+    {
+        return $this->attributes['product_id'];
     }
 
     public function setProductId(int $productId): void
@@ -81,10 +100,37 @@ class OrderedProduct extends Model
         $this->attributes['product_id'] = $productId;
     }
 
-    public function setOrderId(int $orderId): void
+    public function getOrder(): Order
     {
-        $this->attributes['order_id'] = $orderId;
+        return Order::find($this->getOrderId());
     }
+
+    public function setOrder(Order $order): void
+    {
+        $this->order()->associate($order);
+    }
+
+    public function getProduct(): Product
+    {
+        return Product::find($this->getProductId());
+    }
+
+    public function setProduct(Product $product): void
+    {
+        $this->product()->associate($product);
+    }
+
+    public function getCreatedAt(): ?Carbon
+    {
+        return $this->attributes['created_at'] ? Carbon::parse($this->attributes['created_at']) : null;
+    }
+
+    public function getUpdatedAt(): ?Carbon
+    {
+        return $this->attributes['updated_at'] ? Carbon::parse($this->attributes['updated_at']) : null;
+    }
+
+    // relationships
 
     public function order(): BelongsTo
     {
@@ -94,12 +140,5 @@ class OrderedProduct extends Model
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
-    }
-
-    protected function casts(): array
-    {
-        return [
-            'deleted_at' => 'datetime',
-        ];
     }
 }

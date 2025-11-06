@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Enums\UserRole;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -46,6 +47,15 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'birthdate' => 'date',
+            'role' => UserRole::class,
+            'password' => 'hashed',
+        ];
+    }
+
     public static function rules(): array
     {
         return [
@@ -58,34 +68,11 @@ class User extends Authenticatable
         ];
     }
 
-    public function isAdmin(): bool
-    {
-        return $this->getRole() === UserRole::ADMIN;
-    }
+    // setters & getters
 
     public function getId(): int
     {
         return $this->attributes['id'];
-    }
-
-    public function getBirthdate(): string
-    {
-        return $this->attributes['birthdate'];
-    }
-
-    public function getEmail(): string
-    {
-        return $this->attributes['email'];
-    }
-
-    public function getFullName(): string
-    {
-        return $this->attributes['name'].' '.$this->attributes['lastname'];
-    }
-
-    public function getLastname(): string
-    {
-        return $this->attributes['lastname'];
     }
 
     public function getName(): string
@@ -93,24 +80,14 @@ class User extends Authenticatable
         return $this->attributes['name'];
     }
 
-    public function getPhone(): string
+    public function setName(string $name): void
     {
-        return $this->attributes['phone'];
+        $this->attributes['name'] = $name;
     }
 
-    public function getRole(): UserRole
+    public function getLastname(): string
     {
-        return UserRole::from($this->attributes['role']);
-    }
-
-    public function setBirthdate(string $birthdate): void
-    {
-        $this->attributes['birthdate'] = $birthdate;
-    }
-
-    public function setEmail(string $email): void
-    {
-        $this->attributes['email'] = $email;
+        return $this->attributes['lastname'];
     }
 
     public function setLastname(string $lastname): void
@@ -118,9 +95,19 @@ class User extends Authenticatable
         $this->attributes['lastname'] = $lastname;
     }
 
-    public function setName(string $name): void
+    public function getEmail(): string
     {
-        $this->attributes['name'] = $name;
+        return $this->attributes['email'];
+    }
+
+    public function setEmail(string $email): void
+    {
+        $this->attributes['email'] = $email;
+    }
+
+    public function getPhone(): string
+    {
+        return $this->attributes['phone'];
     }
 
     public function setPhone(string $phone): void
@@ -128,22 +115,57 @@ class User extends Authenticatable
         $this->attributes['phone'] = $phone;
     }
 
+    public function getBirthdate(): string
+    {
+        return $this->attributes['birthdate'];
+    }
+
+    public function setBirthdate(string $birthdate): void
+    {
+        $this->attributes['birthdate'] = $birthdate;
+    }
+
+    public function getRole(): UserRole
+    {
+        return $this->attributes['role'];
+    }
+
     public function setRole(UserRole $role): void
     {
         $this->attributes['role'] = $role;
     }
 
+    public function getProductReviews(): Collection
+    {
+        return ProductReview::where('user_id', $this->getId())->get();
+    }
+
+    public function getCreatedAt(): ?Carbon
+    {
+        return $this->attributes['created_at'] ? Carbon::parse($this->attributes['created_at']) : null;
+    }
+
+    public function getUpdatedAt(): ?Carbon
+    {
+        return $this->attributes['updated_at'] ? Carbon::parse($this->attributes['updated_at']) : null;
+    }
+
+    // utils
+
+    public function isAdmin(): bool
+    {
+        return $this->attributes['role'] === UserRole::ADMIN;
+    }
+
+    public function getFullName(): string
+    {
+        return $this->attributes['name'].' '.$this->attributes['lastname'];
+    }
+
+    // relationships
+
     public function productReviews(): HasMany
     {
         return $this->hasMany(ProductReview::class);
-    }
-
-    protected function casts(): array
-    {
-        return [
-            'birthdate' => 'date',
-            'role' => UserRole::class,
-            'password' => 'hashed',
-        ];
     }
 }

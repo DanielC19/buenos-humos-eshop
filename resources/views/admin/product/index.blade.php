@@ -82,8 +82,8 @@
                                         <code class="bg-light px-2 py-1 rounded">{{ $product->getSku() }}</code>
                                     </td>
                                     <td>
-                                        @if($product->productCategory)
-                                            <span class="badge bg-secondary">{{ $product->productCategory->getName() }}</span>
+                                        @if($product->getProductCategory())
+                                            <span class="badge bg-secondary">{{ $product->getProductCategory()->getName() }}</span>
                                         @else
                                             <span class="text-muted">{{ __('No category') }}</span>
                                         @endif
