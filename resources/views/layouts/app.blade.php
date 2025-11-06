@@ -34,13 +34,22 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('product.index') }}">{{ __('Products') }}</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('product.cart') }}">{{ __('Cart') }}</a>
+                    </li>
                     @auth
-                        <li class="nav-item dropdown ms-2">
+                        <li class="nav-item dropdown ms-5">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }}
+                                {{ Auth::user()->getName() }}
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                @if(Auth::user()->isAdmin())
+                                    <a class="dropdown-item" href="{{ route('admin.index') }}">
+                                        {{ __('Dashboard') }}
+                                    </a>
+                                @endif
+
                                 <a class="dropdown-item" onclick="document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
@@ -51,7 +60,7 @@
                             </div>
                         </li>
                     @else
-                        <li class="nav-item">
+                        <li class="nav-item ms-5">
                             <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                         </li>
                     @endauth

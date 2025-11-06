@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('tax');
             $table->integer('shipping');
             $table->integer('total');
-            $table->string('paymentId', 255);
+            $table->string('payment_id', 255);
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });

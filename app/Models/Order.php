@@ -21,7 +21,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $tax
  * @property int $shipping
  * @property int $total
- * @property string $paymentId
+ * @property string $payment_id
+ * @property int $user_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property User $user
@@ -35,8 +36,8 @@ class Order extends Model
         'tax',
         'shipping',
         'total',
-        'paymentId',
-        'user',
+        'payment_id',
+        'user_id',
     ];
 
     protected function casts(): array
@@ -54,12 +55,17 @@ class Order extends Model
             'tax' => ['required', 'numeric'],
             'shipping' => ['required', 'numeric'],
             'total' => ['required', 'numeric'],
-            'paymentId' => ['required', 'string', 'max:255'],
-            'user' => ['required', 'integer', 'exists:users,id'],
+            'payment_id' => ['required', 'string', 'max:255'],
+            'user_id' => ['required', 'integer', 'exists:users,id'],
         ];
     }
 
     // setters & getters
+
+    public function getId(): int
+    {
+        return $this->attributes['id'];
+    }
 
     public function getId(): int
     {
@@ -108,7 +114,7 @@ class Order extends Model
 
     public function getPaymentId(): string
     {
-        return $this->attributes['paymentId'];
+        return $this->attributes['payment_id'];
     }
 
     public function setPaymentId(string $paymentId): void
@@ -118,7 +124,7 @@ class Order extends Model
 
     public function getUserId(): int
     {
-        return $this->attributes['userId'];
+        return $this->attributes['user_id'];
     }
 
     public function setUserId(int $userId): void
