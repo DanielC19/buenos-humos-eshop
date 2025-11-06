@@ -40,25 +40,7 @@ class ProductReview extends Model
         ];
     }
 
-    public function getProductId(): int
-    {
-        return $this->attributes['product_id'];
-    }
-
-    public function setProductId(int $productId): void
-    {
-        $this->attributes['product_id'] = $productId;
-    }
-
-    public function getUserId(): int
-    {
-        return $this->attributes['user_id'];
-    }
-
-    public function setUserId(int $userId): void
-    {
-        $this->attributes['user_id'] = $userId;
-    }
+    // setters & getters
 
     public function getScore(): int
     {
@@ -80,6 +62,26 @@ class ProductReview extends Model
         $this->attributes['comment'] = $comment;
     }
 
+    public function getProductId(): int
+    {
+        return $this->attributes['product_id'];
+    }
+
+    public function setProductId(int $productId): void
+    {
+        $this->attributes['product_id'] = $productId;
+    }
+
+    public function getUserId(): int
+    {
+        return $this->attributes['user_id'];
+    }
+
+    public function setUserId(int $userId): void
+    {
+        $this->attributes['user_id'] = $userId;
+    }
+
     public function getProduct(): Product
     {
         return $this->product;
@@ -99,6 +101,8 @@ class ProductReview extends Model
     {
         $this->user()->associate($user);
     }
+
+    // relationships
 
     public function product(): BelongsTo
     {

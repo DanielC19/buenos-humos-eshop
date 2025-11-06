@@ -85,6 +85,8 @@ class Product extends Model
         return $query->paginate($pagination);
     }
 
+    // setters & getters
+
     public function getId(): int
     {
         return $this->attributes['id'];
@@ -95,9 +97,19 @@ class Product extends Model
         return $this->attributes['name'];
     }
 
+    public function setName(string $name): void
+    {
+        $this->attributes['name'] = $name;
+    }
+
     public function getDescription(): ?string
     {
         return $this->attributes['description'] ?? null;
+    }
+
+    public function setDescription(?string $description): void
+    {
+        $this->attributes['description'] = $description;
     }
 
     public function getPrice(): int
@@ -105,9 +117,19 @@ class Product extends Model
         return $this->attributes['price'];
     }
 
+    public function setPrice(int $price): void
+    {
+        $this->attributes['price'] = $price;
+    }
+
     public function getSku(): string
     {
         return $this->attributes['sku'];
+    }
+
+    public function setSku(string $sku): void
+    {
+        $this->attributes['sku'] = $sku;
     }
 
     public function getBrand(): string
@@ -115,9 +137,19 @@ class Product extends Model
         return $this->attributes['brand'];
     }
 
+    public function setBrand(string $brand): void
+    {
+        $this->attributes['brand'] = $brand;
+    }
+
     public function getImage(): ?string
     {
         return $this->attributes['image'] ?? null;
+    }
+
+    public function setImage(?string $image): void
+    {
+        $this->attributes['image'] = $image;
     }
 
     public function getStock(): int
@@ -125,9 +157,19 @@ class Product extends Model
         return $this->attributes['stock'];
     }
 
+    public function setStock(int $stock): void
+    {
+        $this->attributes['stock'] = $stock;
+    }
+
     public function getCategoryId(): int
     {
         return $this->attributes['product_category_id'];
+    }
+
+    public function setProductCategoryId(int $categoryId): void
+    {
+        $this->attributes['product_category_id'] = $categoryId;
     }
 
     public function getCreatedAt(): ?Carbon
@@ -138,46 +180,6 @@ class Product extends Model
     public function getUpdatedAt(): ?Carbon
     {
         return $this->attributes['updated_at'] ? Carbon::parse($this->attributes['updated_at']) : null;
-    }
-
-    public function setName(string $name): void
-    {
-        $this->attributes['name'] = $name;
-    }
-
-    public function setDescription(?string $description): void
-    {
-        $this->attributes['description'] = $description;
-    }
-
-    public function setPrice(int $price): void
-    {
-        $this->attributes['price'] = $price;
-    }
-
-    public function setSku(string $sku): void
-    {
-        $this->attributes['sku'] = $sku;
-    }
-
-    public function setBrand(string $brand): void
-    {
-        $this->attributes['brand'] = $brand;
-    }
-
-    public function setImage(?string $image): void
-    {
-        $this->attributes['image'] = $image;
-    }
-
-    public function setStock(int $stock): void
-    {
-        $this->attributes['stock'] = $stock;
-    }
-
-    public function setProductCategoryId(int $categoryId): void
-    {
-        $this->attributes['product_category_id'] = $categoryId;
     }
 
     public function getProductCategory(): ProductCategory
@@ -200,10 +202,14 @@ class Product extends Model
         return $this->orderedProducts;
     }
 
+    // utils
+
     public function checkStock(int $quantity = 1): bool
     {
         return $this->getStock() >= $quantity;
     }
+
+    // relationships
 
     public function productCategory(): BelongsTo
     {

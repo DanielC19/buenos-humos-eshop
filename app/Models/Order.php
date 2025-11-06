@@ -54,39 +54,11 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
+    // setters & getters
+
     public function getStatus(): string
     {
         return $this->attributes['status'];
-    }
-
-    public function getSubtotal(): int
-    {
-        return $this->attributes['subtotal'];
-    }
-
-    public function getTax(): int
-    {
-        return $this->attributes['tax'];
-    }
-
-    public function getShipping(): int
-    {
-        return $this->attributes['shipping'];
-    }
-
-    public function getTotal(): int
-    {
-        return $this->attributes['subtotal'] + $this->attributes['tax'] + $this->attributes['shipping'];
-    }
-
-    public function getPaymentId(): string
-    {
-        return $this->attributes['paymentId'];
-    }
-
-    public function getUserId(): int
-    {
-        return $this->attributes['userId'];
     }
 
     public function setStatus(string $status): void
@@ -94,9 +66,19 @@ class Order extends Model
         $this->attributes['status'] = $status;
     }
 
+    public function getSubtotal(): int
+    {
+        return $this->attributes['subtotal'];
+    }
+
     public function setSubtotal(int $subtotal): void
     {
         $this->attributes['subtotal'] = $subtotal;
+    }
+
+    public function getTax(): int
+    {
+        return $this->attributes['tax'];
     }
 
     public function setTax(int $tax): void
@@ -104,14 +86,29 @@ class Order extends Model
         $this->attributes['tax'] = $tax;
     }
 
+    public function getShipping(): int
+    {
+        return $this->attributes['shipping'];
+    }
+
     public function setShipping(int $shipping): void
     {
         $this->attributes['shipping'] = $shipping;
     }
 
+    public function getPaymentId(): string
+    {
+        return $this->attributes['paymentId'];
+    }
+
     public function setPaymentId(string $paymentId): void
     {
         $this->attributes['paymentId'] = $paymentId;
+    }
+
+    public function getUserId(): int
+    {
+        return $this->attributes['userId'];
     }
 
     public function setUserId(int $userId): void
@@ -134,15 +131,24 @@ class Order extends Model
         return $this->orderedProducts;
     }
 
+    // utils
+
+    public function getTotal(): int
+    {
+        return $this->attributes['subtotal'] + $this->attributes['tax'] + $this->attributes['shipping'];
+    }
+
+    // relationships
+
+    protected function orderedProducts()
+    {
+        return $this->hasMany(OrderedProduct::class);
+    }
+
     protected function casts(): array
     {
         return [
             'status' => OrderStatus::class,
         ];
-    }
-
-    protected function orderedProducts()
-    {
-        return $this->hasMany(OrderedProduct::class);
     }
 }

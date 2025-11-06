@@ -58,59 +58,11 @@ class User extends Authenticatable
         ];
     }
 
-    public function isAdmin(): bool
-    {
-        return $this->attributes['role'] === UserRole::ADMIN;
-    }
-
-    public function getBirthdate(): string
-    {
-        return $this->attributes['birthdate'];
-    }
-
-    public function getEmail(): string
-    {
-        return $this->attributes['email'];
-    }
-
-    public function getFullName(): string
-    {
-        return $this->attributes['name'].' '.$this->attributes['lastname'];
-    }
-
-    public function getLastname(): string
-    {
-        return $this->attributes['lastname'];
-    }
+    // setters & getters
 
     public function getName(): string
     {
         return $this->attributes['name'];
-    }
-
-    public function getPhone(): string
-    {
-        return $this->attributes['phone'];
-    }
-
-    public function getRole(): UserRole
-    {
-        return $this->attributes['role'];
-    }
-
-    public function setBirthdate(string $birthdate): void
-    {
-        $this->attributes['birthdate'] = $birthdate;
-    }
-
-    public function setEmail(string $email): void
-    {
-        $this->attributes['email'] = $email;
-    }
-
-    public function setLastname(string $lastname): void
-    {
-        $this->attributes['lastname'] = $lastname;
     }
 
     public function setName(string $name): void
@@ -118,9 +70,49 @@ class User extends Authenticatable
         $this->attributes['name'] = $name;
     }
 
+    public function getLastname(): string
+    {
+        return $this->attributes['lastname'];
+    }
+
+    public function setLastname(string $lastname): void
+    {
+        $this->attributes['lastname'] = $lastname;
+    }
+
+    public function getEmail(): string
+    {
+        return $this->attributes['email'];
+    }
+
+    public function setEmail(string $email): void
+    {
+        $this->attributes['email'] = $email;
+    }
+
+    public function getPhone(): string
+    {
+        return $this->attributes['phone'];
+    }
+
     public function setPhone(string $phone): void
     {
         $this->attributes['phone'] = $phone;
+    }
+
+    public function getBirthdate(): string
+    {
+        return $this->attributes['birthdate'];
+    }
+
+    public function setBirthdate(string $birthdate): void
+    {
+        $this->attributes['birthdate'] = $birthdate;
+    }
+
+    public function getRole(): UserRole
+    {
+        return $this->attributes['role'];
     }
 
     public function setRole(UserRole $role): void
@@ -132,6 +124,20 @@ class User extends Authenticatable
     {
         return $this->productReviews;
     }
+
+    // utils
+
+    public function isAdmin(): bool
+    {
+        return $this->attributes['role'] === UserRole::ADMIN;
+    }
+
+    public function getFullName(): string
+    {
+        return $this->attributes['name'].' '.$this->attributes['lastname'];
+    }
+
+    // relationships
 
     public function productReviews(): HasMany
     {

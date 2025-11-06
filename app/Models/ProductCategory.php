@@ -39,10 +39,7 @@ class ProductCategory extends Model
         ];
     }
 
-    public function products(): HasMany
-    {
-        return $this->hasMany(Product::class);
-    }
+    // setters & getters
 
     public function getId(): int
     {
@@ -79,6 +76,16 @@ class ProductCategory extends Model
         $this->attributes['banner'] = $banner;
     }
 
+    public function getCreatedAt(): ?Carbon
+    {
+        return $this->attributes['created_at'] ? Carbon::parse($this->attributes['created_at']) : null;
+    }
+
+    public function getUpdatedAt(): ?Carbon
+    {
+        return $this->attributes['updated_at'] ? Carbon::parse($this->attributes['updated_at']) : null;
+    }
+
     public function getProducts(): array
     {
         return $this->attributes['products'] ?? [];
@@ -89,13 +96,10 @@ class ProductCategory extends Model
         $this->attributes['products'] = $products;
     }
 
-    public function getCreatedAt(): ?Carbon
-    {
-        return $this->attributes['created_at'] ? Carbon::parse($this->attributes['created_at']) : null;
-    }
+    // relationships
 
-    public function getUpdatedAt(): ?Carbon
+    public function products(): HasMany
     {
-        return $this->attributes['updated_at'] ? Carbon::parse($this->attributes['updated_at']) : null;
+        return $this->hasMany(Product::class);
     }
 }

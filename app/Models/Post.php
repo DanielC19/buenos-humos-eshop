@@ -35,14 +35,26 @@ class Post extends Model
         ];
     }
 
+    // setters & getters
+
     public function getTitle(): string
     {
         return $this->attributes['title'];
     }
 
+    public function setTitle(string $title): void
+    {
+        $this->attributes['title'] = $title;
+    }
+
     public function getContent(): string
     {
         return $this->attributes['content'];
+    }
+
+    public function setContent(string $content): void
+    {
+        $this->attributes['content'] = $content;
     }
 
     public function getCategory(): PostCategory
@@ -53,16 +65,6 @@ class Post extends Model
     public function setCategory(PostCategory $category): void
     {
         $this->attributes['category'] = $category;
-    }
-
-    public function setTitle(string $title): void
-    {
-        $this->attributes['title'] = $title;
-    }
-
-    public function setContent(string $content): void
-    {
-        $this->attributes['content'] = $content;
     }
 
     protected function casts(): array

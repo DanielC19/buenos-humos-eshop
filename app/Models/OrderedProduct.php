@@ -46,24 +46,11 @@ class OrderedProduct extends Model
         ];
     }
 
+    // setters & getters
+
     public function getAmount(): int
     {
         return $this->attributes['amount'];
-    }
-
-    public function getPrice(): int
-    {
-        return $this->attributes['price'];
-    }
-
-    public function getProductId(): int
-    {
-        return $this->attributes['product_id'];
-    }
-
-    public function getOrderId(): int
-    {
-        return $this->attributes['order_id'];
     }
 
     public function setAmount(int $amount): void
@@ -71,19 +58,34 @@ class OrderedProduct extends Model
         $this->attributes['amount'] = $amount;
     }
 
+    public function getPrice(): int
+    {
+        return $this->attributes['price'];
+    }
+
     public function setPrice(int $price): void
     {
         $this->attributes['price'] = $price;
     }
 
-    public function setProductId(int $productId): void
+    public function getOrderId(): int
     {
-        $this->attributes['product_id'] = $productId;
+        return $this->attributes['order_id'];
     }
 
     public function setOrderId(int $orderId): void
     {
         $this->attributes['order_id'] = $orderId;
+    }
+
+    public function getProductId(): int
+    {
+        return $this->attributes['product_id'];
+    }
+
+    public function setProductId(int $productId): void
+    {
+        $this->attributes['product_id'] = $productId;
     }
 
     public function getOrder(): Order
@@ -105,6 +107,8 @@ class OrderedProduct extends Model
     {
         $this->product()->associate($product);
     }
+
+    // relationships
 
     public function order(): BelongsTo
     {
