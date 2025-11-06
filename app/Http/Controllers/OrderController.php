@@ -53,6 +53,6 @@ class OrderController extends Controller
         $viewData = [];
         $viewData['order'] = $order;
 
-        return view('order.success')->with('viewData', $viewData);
+        return view('orders.success')->with('viewData', $viewData);
     }
 }

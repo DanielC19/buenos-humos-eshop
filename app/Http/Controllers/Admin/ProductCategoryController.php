@@ -16,12 +16,12 @@ class ProductCategoryController extends Controller
     {
         $viewData['categories'] = ProductCategory::all();
 
-        return view('admin.product-category.index')->with('viewData', $viewData);
+        return view('admin.product-categories.index')->with('viewData', $viewData);
     }
 
     public function create(): View
     {
-        return view('admin.product-category.create');
+        return view('admin.product-categories.create');
     }
 
     public function destroy(int $categoryId): RedirectResponse
@@ -29,14 +29,14 @@ class ProductCategoryController extends Controller
         $category = ProductCategory::findOrFail($categoryId);
         $category->delete();
 
-        return redirect()->route('admin.product-category.index');
+        return redirect()->route('admin.product-categories.index');
     }
 
     public function edit(int $categoryId): View
     {
         $viewData['category'] = ProductCategory::findOrFail($categoryId);
 
-        return view('admin.product-category.edit')->with('viewData', $viewData);
+        return view('admin.product-categories.edit')->with('viewData', $viewData);
     }
 
     public function update(Request $request, int $categoryId): RedirectResponse
@@ -46,7 +46,7 @@ class ProductCategoryController extends Controller
         $category = ProductCategory::findOrFail($categoryId);
         $category->update($categoryData);
 
-        return redirect()->route('admin.product-category.index');
+        return redirect()->route('admin.product-categories.index');
     }
 
     public function store(Request $request): RedirectResponse
@@ -55,6 +55,6 @@ class ProductCategoryController extends Controller
 
         ProductCategory::create($categoryData);
 
-        return redirect()->route('admin.product-category.index');
+        return redirect()->route('admin.product-categories.index');
     }
 }
