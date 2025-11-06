@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Enums\UserRole;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -134,7 +135,7 @@ class User extends Authenticatable
         $this->attributes['role'] = $role;
     }
 
-    public function getProductReviews()
+    public function getProductReviews(): Collection
     {
         return ProductReview::where('user_id', $this->getId())->get();
     }

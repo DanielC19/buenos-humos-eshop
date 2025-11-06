@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -192,12 +193,12 @@ class Product extends Model
         $this->productCategory()->associate($productCategory);
     }
 
-    public function getProductReviews()
+    public function getProductReviews(): Collection
     {
         return ProductReview::where('product_id', $this->getId())->get();
     }
 
-    public function getOrderedProducts()
+    public function getOrderedProducts(): Collection
     {
         return OrderedProduct::where('product_id', $this->getId())->get();
     }

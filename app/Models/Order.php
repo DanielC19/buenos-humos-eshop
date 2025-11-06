@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Enums\OrderStatus;
 use app\Models\User;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -138,7 +139,7 @@ class Order extends Model
         $this->user()->associate($user);
     }
 
-    public function getOrderedProducts()
+    public function getOrderedProducts(): Collection
     {
         return OrderedProduct::where('order_id', $this->getId())->get();
     }
