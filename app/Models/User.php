@@ -46,6 +46,15 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'birthdate' => 'date',
+            'role' => UserRole::class,
+            'password' => 'hashed',
+        ];
+    }
+
     public static function rules(): array
     {
         return [
@@ -157,14 +166,5 @@ class User extends Authenticatable
     public function productReviews(): HasMany
     {
         return $this->hasMany(ProductReview::class);
-    }
-
-    protected function casts(): array
-    {
-        return [
-            'birthdate' => 'date',
-            'role' => UserRole::class,
-            'password' => 'hashed',
-        ];
     }
 }

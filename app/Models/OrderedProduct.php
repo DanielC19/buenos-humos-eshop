@@ -36,6 +36,13 @@ class OrderedProduct extends Model
         'product_id',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'deleted_at' => 'datetime',
+        ];
+    }
+
     public static function rules(): array
     {
         return [
@@ -133,12 +140,5 @@ class OrderedProduct extends Model
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
-    }
-
-    protected function casts(): array
-    {
-        return [
-            'deleted_at' => 'datetime',
-        ];
     }
 }

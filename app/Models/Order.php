@@ -36,6 +36,13 @@ class Order extends Model
         'user',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'status' => OrderStatus::class,
+        ];
+    }
+
     public static function rules(): array
     {
         return [
@@ -158,12 +165,5 @@ class Order extends Model
     protected function orderedProducts()
     {
         return $this->hasMany(OrderedProduct::class);
-    }
-
-    protected function casts(): array
-    {
-        return [
-            'status' => OrderStatus::class,
-        ];
     }
 }

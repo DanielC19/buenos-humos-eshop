@@ -26,6 +26,13 @@ class Post extends Model
         'category',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'category' => PostCategory::class,
+        ];
+    }
+
     public static function rules(): array
     {
         return [
@@ -80,12 +87,5 @@ class Post extends Model
     public function getUpdatedAt(): ?Carbon
     {
         return $this->attributes['updated_at'] ? Carbon::parse($this->attributes['updated_at']) : null;
-    }
-
-    protected function casts(): array
-    {
-        return [
-            'category' => PostCategory::class,
-        ];
     }
 }
