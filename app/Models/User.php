@@ -136,7 +136,7 @@ class User extends Authenticatable
 
     public function getProductReviews()
     {
-        return $this->productReviews;
+        return ProductReview::where('user_id', $this->getId())->get();
     }
 
     public function getCreatedAt(): ?Carbon

@@ -102,7 +102,7 @@ class OrderedProduct extends Model
 
     public function getOrder(): Order
     {
-        return $this->order;
+        return Order::find($this->getOrderId());
     }
 
     public function setOrder(Order $order): void
@@ -112,7 +112,7 @@ class OrderedProduct extends Model
 
     public function getProduct(): Product
     {
-        return $this->product;
+        return Product::find($this->getProductId());
     }
 
     public function setProduct(Product $product): void

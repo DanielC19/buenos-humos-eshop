@@ -184,7 +184,7 @@ class Product extends Model
 
     public function getProductCategory(): ProductCategory
     {
-        return $this->productCategory;
+        return ProductCategory::find($this->getCategoryId());
     }
 
     public function setProductCategory(ProductCategory $productCategory): void
@@ -194,12 +194,12 @@ class Product extends Model
 
     public function getProductReviews()
     {
-        return $this->productReviews;
+        return ProductReview::where('product_id', $this->getId())->get();
     }
 
     public function getOrderedProducts()
     {
-        return $this->orderedProducts;
+        return OrderedProduct::where('product_id', $this->getId())->get();
     }
 
     // utils

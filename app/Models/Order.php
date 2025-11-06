@@ -130,7 +130,7 @@ class Order extends Model
 
     public function getUser(): User
     {
-        return $this->user;
+        return User::find($this->getUserId());
     }
 
     public function setUser(User $user): void
@@ -140,7 +140,7 @@ class Order extends Model
 
     public function getOrderedProducts()
     {
-        return $this->orderedProducts;
+        return OrderedProduct::where('order_id', $this->getId())->get();
     }
 
     public function getCreatedAt(): ?Carbon

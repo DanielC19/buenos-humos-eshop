@@ -86,14 +86,9 @@ class ProductCategory extends Model
         return $this->attributes['updated_at'] ? Carbon::parse($this->attributes['updated_at']) : null;
     }
 
-    public function getProducts(): array
+    public function getProducts()
     {
-        return $this->attributes['products'] ?? [];
-    }
-
-    public function setProducts(array $products): void
-    {
-        $this->attributes['products'] = $products;
+        return Product::where('product_category_id', $this->getId())->get();
     }
 
     // relationships

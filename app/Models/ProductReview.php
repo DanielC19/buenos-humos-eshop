@@ -89,7 +89,7 @@ class ProductReview extends Model
 
     public function getProduct(): Product
     {
-        return $this->product;
+        return Product::find($this->getProductId());
     }
 
     public function setProduct(Product $product): void
@@ -99,7 +99,7 @@ class ProductReview extends Model
 
     public function getUser(): User
     {
-        return $this->user;
+        return User::find($this->getUserId());
     }
 
     public function setUser(User $user): void
