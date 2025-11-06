@@ -56,6 +56,11 @@ class Order extends Model
 
     // setters & getters
 
+    public function getId(): int
+    {
+        return $this->attributes['id'];
+    }
+
     public function getStatus(): string
     {
         return $this->attributes['status'];
@@ -129,6 +134,16 @@ class Order extends Model
     public function getOrderedProducts()
     {
         return $this->orderedProducts;
+    }
+
+    public function getCreatedAt(): ?Carbon
+    {
+        return $this->attributes['created_at'] ? Carbon::parse($this->attributes['created_at']) : null;
+    }
+
+    public function getUpdatedAt(): ?Carbon
+    {
+        return $this->attributes['updated_at'] ? Carbon::parse($this->attributes['updated_at']) : null;
     }
 
     // utils

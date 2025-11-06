@@ -48,6 +48,11 @@ class OrderedProduct extends Model
 
     // setters & getters
 
+    public function getId(): int
+    {
+        return $this->attributes['id'];
+    }
+
     public function getAmount(): int
     {
         return $this->attributes['amount'];
@@ -106,6 +111,16 @@ class OrderedProduct extends Model
     public function setProduct(Product $product): void
     {
         $this->product()->associate($product);
+    }
+
+    public function getCreatedAt(): ?Carbon
+    {
+        return $this->attributes['created_at'] ? Carbon::parse($this->attributes['created_at']) : null;
+    }
+
+    public function getUpdatedAt(): ?Carbon
+    {
+        return $this->attributes['updated_at'] ? Carbon::parse($this->attributes['updated_at']) : null;
     }
 
     // relationships

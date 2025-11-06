@@ -37,6 +37,11 @@ class Post extends Model
 
     // setters & getters
 
+    public function getId(): int
+    {
+        return $this->attributes['id'];
+    }
+
     public function getTitle(): string
     {
         return $this->attributes['title'];
@@ -65,6 +70,16 @@ class Post extends Model
     public function setCategory(PostCategory $category): void
     {
         $this->attributes['category'] = $category;
+    }
+
+    public function getCreatedAt(): ?Carbon
+    {
+        return $this->attributes['created_at'] ? Carbon::parse($this->attributes['created_at']) : null;
+    }
+
+    public function getUpdatedAt(): ?Carbon
+    {
+        return $this->attributes['updated_at'] ? Carbon::parse($this->attributes['updated_at']) : null;
     }
 
     protected function casts(): array

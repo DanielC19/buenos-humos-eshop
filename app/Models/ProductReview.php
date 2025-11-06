@@ -42,6 +42,11 @@ class ProductReview extends Model
 
     // setters & getters
 
+    public function getId(): int
+    {
+        return $this->attributes['id'];
+    }
+
     public function getScore(): int
     {
         return $this->attributes['score'];
@@ -100,6 +105,16 @@ class ProductReview extends Model
     public function setUser(User $user): void
     {
         $this->user()->associate($user);
+    }
+
+    public function getCreatedAt(): ?Carbon
+    {
+        return $this->attributes['created_at'] ? Carbon::parse($this->attributes['created_at']) : null;
+    }
+
+    public function getUpdatedAt(): ?Carbon
+    {
+        return $this->attributes['updated_at'] ? Carbon::parse($this->attributes['updated_at']) : null;
     }
 
     // relationships

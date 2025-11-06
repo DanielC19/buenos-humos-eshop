@@ -60,6 +60,11 @@ class User extends Authenticatable
 
     // setters & getters
 
+    public function getId(): int
+    {
+        return $this->attributes['id'];
+    }
+
     public function getName(): string
     {
         return $this->attributes['name'];
@@ -123,6 +128,16 @@ class User extends Authenticatable
     public function getProductReviews()
     {
         return $this->productReviews;
+    }
+
+    public function getCreatedAt(): ?Carbon
+    {
+        return $this->attributes['created_at'] ? Carbon::parse($this->attributes['created_at']) : null;
+    }
+
+    public function getUpdatedAt(): ?Carbon
+    {
+        return $this->attributes['updated_at'] ? Carbon::parse($this->attributes['updated_at']) : null;
     }
 
     // utils
