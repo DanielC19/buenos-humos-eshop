@@ -9,7 +9,7 @@
                     <h2 class="mb-0">{{ __('Create Product') }}</h2>
                     <p class="text-muted mb-0">{{ __('Add a new product to the inventory') }}</p>
                 </div>
-                <a href="{{ route('admin.product.index') }}" class="btn btn-outline-secondary">
+                <a href="{{ route('admin.products.index') }}" class="btn btn-outline-secondary">
                     <i class="fas fa-arrow-left me-2"></i>{{ __('Back to Products') }}
                 </a>
             </div>
@@ -18,7 +18,7 @@
 
     <div class="row">
         <div class="col-lg-8">
-            <form action="{{ route('admin.product.store') }}" method="POST">
+            <form action="{{ route('admin.products.store') }}" method="POST">
                 @csrf
                 <div class="card">
                     <div class="card-header">

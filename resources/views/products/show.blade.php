@@ -47,7 +47,7 @@
 
                         <!-- Add to Cart Form -->
                         <div class="cart-section mb-4">
-                            <form action="{{ route('product.cart.add') }}" method="POST" class="d-flex align-items-center gap-3">
+                            <form action="{{ route('cart.add') }}" method="POST" class="d-flex align-items-center gap-3">
                                 @csrf
                                 <div class="quantity-selector">
                                     <label for="quantity" class="form-label">{{ __('Quantity') }}</label>

@@ -32,10 +32,10 @@
                         <a class="nav-link" href="{{ route('home.index') }}">{{ __('Home') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('product.index') }}">{{ __('Products') }}</a>
+                        <a class="nav-link" href="{{ route('products.index') }}">{{ __('Products') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('product.cart') }}">{{ __('Cart') }}</a>
+                        <a class="nav-link" href="{{ route('cart.index') }}">{{ __('Cart') }}</a>
                     </li>
                     @auth
                         <li class="nav-item dropdown ms-5">

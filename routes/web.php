@@ -14,7 +14,7 @@ Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
-Route::get('product-category/{category_id}', [ProductCategoryController::class, 'show'])->name('product-category.show');
+Route::get('product-categories/{category_id}', [ProductCategoryController::class, 'show'])->name('product-categories.show');
 
 Route::prefix('products')->name('products.')->group(function () {
     Route::get('/', [ProductController::class, 'index'])->name('index');
