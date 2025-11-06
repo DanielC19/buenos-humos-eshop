@@ -96,19 +96,4 @@
             </div>
         </div>
     </section>
-
-    <!-- Related Products -->
-    <section class="py-5 bg-light">
-        <div class="container">
-            <h3 class="text-center section-title mb-4">{{ __('Related Products') }}</h3>
-            <div class="row">
-                <!-- Placeholder for related products - you can add this functionality later -->
-                <div class="col-12 text-center">
-                    <a href="{{ route('product.index') }}" class="btn btn-outline-primary">
-                        {{ __('View All Products') }}
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
 @endsection
