@@ -66,26 +66,6 @@ class Product extends Model
         ];
     }
 
-    public static function searchAndOrder(?string $search = null, ?string $mostSold = null, ?int $pagination = 20): LengthAwarePaginator
-    {
-        $query = self::query();
-
-        if ($search) {
-            $query->where('name', 'like', "%$search%")
-                ->orWhere('description', 'like', "%$search%")
-                ->orWhere('brand', 'like', "%$search%");
-        }
-
-        if ($mostSold) {
-            $query->withCount('orderedProducts')
-                ->orderByDesc('ordered_products_count');
-        } else {
-            $query->orderBy('name');
-        }
-
-        return $query->paginate($pagination);
-    }
-
     // setters & getters
 
     public function getId(): int
@@ -204,6 +184,26 @@ class Product extends Model
     }
 
     // utils
+
+    public static function searchAndOrder(?string $search = null, ?string $mostSold = null, ?int $pagination = 20): LengthAwarePaginator
+    {
+        $query = self::query();
+
+        if ($search) {
+            $query->where('name', 'like', "%$search%")
+                ->orWhere('description', 'like', "%$search%")
+                ->orWhere('brand', 'like', "%$search%");
+        }
+
+        if ($mostSold) {
+            $query->withCount('orderedProducts')
+                ->orderByDesc('ordered_products_count');
+        } else {
+            $query->orderBy('name');
+        }
+
+        return $query->paginate($pagination);
+    }
 
     public function checkStock(int $quantity = 1): bool
     {

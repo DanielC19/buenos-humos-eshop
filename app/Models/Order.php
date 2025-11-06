@@ -9,6 +9,8 @@ use app\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Author: Daniel Arango
@@ -55,11 +57,6 @@ class Order extends Model
             'paymentId' => ['required', 'string', 'max:255'],
             'user' => ['required', 'integer', 'exists:users,id'],
         ];
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
     }
 
     // setters & getters
@@ -163,7 +160,12 @@ class Order extends Model
 
     // relationships
 
-    protected function orderedProducts()
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function orderedProducts(): HasMany
     {
         return $this->hasMany(OrderedProduct::class);
     }
