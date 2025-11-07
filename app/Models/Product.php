@@ -68,11 +68,6 @@ class Product extends Model
 
     // setters & getters
 
-    public function checkStock(int $quantity = 1): bool
-    {
-        return $this->getStock() >= $quantity;
-    }
-
     public function getId(): int
     {
         return $this->attributes['id'];
