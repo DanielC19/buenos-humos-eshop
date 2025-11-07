@@ -47,7 +47,7 @@
 
                         <!-- Add to Cart Form -->
                         <div class="cart-section mb-4">
-                            <form action="{{ route('product.cart.add') }}" method="POST" class="d-flex align-items-center gap-3">
+                            <form action="{{ route('cart.add') }}" method="POST" class="d-flex align-items-center gap-3">
                                 @csrf
                                 <div class="quantity-selector">
                                     <label for="quantity" class="form-label">{{ __('Quantity') }}</label>
@@ -92,21 +92,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Related Products -->
-    <section class="py-5 bg-light">
-        <div class="container">
-            <h3 class="text-center section-title mb-4">{{ __('Related Products') }}</h3>
-            <div class="row">
-                <!-- Placeholder for related products - you can add this functionality later -->
-                <div class="col-12 text-center">
-                    <a href="{{ route('product.index') }}" class="btn btn-outline-primary">
-                        {{ __('View All Products') }}
-                    </a>
                 </div>
             </div>
         </div>

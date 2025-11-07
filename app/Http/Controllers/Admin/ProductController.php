@@ -18,7 +18,7 @@ class ProductController extends Controller
         $viewData = [];
         $viewData['products'] = Product::all();
 
-        return view('admin.product.index')->with('viewData', $viewData);
+        return view('admin.products.index')->with('viewData', $viewData);
     }
 
     public function create(): View
@@ -26,7 +26,7 @@ class ProductController extends Controller
         $viewData = [];
         $viewData['categories'] = ProductCategory::all();
 
-        return view('admin.product.create')->with('viewData', $viewData);
+        return view('admin.products.create')->with('viewData', $viewData);
     }
 
     public function destroy(int $product_id): RedirectResponse
@@ -34,7 +34,7 @@ class ProductController extends Controller
         $product = Product::findOrFail($product_id);
         $product->delete();
 
-        return redirect()->route('admin.product.index');
+        return redirect()->route('admin.products.index');
     }
 
     public function edit(int $product_id): View
@@ -43,7 +43,7 @@ class ProductController extends Controller
         $viewData['categories'] = ProductCategory::all();
         $viewData['product'] = Product::findOrFail($product_id);
 
-        return view('admin.product.edit')->with('viewData', $viewData);
+        return view('admin.products.edit')->with('viewData', $viewData);
     }
 
     public function store(Request $request): RedirectResponse
@@ -52,7 +52,7 @@ class ProductController extends Controller
         $productData['price'] = $productData['price'] * 100;
         Product::create($productData);
 
-        return redirect()->route('admin.product.index');
+        return redirect()->route('admin.products.index');
     }
 
     public function update(Request $request, int $product_id): RedirectResponse
@@ -62,6 +62,6 @@ class ProductController extends Controller
         $product = Product::findOrFail($product_id);
         $product->update($productData);
 
-        return redirect()->route('admin.product.index');
+        return redirect()->route('admin.products.index');
     }
 }

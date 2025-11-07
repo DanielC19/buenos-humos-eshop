@@ -10,7 +10,7 @@
                         <h1 class="display-4 fw-bold mb-4">{{ __('Welcome to Buenos Humos') }}</h1>
                         <p class="lead mb-4">{{ __('Your trusted smoke shop with the best smoking products and accessories. Premium quality, fair prices, and fast shipping.') }}</p>
                         <div class="d-flex gap-3 flex-wrap">
-                            <a href="{{ route('product.index') }}" class="btn btn-primary-custom">
+                            <a href="{{ route('products.index') }}" class="btn btn-primary-custom">
                                 <i class="fas fa-shopping-bag me-2"></i>{{ __('See Products') }}
                             </a>
                         </div>
@@ -32,7 +32,7 @@
             <div class="row">
                 @foreach($viewData['categories'] as $category)
                     <div class="col-lg-3 col-md-6 mb-4">
-                        <a href="{{ route('product-category.show', $category->getId()) }}">
+                        <a href="{{ route('product-categories.show', $category->getId()) }}">
                             <div class="category-card">
                                 <div class="category-icon">
                                     <i class="fas fa-leaf"></i>
@@ -57,7 +57,7 @@
             <div class="row">
                 @foreach($viewData['products'] as $product)
                     <div class="col-lg-3 col-md-6 mb-4">
-                        <a href="{{ route('product.show', $product->getId()) }}">
+                        <a href="{{ route('products.show', $product->getId()) }}">
                             <div class="product-card">
                                 <div class="product-image">
                                     @if($product->getImage())
@@ -85,7 +85,7 @@
                 @endforeach
             </div>
             <div class="text-center mt-4">
-                <a href="{{ route('product.index') }}" class="btn btn-primary-custom">
+                <a href="{{ route('products.index') }}" class="btn btn-primary-custom">
                     {{ __('All Products') }}
                 </a>
             </div>

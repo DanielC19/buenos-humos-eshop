@@ -18,6 +18,6 @@ class ProductCategoryController extends Controller
         $viewData['category'] = $category;
         $viewData['products'] = $products;
 
-        return view('product-category.show')->with('viewData', $viewData);
+        return view('product-categories.show')->with('viewData', $viewData);
     }
 }

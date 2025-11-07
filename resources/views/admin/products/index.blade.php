@@ -4,7 +4,7 @@
 <div class="container py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="mb-0">{{ __('Products Management') }}</h2>
-        <a href="{{ route('admin.product.create') }}" class="btn btn-primary">
+        <a href="{{ route('admin.products.create') }}" class="btn btn-primary">
             <i class="fas fa-plus me-2"></i>{{ __('Add Product') }}
         </a>
     </div>
@@ -15,7 +15,7 @@
                 <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
                 <h4 class="text-muted">{{ __('No products found') }}</h4>
                 <p class="text-muted">{{ __('Start by creating your first product.') }}</p>
-                <a href="{{ route('admin.product.create') }}" class="btn btn-primary">
+                <a href="{{ route('admin.products.create') }}" class="btn btn-primary">
                     <i class="fas fa-plus me-2"></i>{{ __('Create Product') }}
                 </a>
             </div>
@@ -107,10 +107,10 @@
                                     </td>
                                     <td>
                                         <div class="btn-group btn-group-sm">
-                                            <a href="{{ route('admin.product.edit', $product->getId()) }}" class="btn btn-outline-primary" title="{{ __('Edit') }}">
+                                            <a href="{{ route('admin.products.edit', $product->getId()) }}" class="btn btn-outline-primary" title="{{ __('Edit') }}">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <form action="{{ route('admin.product.destroy', $product->getId()) }}"
+                                            <form action="{{ route('admin.products.destroy', $product->getId()) }}"
                                                   method="POST"
                                                   style="display: inline;">
                                                 @csrf

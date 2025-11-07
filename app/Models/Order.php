@@ -67,11 +67,6 @@ class Order extends Model
         return $this->attributes['id'];
     }
 
-    public function getId(): int
-    {
-        return $this->attributes['id'];
-    }
-
     public function getStatus(): string
     {
         return $this->attributes['status'];
