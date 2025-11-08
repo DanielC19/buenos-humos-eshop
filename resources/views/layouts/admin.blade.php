@@ -35,7 +35,7 @@
                         </a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a id="adminDropdown" class="nav-link dropdown-toggle" href="#" role="button" 
+                        <a id="adminDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-user-circle me-1"></i>{{ Auth::user()->getName() }}
                         </a>
@@ -66,51 +66,51 @@
                 </h5>
             </div>
             <nav class="sidebar-nav">
-                <a href="{{ route('admin.index') }}" 
+                <a href="{{ route('admin.index') }}"
                    class="sidebar-link {{ request()->routeIs('admin.index') ? 'active' : '' }}">
                     <i class="fas fa-home"></i>
                     <span>{{ __('Overview') }}</span>
                 </a>
-                
+
                 <div class="sidebar-divider">
                     <span>{{ __('Catalog') }}</span>
                 </div>
-                
-                <a href="{{ route('admin.product-categories.index') }}" 
+
+                <a href="{{ route('admin.product-categories.index') }}"
                    class="sidebar-link {{ request()->routeIs('admin.product-categories.*') ? 'active' : '' }}">
                     <i class="fas fa-folder"></i>
                     <span>{{ __('Categories') }}</span>
                 </a>
-                
-                <a href="{{ route('admin.products.index') }}" 
+
+                <a href="{{ route('admin.products.index') }}"
                    class="sidebar-link {{ request()->routeIs('admin.products.*') ? 'active' : '' }}">
                     <i class="fas fa-box"></i>
                     <span>{{ __('Products') }}</span>
                 </a>
-                
+
                 <div class="sidebar-divider">
                     <span>{{ __('Sales') }}</span>
                 </div>
-                
+
                 <a href="#" class="sidebar-link">
                     <i class="fas fa-shopping-cart"></i>
                     <span>{{ __('Orders') }}</span>
                 </a>
-                
+
                 <a href="#" class="sidebar-link">
                     <i class="fas fa-users"></i>
                     <span>{{ __('Customers') }}</span>
                 </a>
-                
+
                 <div class="sidebar-divider">
                     <span>{{ __('Content') }}</span>
                 </div>
-                
+
                 <a href="#" class="sidebar-link">
                     <i class="fas fa-star"></i>
                     <span>{{ __('Reviews') }}</span>
                 </a>
-                
+
                 <a href="#" class="sidebar-link">
                     <i class="fas fa-newspaper"></i>
                     <span>{{ __('Posts') }}</span>
@@ -123,14 +123,14 @@
             @if(session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{{ __('Close') }}"></button>
                 </div>
             @endif
 
             @if(session('error'))
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <i class="fas fa-exclamation-circle me-2"></i>{{ session('error') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{{ __('Close') }}"></button>
                 </div>
             @endif
 
@@ -143,7 +143,7 @@
                             <li>{{ $error }}</li>
                         @endforeach
                     </ul>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{{ __('Close') }}"></button>
                 </div>
             @endif
 
