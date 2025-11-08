@@ -4,9 +4,7 @@
     <section class="py-5">
         <div class="container">
             <!-- Breadcrumb -->
-            <x-breadcrumb :items="[
-                ['label' => __('Products'), 'url' => '#']
-            ]" />
+            <x-breadcrumb :items="$viewData['breadcrumbs']" />
 
             <!-- Simple Search and Filter -->
             <div class="row mb-4">

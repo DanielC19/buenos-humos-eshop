@@ -122,16 +122,16 @@ class User extends Authenticatable
         return $this->attributes['birthdate'];
     }
 
+    public function setBirthdate(string $birthdate): void
+    {
+        $this->attributes['birthdate'] = $birthdate;
+    }
+
     public function getRole(): UserRole
     {
         $role = $this->attributes['role'];
 
         return $role instanceof UserRole ? $role : UserRole::from($role);
-    }
-
-    public function setBirthdate(string $birthdate): void
-    {
-        $this->attributes['birthdate'] = $birthdate;
     }
 
     public function setRole(UserRole $role): void

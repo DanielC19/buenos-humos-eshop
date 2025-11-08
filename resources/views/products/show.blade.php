@@ -5,11 +5,7 @@
     <section class="py-5">
         <div class="container">
             <!-- Breadcrumb -->
-            <x-breadcrumb :items="[
-                ['label' => __('Products'), 'url' => route('products.index')],
-                ['label' => $viewData['product']->getProductCategory()->getName(), 'url' => route('product-categories.show', ['category_id' => $viewData['product']->getProductCategory()->getId()])],
-                ['label' => $viewData['product']->getName(), 'url' => '#']
-            ]" />
+            <x-breadcrumb :items="$viewData['breadcrumbs']" />
 
             @if(session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">

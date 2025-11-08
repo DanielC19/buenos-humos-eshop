@@ -8,10 +8,7 @@
                 <div class="col-lg-8">
                     <div class="hero-content">
                         <!-- Breadcrumb -->
-                        <x-breadcrumb :items="[
-                            ['label' => __('Products'), 'url' => route('products.index')],
-                            ['label' => $viewData['category']->getName(), 'url' => '#']
-                        ]" />
+                        <x-breadcrumb :items="$viewData['breadcrumbs']" />
                         <h1 class="display-4 fw-bold mb-4">{{ $viewData['category']->getName() }}</h1>
                         <p class="lead mb-4">{{ $viewData['category']->getDescription() }}</p>
                         <div class="d-flex align-items-center gap-3">
