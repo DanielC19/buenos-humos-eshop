@@ -16,7 +16,7 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-12">
             <form action="{{ route('admin.products.update', $viewData['product']->getId()) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
@@ -169,109 +169,6 @@
                     </div>
                 </div>
             </form>
-        </div>
-
-        <div class="col-lg-4">
-            <div class="card">
-                <div class="card-header">
-                    <h6 class="mb-0">{{ __('Product Details') }}</h6>
-                </div>
-                <div class="card-body">
-                    <div class="mb-3">
-                        <h6 class="text-primary">{{ __('Product ID') }}</h6>
-                        <span class="badge bg-light text-dark">{{ $viewData['product']->getId() }}</span>
-                    </div>
-                    <div class="mb-3">
-                        <h6 class="text-primary">{{ __('Current Name') }}</h6>
-                        <p class="mb-0">{{ $viewData['product']->getName() }}</p>
-                    </div>
-                    <div class="mb-3">
-                        <h6 class="text-primary">{{ __('Current SKU') }}</h6>
-                        <code class="bg-light px-2 py-1 rounded">{{ $viewData['product']->getSku() }}</code>
-                    </div>
-                    <div class="mb-3">
-                        <h6 class="text-primary">{{ __('Current Price') }}</h6>
-                        <span class="text-success fw-bold">${{ number_format($viewData['product']->getPrice() / 100, 2) }}</span>
-                    </div>
-                    <div class="mb-3">
-                        <h6 class="text-primary">{{ __('Current Stock') }}</h6>
-                        <span class="badge {{ $viewData['product']->getStock() > 0 ? 'bg-success' : 'bg-danger' }}">
-                            {{ $viewData['product']->getStock() }}
-                        </span>
-                    </div>
-                    <div class="mb-3">
-                        <h6 class="text-primary">{{ __('Created') }}</h6>
-                        <small class="text-muted">
-                            @if($viewData['product']->getCreatedAt())
-                                {{ $viewData['product']->getCreatedAt()->format('M d, Y \a\t H:i') }}
-                            @else
-                                {{ __('N/A') }}
-                            @endif
-                        </small>
-                    </div>
-                    <div class="mb-0">
-                        <h6 class="text-primary">{{ __('Last Updated') }}</h6>
-                        <small class="text-muted">
-                            @if($viewData['product']->getUpdatedAt())
-                                {{ $viewData['product']->getUpdatedAt()->format('M d, Y \a\t H:i') }}
-                            @else
-                                {{ __('N/A') }}
-                            @endif
-                        </small>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card mt-3">
-                <div class="card-header">
-                    <h6 class="mb-0">{{ __('Guidelines') }}</h6>
-                </div>
-                <div class="card-body">
-                    <div class="mb-3">
-                        <h6 class="text-primary">{{ __('Product Name') }}</h6>
-                        <small class="text-muted">{{ __('Use clear, descriptive names that customers can easily search for.') }}</small>
-                    </div>
-                    <div class="mb-3">
-                        <h6 class="text-primary">{{ __('SKU Format') }}</h6>
-                        <small class="text-muted">{{ __('Keep the same format when editing. Example: PRD-001, SMOKE-PIPE-01') }}</small>
-                    </div>
-                    <div class="mb-3">
-                        <h6 class="text-primary">{{ __('Price Input') }}</h6>
-                        <small class="text-muted">{{ __('Enter the price in dollars (e.g., enter 20.99 for $20.99). The system will automatically convert to cents for storage.') }}</small>
-                    </div>
-                    <div class="mb-3">
-                        <h6 class="text-primary">{{ __('Price Input') }}</h6>
-                        <small class="text-muted">{{ __('Enter the price in dollars (e.g., enter 20.99 for $20.99). The system will automatically convert to cents for storage.') }}</small>
-                    </div>
-                    <div class="mb-3">
-                        <h6 class="text-primary">{{ __('Image Guidelines') }}</h6>
-                        <small class="text-muted">{{ __('Use direct image URLs from reliable sources. Make sure the URL ends with .jpg, .png, or .gif and is publicly accessible.') }}</small>
-                    </div>
-                    <div class="mb-0">
-                        <h6 class="text-primary">{{ __('Stock Management') }}</h6>
-                        <small class="text-muted">{{ __('Update stock levels carefully to prevent overselling.') }}</small>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card mt-3">
-                <div class="card-header bg-danger text-white">
-                    <h6 class="mb-0">{{ __('Danger Zone') }}</h6>
-                </div>
-                <div class="card-body">
-                    <p class="text-muted small mb-3">{{ __('Once you delete a product, there is no going back. Please be certain.') }}</p>
-                    <form action="{{ route('admin.products.destroy', $viewData['product']->getId()) }}"
-                          method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit"
-                                class="btn btn-danger btn-sm w-100"
-                                onclick="return confirm('{{ __('Are you sure you want to delete this product? This action cannot be undone.') }}')">
-                            <i class="fas fa-trash me-2"></i>{{ __('Delete Product') }}
-                        </button>
-                    </form>
-                </div>
-            </div>
         </div>
     </div>
 </div>
