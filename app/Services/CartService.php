@@ -20,15 +20,15 @@ class CartService
         $this->products = $products;
     }
 
-    public function calculateSubtotal(): float
+    public function calculateSubtotal(): int
     {
-        $subtotal = 0.0;
+        $subtotal = 0;
 
         foreach ($this->products as $product) {
             $productId = $product->getId();
             if (isset($this->cartProducts[$productId])) {
                 $quantity = $this->cartProducts[$productId];
-                $productPrice = $product->getPrice() * $quantity;
+                $productPrice = intval($product->getPrice() * $quantity);
                 $subtotal += $productPrice;
             }
         }
@@ -36,14 +36,14 @@ class CartService
         return $subtotal;
     }
 
-    public function calculateTax(): float
+    public function calculateTax(): int
     {
         $subtotal = $this->calculateSubtotal();
 
-        return $subtotal * (self::$TAX_PERCENTAGE / 100);
+        return intval($subtotal * (self::$TAX_PERCENTAGE / 100));
     }
 
-    public function calculateTotal(): float
+    public function calculateTotal(): int
     {
         $subtotal = $this->calculateSubtotal();
         $tax = $this->calculateTax();

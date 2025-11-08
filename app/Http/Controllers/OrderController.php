@@ -48,6 +48,10 @@ class OrderController extends Controller
             $product->save();
         }
 
+        $newBalance = $request->user()->getBalance() - $order->getTotal();
+        $request->user()->setBalance($newBalance);
+        $request->user()->save();
+
         session()->forget('cart');
 
         $viewData = [];

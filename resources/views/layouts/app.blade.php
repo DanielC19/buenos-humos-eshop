@@ -58,6 +58,10 @@
                                     <div class="dropdown-divider"></div>
                                 @endif
 
+                                <p class="dropdown-item">
+                                    {{ __('Balance') }}: <span class="text-success fw-bold">${{ number_format(Auth::user()->getBalance(), 2) }}</span>
+                                </p>
+
                                 <a class="dropdown-item" onclick="document.getElementById('logout-form').submit();">
                                     <i class="fas fa-sign-out-alt me-2"></i>{{ __('Logout') }}
                                 </a>

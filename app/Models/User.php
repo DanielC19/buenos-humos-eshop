@@ -40,6 +40,7 @@ class User extends Authenticatable
         'phone',
         'birthdate',
         'role',
+        'balance',
         'password',
     ];
 
@@ -136,6 +137,16 @@ class User extends Authenticatable
     public function setRole(UserRole $role): void
     {
         $this->attributes['role'] = $role;
+    }
+
+    public function getBalance(): int
+    {
+        return $this->attributes['balance'];
+    }
+
+    public function setBalance(int $balance): void
+    {
+        $this->attributes['balance'] = $balance;
     }
 
     public function getProductReviews(): Collection
