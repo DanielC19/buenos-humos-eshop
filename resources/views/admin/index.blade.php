@@ -47,8 +47,7 @@
     </div>
 
     <!-- Quick Actions -->
-
-        <div class="card">
+    <div class="card">
         <div class="card-header">
             <h5 class="mb-0">{{ __('Quick Actions') }}</h5>
         </div>
