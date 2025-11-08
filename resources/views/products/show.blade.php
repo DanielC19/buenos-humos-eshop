@@ -47,19 +47,23 @@
 
                         <!-- Add to Cart Form -->
                         <div class="cart-section mb-4">
-                            <form action="{{ route('cart.add') }}" method="POST" class="d-flex align-items-center gap-3">
-                                @csrf
-                                <div class="quantity-selector">
-                                    <label for="quantity" class="form-label">{{ __('Quantity') }}</label>
-                                    <input type="number" class="form-control" id="quantity" name="quantity" value="1" min="1">
-                                </div>
-                                <div class="add-to-cart-btn">
-                                    <input type="hidden" name="productId" value="{{ $viewData['product']->getId() }}">
-                                    <button type="submit" class="btn btn-primary-custom btn-lg">
-                                        <i class="fas fa-cart-plus me-2"></i>{{ __('Add to Cart') }}
-                                    </button>
-                                </div>
-                            </form>
+                            @if ($viewData['product']->getStock() === 0)
+                                {{ __('Out of Stock :(') }}
+                            @else
+                                <form action="{{ route('cart.add') }}" method="POST" class="d-flex align-items-center gap-3">
+                                    @csrf
+                                    <div class="quantity-selector">
+                                        <label for="quantity" class="form-label">{{ __('Quantity') }}</label>
+                                        <input type="number" class="form-control" id="quantity" name="quantity" value="1" min="1">
+                                    </div>
+                                    <div class="add-to-cart-btn">
+                                        <input type="hidden" name="productId" value="{{ $viewData['product']->getId() }}">
+                                        <button type="submit" class="btn btn-primary-custom btn-lg">
+                                            <i class="fas fa-cart-plus me-2"></i>{{ __('Add to Cart') }}
+                                        </button>
+                                    </div>
+                                </form>
+                            @endif
                         </div>
 
                         <!-- Product Features -->
