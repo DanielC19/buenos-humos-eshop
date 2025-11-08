@@ -37,8 +37,10 @@
                                         <p class="text-muted small">{{ $product->getDescription() }}</p>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <span class="price">${{ number_format($product->getPrice(), 2) }}</span>
-                                            <form action="#" method="POST" class="d-inline">
+                                            <form action="{{ route('cart.add') }}" method="POST" class="d-inline">
                                                 @csrf
+                                                <input type="hidden" name="productId" value="{{ $product->getId() }}">
+                                                <input type="hidden" name="quantity" value="1">
                                                 <button type="submit" class="btn btn-sm btn-primary-custom">
                                                     <i class="fas fa-cart-plus"></i>
                                                 </button>
