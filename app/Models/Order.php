@@ -107,6 +107,16 @@ class Order extends Model
         $this->attributes['shipping'] = $shipping;
     }
 
+    public function getTotal(): int
+    {
+        return $this->attributes['total'];
+    }
+
+    public function setTotal(int $total): void
+    {
+        $this->attributes['total'] = $total;
+    }
+
     public function getPaymentId(): string
     {
         return $this->attributes['payment_id'];
@@ -150,13 +160,6 @@ class Order extends Model
     public function getUpdatedAt(): ?Carbon
     {
         return $this->attributes['updated_at'] ? Carbon::parse($this->attributes['updated_at']) : null;
-    }
-
-    // utils
-
-    public function getTotal(): int
-    {
-        return $this->attributes['subtotal'] + $this->attributes['tax'] + $this->attributes['shipping'];
     }
 
     // relationships

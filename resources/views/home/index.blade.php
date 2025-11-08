@@ -56,32 +56,7 @@
             <h2 class="text-center section-title">{{ __('Featured Products') }}</h2>
             <div class="row">
                 @foreach($viewData['products'] as $product)
-                    <div class="col-lg-3 col-md-6 mb-4">
-                        <a href="{{ route('products.show', $product->getId()) }}">
-                            <div class="product-card">
-                                <div class="product-image">
-                                    @if($product->getImage())
-                                        <img src="{{ $product->getImage() }}" alt="{{ $product->getName() }}" class="img-fluid">
-                                    @else
-                                        <i class="fas fa-leaf"></i>
-                                    @endif
-                                </div>
-                                <div class="p-3">
-                                    <h6>{{ $product->getName() }}</h6>
-                                    <p class="text-muted small">{{ $product->getDescription() }}</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span class="price">${{ number_format($product->getPrice(), 2) }}</span>
-                                        <form action="#" method="POST" class="d-inline">
-                                            @csrf
-                                            <button type="submit" class="btn btn-sm btn-primary-custom">
-                                                <i class="fas fa-cart-plus"></i>
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
+                    <x-product-item :product="$product" />
                 @endforeach
             </div>
             <div class="text-center mt-4">
