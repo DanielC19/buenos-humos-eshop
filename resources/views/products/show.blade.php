@@ -4,6 +4,13 @@
     <!-- Product Details -->
     <section class="py-5">
         <div class="container">
+            <!-- Breadcrumb -->
+            <x-breadcrumb :items="[
+                ['label' => __('Products'), 'url' => route('products.index')],
+                ['label' => $viewData['product']->getProductCategory()->getName(), 'url' => route('product-categories.show', ['category_id' => $viewData['product']->getCategory()->getId()])],
+                ['label' => $viewData['product']->getName(), 'url' => '#']
+            ]" />
+
             @if(session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     {{ session('success') }}
