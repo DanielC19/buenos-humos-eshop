@@ -3,6 +3,9 @@
 @section('content')
     <section class="py-5">
         <div class="container">
+            <!-- Breadcrumb -->
+            <x-breadcrumb :items="$viewData['breadcrumbs']" />
+
             <!-- Simple Search and Filter -->
             <div class="row mb-4">
                 <div class="col-md-8">

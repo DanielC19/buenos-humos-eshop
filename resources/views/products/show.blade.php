@@ -4,6 +4,9 @@
     <!-- Product Details -->
     <section class="py-5">
         <div class="container">
+            <!-- Breadcrumb -->
+            <x-breadcrumb :items="$viewData['breadcrumbs']" />
+
             @if(session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     {{ session('success') }}

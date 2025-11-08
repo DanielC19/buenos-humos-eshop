@@ -737,6 +737,77 @@ a {
     }
 }
 
+// Breadcrumb Styling
+.breadcrumb {
+    background-color: transparent;
+    padding: 0.75rem 0;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+
+    .breadcrumb-item {
+        color: #6b7280;
+        font-size: 0.875rem;
+        display: inline-flex;
+        align-items: center;
+
+        a {
+            color: var(--secondary-purple);
+            text-decoration: none;
+            transition: color 0.3s ease;
+
+            &:hover {
+                color: var(--primary-purple);
+                text-decoration: underline;
+            }
+
+            i {
+                margin-right: 0.25rem;
+            }
+        }
+
+        &.active {
+            color: var(--dark-purple);
+            font-weight: 500;
+        }
+
+        +.breadcrumb-item::before {
+            content: "›";
+            color: #d1d5db;
+            font-size: 0.875rem;
+            padding: 0 0.5rem;
+            line-height: 1;
+            display: inline-flex;
+            align-items: center;
+        }
+    }
+}
+
+// Breadcrumbs on hero/dark backgrounds
+.hero-section .breadcrumb {
+    .breadcrumb-item {
+        color: rgba(255, 255, 255, 0.8);
+
+        a {
+            color: var(--accent-green);
+            font-weight: 500;
+
+            &:hover {
+                color: white;
+                text-decoration: underline;
+            }
+        }
+
+        &.active {
+            color: white;
+            font-weight: 600;
+        }
+
+        +.breadcrumb-item::before {
+            color: rgba(255, 255, 255, 0.5);
+        }
+    }
+}
+
 @media (max-width: 768px) {
     .admin-content {
         padding: 1rem;

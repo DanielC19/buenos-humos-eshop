@@ -7,6 +7,8 @@
             <div class="row align-items-center">
                 <div class="col-lg-8">
                     <div class="hero-content">
+                        <!-- Breadcrumb -->
+                        <x-breadcrumb :items="$viewData['breadcrumbs']" />
                         <h1 class="display-4 fw-bold mb-4">{{ $viewData['category']->getName() }}</h1>
                         <p class="lead mb-4">{{ $viewData['category']->getDescription() }}</p>
                         <div class="d-flex align-items-center gap-3">
