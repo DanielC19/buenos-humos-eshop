@@ -168,11 +168,6 @@ class Product extends Model
         return ProductCategory::find($this->getCategoryId());
     }
 
-    public function getCategory(): ProductCategory
-    {
-        return $this->getProductCategory();
-    }
-
     public function setProductCategory(ProductCategory $productCategory): void
     {
         $this->productCategory()->associate($productCategory);

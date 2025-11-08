@@ -7,7 +7,7 @@
             <!-- Breadcrumb -->
             <x-breadcrumb :items="[
                 ['label' => __('Products'), 'url' => route('products.index')],
-                ['label' => $viewData['product']->getProductCategory()->getName(), 'url' => route('product-categories.show', ['category_id' => $viewData['product']->getCategory()->getId()])],
+                ['label' => $viewData['product']->getProductCategory()->getName(), 'url' => route('product-categories.show', ['category_id' => $viewData['product']->getProductCategory()->getId()])],
                 ['label' => $viewData['product']->getName(), 'url' => '#']
             ]" />
 

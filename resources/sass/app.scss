@@ -747,6 +747,8 @@ a {
     .breadcrumb-item {
         color: #6b7280;
         font-size: 0.875rem;
+        display: inline-flex;
+        align-items: center;
         
         a {
             color: var(--secondary-purple);
@@ -771,8 +773,11 @@ a {
         + .breadcrumb-item::before {
             content: "›";
             color: #d1d5db;
-            font-size: 1.25rem;
+            font-size: 0.875rem;
             padding: 0 0.5rem;
+            line-height: 1;
+            display: inline-flex;
+            align-items: center;
         }
     }
 }
