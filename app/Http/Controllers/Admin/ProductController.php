@@ -13,10 +13,22 @@ use Illuminate\View\View;
 
 class ProductController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
         $viewData = [];
-        $viewData['products'] = Product::all();
+        $search = $request->query('search');
+
+        if ($search) {
+            $viewData['products'] = Product::where('name', 'like', "%{$search}%")
+                ->orWhere('description', 'like', "%{$search}%")
+                ->orWhere('sku', 'like', "%{$search}%")
+                ->orWhere('brand', 'like', "%{$search}%")
+                ->get();
+        } else {
+            $viewData['products'] = Product::all();
+        }
+
+        $viewData['search'] = $search;
 
         return view('admin.products.index')->with('viewData', $viewData);
     }
