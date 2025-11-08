@@ -47,7 +47,7 @@
 
                         <!-- Add to Cart Form -->
                         <div class="cart-section mb-4">
-                            @if ($viewData['product']->getStock() === 0)
+                            @if (!$viewData['product']->checkStock())
                                 {{ __('Out of Stock :(') }}
                             @else
                                 <form action="{{ route('cart.add') }}" method="POST" class="d-flex align-items-center gap-3">
