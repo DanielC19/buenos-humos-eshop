@@ -121,14 +121,16 @@ class User extends Authenticatable
         return $this->attributes['birthdate'];
     }
 
+    public function getRole(): UserRole
+    {
+        $role = $this->attributes['role'];
+
+        return $role instanceof UserRole ? $role : UserRole::from($role);
+    }
+
     public function setBirthdate(string $birthdate): void
     {
         $this->attributes['birthdate'] = $birthdate;
-    }
-
-    public function getRole(): UserRole
-    {
-        return $this->attributes['role'];
     }
 
     public function setRole(UserRole $role): void
@@ -155,7 +157,7 @@ class User extends Authenticatable
 
     public function isAdmin(): bool
     {
-        return $this->role === UserRole::ADMIN;
+        return $this->getRole() === UserRole::ADMIN;
     }
 
     public function getFullName(): string
