@@ -16,7 +16,7 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-8">
             <form action="{{ route('admin.product-categories.update', $viewData['category']->getId()) }}" method="POST">
                 @csrf
                 @method('PUT')
@@ -64,6 +64,43 @@
                     </div>
                 </div>
             </form>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="mb-0">{{ __('Guidelines') }}</h6>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <h6 class="text-primary">{{ __('Category Name') }}</h6>
+                        <small class="text-muted">{{ __('Use clear, descriptive names that customers can easily understand.') }}</small>
+                    </div>
+                    <div class="mb-0">
+                        <h6 class="text-primary">{{ __('Description') }}</h6>
+                        <small class="text-muted">{{ __('Provide a detailed description of what products belong in this category.') }}</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-3">
+                <div class="card-header bg-danger text-white">
+                    <h6 class="mb-0">{{ __('Danger Zone') }}</h6>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted small mb-3">{{ __('Once you delete a category, there is no going back. Please be certain.') }}</p>
+                    <form action="{{ route('admin.product-categories.destroy', $viewData['category']->getId()) }}"
+                          method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit"
+                                class="btn btn-danger btn-sm w-100"
+                                onclick="return confirm('{{ __('Are you sure you want to delete this category? This action cannot be undone.') }}')">
+                            <i class="fas fa-trash me-2"></i>{{ __('Delete Category') }}
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>

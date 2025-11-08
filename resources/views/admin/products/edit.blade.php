@@ -16,7 +16,7 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-8">
             <form action="{{ route('admin.products.update', $viewData['product']->getId()) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
@@ -169,6 +169,55 @@
                     </div>
                 </div>
             </form>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="mb-0">{{ __('Guidelines') }}</h6>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <h6 class="text-primary">{{ __('Product Name') }}</h6>
+                        <small class="text-muted">{{ __('Use clear, descriptive names that customers can easily search for.') }}</small>
+                    </div>
+                    <div class="mb-3">
+                        <h6 class="text-primary">{{ __('SKU Format') }}</h6>
+                        <small class="text-muted">{{ __('Keep the same format when editing. Example: PRD-001, SMOKE-PIPE-01') }}</small>
+                    </div>
+                    <div class="mb-3">
+                        <h6 class="text-primary">{{ __('Price Input') }}</h6>
+                        <small class="text-muted">{{ __('Enter the price in dollars (e.g., enter 20.99 for $20.99). The system will automatically convert to cents for storage.') }}</small>
+                    </div>
+                    <div class="mb-3">
+                        <h6 class="text-primary">{{ __('Image Guidelines') }}</h6>
+                        <small class="text-muted">{{ __('Upload high-quality images. Accepted formats: JPEG, PNG, GIF, WebP. Max size: 2MB.') }}</small>
+                    </div>
+                    <div class="mb-0">
+                        <h6 class="text-primary">{{ __('Stock Management') }}</h6>
+                        <small class="text-muted">{{ __('Update stock levels carefully to prevent overselling.') }}</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-3">
+                <div class="card-header bg-danger text-white">
+                    <h6 class="mb-0">{{ __('Danger Zone') }}</h6>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted small mb-3">{{ __('Once you delete a product, there is no going back. Please be certain.') }}</p>
+                    <form action="{{ route('admin.products.destroy', $viewData['product']->getId()) }}"
+                          method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit"
+                                class="btn btn-danger btn-sm w-100"
+                                onclick="return confirm('{{ __('Are you sure you want to delete this product? This action cannot be undone.') }}')">
+                            <i class="fas fa-trash me-2"></i>{{ __('Delete Product') }}
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>
