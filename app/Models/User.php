@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Enums\UserRole;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -162,7 +163,10 @@ class User extends Authenticatable
         return $this->attributes['name'].' '.$this->attributes['lastname'];
     }
 
-    public static function customers()
+    /**
+     * @return Builder<User>
+     */
+    public static function customers(): Builder
     {
         return self::where('role', '!=', UserRole::ADMIN);
     }
