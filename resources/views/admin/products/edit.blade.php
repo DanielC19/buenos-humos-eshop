@@ -199,22 +199,6 @@
                             {{ $viewData['product']->getStock() }}
                         </span>
                     </div>
-                    @if($viewData['product']->getImage())
-                        <div class="mb-3">
-                            <h6 class="text-primary">{{ __('Current Image') }}</h6>
-                            <img src="{{ asset('storage/' . $viewData['product']->getImage()) }}"
-                                 alt="{{ $viewData['product']->getName() }}"
-                                 class="img-fluid rounded"
-                                 style="max-height: 200px;"
-                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                            <div style="display: none;" class="text-muted small">
-                                {{ __('Image failed to load') }}
-                            </div>
-                            <div class="mt-2">
-                                <small class="text-muted">{{ $viewData['product']->getImage() }}</small>
-                            </div>
-                        </div>
-                    @endif
                     <div class="mb-3">
                         <h6 class="text-primary">{{ __('Created') }}</h6>
                         <small class="text-muted">

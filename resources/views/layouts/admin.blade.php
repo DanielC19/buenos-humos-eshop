@@ -87,34 +87,6 @@
                     <i class="fas fa-box"></i>
                     <span>{{ __('Products') }}</span>
                 </a>
-
-                <div class="sidebar-divider">
-                    <span>{{ __('Sales') }}</span>
-                </div>
-
-                <a href="#" class="sidebar-link">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span>{{ __('Orders') }}</span>
-                </a>
-
-                <a href="#" class="sidebar-link">
-                    <i class="fas fa-users"></i>
-                    <span>{{ __('Customers') }}</span>
-                </a>
-
-                <div class="sidebar-divider">
-                    <span>{{ __('Content') }}</span>
-                </div>
-
-                <a href="#" class="sidebar-link">
-                    <i class="fas fa-star"></i>
-                    <span>{{ __('Reviews') }}</span>
-                </a>
-
-                <a href="#" class="sidebar-link">
-                    <i class="fas fa-newspaper"></i>
-                    <span>{{ __('Posts') }}</span>
-                </a>
             </nav>
         </aside>
 

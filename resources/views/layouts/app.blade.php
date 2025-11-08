@@ -38,7 +38,14 @@
                         <a class="nav-link" href="{{ route('cart.index') }}">{{ __('Cart') }}</a>
                     </li>
                     @auth
-                        <li class="nav-item dropdown ms-5">
+                        @if(Auth::user()->isAdmin())
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-sm btn-outline-primary ms-2" href="{{ route('admin.index') }}">
+                                    <i class="fas fa-shield-alt me-1"></i>{{ __('Admin Panel') }}
+                                </a>
+                            </li>
+                        @endif
+                        <li class="nav-item dropdown ms-3">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->getName() }}
                             </a>
@@ -46,12 +53,13 @@
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 @if(Auth::user()->isAdmin())
                                     <a class="dropdown-item" href="{{ route('admin.index') }}">
-                                        {{ __('Dashboard') }}
+                                        <i class="fas fa-tachometer-alt me-2"></i>{{ __('Dashboard') }}
                                     </a>
+                                    <div class="dropdown-divider"></div>
                                 @endif
 
                                 <a class="dropdown-item" onclick="document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
+                                    <i class="fas fa-sign-out-alt me-2"></i>{{ __('Logout') }}
                                 </a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

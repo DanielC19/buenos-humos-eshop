@@ -155,7 +155,7 @@ class User extends Authenticatable
 
     public function isAdmin(): bool
     {
-        return $this->attributes['role'] === UserRole::ADMIN;
+        return $this->role === UserRole::ADMIN;
     }
 
     public function getFullName(): string
