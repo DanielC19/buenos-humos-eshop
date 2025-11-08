@@ -6,13 +6,13 @@
             @if(session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{{ __('Close') }}"></button>
                 </div>
             @endif
             @if(session('error'))
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     {{ session('error') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{{ __('Close') }}"></button>
                 </div>
             @endif
             @if(!empty($viewData['cartProducts']) && count($viewData['products']) > 0)
@@ -26,7 +26,7 @@
                                         <div class="col-md-2">
                                             <div class="product-image-small">
                                                 @if($product->getImage())
-                                                    <img src="{{ $product->getImage() }}" alt="{{ $product->getName() }}" class="img-fluid rounded">
+                                                    <img src="{{ asset('storage/' . $product->getImage()) }}" alt="{{ $product->getName() }}" class="img-fluid rounded">
                                                 @else
                                                     <div class="placeholder-image-small">
                                                         <i class="fas fa-leaf"></i>

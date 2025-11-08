@@ -7,7 +7,7 @@
             <div class="row mb-4">
                 <div class="col-md-8">
                     <form method="GET" action="{{ route('products.index', request()->all()) }}" class="d-flex">
-                        <input type="text" class="form-control" name="search" placeholder="Search products..." value="{{ request('search') }}">
+                        <input type="text" class="form-control" name="search" placeholder="{{ __('Search products...') }}" value="{{ request('search') }}">
                         <button type="submit" class="btn btn-primary-custom ms-2">{{ __('Search') }}</button>
                     </form>
                 </div>

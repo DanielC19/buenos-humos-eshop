@@ -1,9 +1,8 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
-<div class="container py-4">
-    <div class="row">
-        <div class="col-12">
+<div class="row">
+    <div class="col-12">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <div>
                     <h2 class="mb-0">{{ __('Edit Product') }}</h2>
@@ -18,7 +17,7 @@
 
     <div class="row">
         <div class="col-lg-8">
-            <form action="{{ route('admin.products.update', $viewData['product']->getId()) }}" method="POST">
+            <form action="{{ route('admin.products.update', $viewData['product']->getId()) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="card">
@@ -129,14 +128,29 @@
                                 @enderror
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label for="image" class="form-label">{{ __('Product Image URL') }}</label>
-                                <input type="url"
+                                <label for="image" class="form-label">{{ __('Product Image') }}</label>
+
+                                @if($viewData['product']->getImage())
+                                    <div class="mb-2">
+                                        <img src="{{ asset('storage/' . $viewData['product']->getImage()) }}"
+                                             alt="{{ $viewData['product']->getName() }}"
+                                             class="img-thumbnail"
+                                             style="max-width: 200px; max-height: 200px; object-fit: cover;">
+                                        <div class="form-text">{{ __('Current image') }}</div>
+                                    </div>
+                                @endif
+
+                                <input type="file"
                                        class="form-control @error('image') is-invalid @enderror"
                                        id="image"
                                        name="image"
-                                       value="{{ old('image', $viewData['product']->getImage()) }}"
-                                       placeholder="https://example.com/image.jpg">
-                                <div class="form-text">{{ __('Enter a valid image URL from the internet') }}</div>
+                                       accept="image/jpeg,image/jpg,image/png,image/gif,image/webp">
+                                <div class="form-text">
+                                    @if($viewData['product']->getImage())
+                                        {{ __('Leave empty to keep current image. ') }}
+                                    @endif
+                                    {{ __('Accepted formats: JPEG, PNG, GIF, WebP. Max size: 2MB') }}
+                                </div>
                                 @error('image')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -160,72 +174,6 @@
         <div class="col-lg-4">
             <div class="card">
                 <div class="card-header">
-                    <h6 class="mb-0">{{ __('Product Details') }}</h6>
-                </div>
-                <div class="card-body">
-                    <div class="mb-3">
-                        <h6 class="text-primary">{{ __('Product ID') }}</h6>
-                        <span class="badge bg-light text-dark">{{ $viewData['product']->getId() }}</span>
-                    </div>
-                    <div class="mb-3">
-                        <h6 class="text-primary">{{ __('Current Name') }}</h6>
-                        <p class="mb-0">{{ $viewData['product']->getName() }}</p>
-                    </div>
-                    <div class="mb-3">
-                        <h6 class="text-primary">{{ __('Current SKU') }}</h6>
-                        <code class="bg-light px-2 py-1 rounded">{{ $viewData['product']->getSku() }}</code>
-                    </div>
-                    <div class="mb-3">
-                        <h6 class="text-primary">{{ __('Current Price') }}</h6>
-                        <span class="text-success fw-bold">${{ number_format($viewData['product']->getPrice() / 100, 2) }}</span>
-                    </div>
-                    <div class="mb-3">
-                        <h6 class="text-primary">{{ __('Current Stock') }}</h6>
-                        <span class="badge {{ $viewData['product']->getStock() > 0 ? 'bg-success' : 'bg-danger' }}">
-                            {{ $viewData['product']->getStock() }}
-                        </span>
-                    </div>
-                    @if($viewData['product']->getImage())
-                        <div class="mb-3">
-                            <h6 class="text-primary">{{ __('Current Image') }}</h6>
-                            <img src="{{ $viewData['product']->getImage() }}"
-                                 alt="{{ $viewData['product']->getName() }}"
-                                 class="img-fluid rounded"
-                                 style="max-height: 200px;"
-                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                            <div style="display: none;" class="text-muted small">
-                                {{ __('Image failed to load') }}
-                            </div>
-                            <div class="mt-2">
-                                <small class="text-muted">{{ $viewData['product']->getImage() }}</small>
-                            </div>
-                        </div>
-                    @endif
-                    <div class="mb-3">
-                        <h6 class="text-primary">{{ __('Created') }}</h6>
-                        <small class="text-muted">
-                            @if($viewData['product']->getCreatedAt())
-                                {{ $viewData['product']->getCreatedAt()->format('M d, Y \a\t H:i') }}
-                            @else
-                                {{ __('N/A') }}
-                            @endif
-                        </small>
-                    </div>
-                    <div class="mb-0">
-                        <h6 class="text-primary">{{ __('Last Updated') }}</h6>
-                        <small class="text-muted">
-                            @if($viewData['product']->getUpdatedAt())
-                                {{ $viewData['product']->getUpdatedAt()->format('M d, Y \a\t H:i') }}
-                            @else
-                                {{ __('N/A') }}
-                            @endif
-                        </small>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card mt-3">
-                <div class="card-header">
                     <h6 class="mb-0">{{ __('Guidelines') }}</h6>
                 </div>
                 <div class="card-body">
@@ -242,12 +190,8 @@
                         <small class="text-muted">{{ __('Enter the price in dollars (e.g., enter 20.99 for $20.99). The system will automatically convert to cents for storage.') }}</small>
                     </div>
                     <div class="mb-3">
-                        <h6 class="text-primary">{{ __('Price Input') }}</h6>
-                        <small class="text-muted">{{ __('Enter the price in dollars (e.g., enter 20.99 for $20.99). The system will automatically convert to cents for storage.') }}</small>
-                    </div>
-                    <div class="mb-3">
                         <h6 class="text-primary">{{ __('Image Guidelines') }}</h6>
-                        <small class="text-muted">{{ __('Use direct image URLs from reliable sources. Make sure the URL ends with .jpg, .png, or .gif and is publicly accessible.') }}</small>
+                        <small class="text-muted">{{ __('Upload high-quality images. Accepted formats: JPEG, PNG, GIF, WebP. Max size: 2MB.') }}</small>
                     </div>
                     <div class="mb-0">
                         <h6 class="text-primary">{{ __('Stock Management') }}</h6>

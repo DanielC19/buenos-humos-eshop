@@ -1,9 +1,8 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
-<div class="container py-4">
-    <div class="row">
-        <div class="col-12">
+<div class="row">
+    <div class="col-12">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <div>
                     <h2 class="mb-0">{{ __('Edit Category') }}</h2>
@@ -69,46 +68,6 @@
 
         <div class="col-lg-4">
             <div class="card">
-                <div class="card-header">
-                    <h6 class="mb-0">{{ __('Category Details') }}</h6>
-                </div>
-                <div class="card-body">
-                    <div class="mb-3">
-                        <h6 class="text-primary">{{ __('Category ID') }}</h6>
-                        <span class="badge bg-light text-dark">{{ $viewData['category']->getId() }}</span>
-                    </div>
-                    <div class="mb-3">
-                        <h6 class="text-primary">{{ __('Current Name') }}</h6>
-                        <p class="mb-0">{{ $viewData['category']->getName() }}</p>
-                    </div>
-                    <div class="mb-3">
-                        <h6 class="text-primary">{{ __('Current Description') }}</h6>
-                        <p class="mb-0 text-muted">{{ $viewData['category']->getDescription() }}</p>
-                    </div>
-                    <div class="mb-3">
-                        <h6 class="text-primary">{{ __('Created') }}</h6>
-                        <small class="text-muted">
-                            @if($viewData['category']->getCreatedAt())
-                                {{ $viewData['category']->getCreatedAt()->format('M d, Y \a\t H:i') }}
-                            @else
-                                {{ __('N/A') }}
-                            @endif
-                        </small>
-                    </div>
-                    <div class="mb-0">
-                        <h6 class="text-primary">{{ __('Last Updated') }}</h6>
-                        <small class="text-muted">
-                            @if($viewData['category']->getUpdatedAt())
-                                {{ $viewData['category']->getUpdatedAt()->format('M d, Y \a\t H:i') }}
-                            @else
-                                {{ __('N/A') }}
-                            @endif
-                        </small>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card mt-3">
                 <div class="card-header">
                     <h6 class="mb-0">{{ __('Guidelines') }}</h6>
                 </div>

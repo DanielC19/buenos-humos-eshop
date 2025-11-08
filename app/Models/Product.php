@@ -60,7 +60,7 @@ class Product extends Model
             'price' => ['required', 'numeric', 'min:1'],
             'sku' => ['required', 'string', 'max:100', 'unique:products,sku'.$productId],
             'brand' => ['nullable', 'string', 'max:150'],
-            'image' => ['nullable', 'url', 'max:500'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,jpg,png,gif,webp', 'max:2048'],
             'stock' => ['required', 'integer', 'min:0'],
             'product_category_id' => ['required', 'integer', 'exists:product_categories,id'],
         ];
