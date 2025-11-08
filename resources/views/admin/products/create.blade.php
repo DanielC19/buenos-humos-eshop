@@ -17,7 +17,7 @@
 
     <div class="row">
         <div class="col-lg-8">
-            <form action="{{ route('admin.products.store') }}" method="POST">
+            <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="card">
                     <div class="card-header">
@@ -127,14 +127,13 @@
                                 @enderror
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label for="image" class="form-label">{{ __('Product Image URL') }}</label>
-                                <input type="url"
+                                <label for="image" class="form-label">{{ __('Product Image') }}</label>
+                                <input type="file"
                                        class="form-control @error('image') is-invalid @enderror"
                                        id="image"
                                        name="image"
-                                       value="{{ old('image') }}"
-                                       placeholder="https://example.com/image.jpg">
-                                <div class="form-text">{{ __('Enter a valid image URL from the internet') }}</div>
+                                       accept="image/jpeg,image/jpg,image/png,image/gif,image/webp">
+                                <div class="form-text">{{ __('Accepted formats: JPEG, PNG, GIF, WebP. Max size: 2MB') }}</div>
                                 @error('image')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

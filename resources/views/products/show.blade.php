@@ -20,7 +20,7 @@
                 <div class="col-lg-6 mb-4">
                     <div class="product-image-large">
                         @if($viewData['product']->getImage())
-                            <img src="{{ $viewData['product']->getImage() }}"
+                            <img src="{{ asset('storage/' . $viewData['product']->getImage()) }}"
                                  alt="{{ $viewData['product']->getName() }}"
                                  class="img-fluid rounded shadow">
                         @else
