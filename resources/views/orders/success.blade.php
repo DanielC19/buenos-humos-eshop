@@ -24,7 +24,7 @@
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <strong>{{ __('Total Amount:') }}</strong><br>
-                                    <span class="text-success fw-bold">${{ number_format($viewData['order']->getTotal() / 100, 2) }}</span>
+                                    <span class="text-success fw-bold">${{ number_format($viewData['order']->getTotal(), 2) }}</span>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <strong>{{ __('Status:') }}</strong><br>
