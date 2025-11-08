@@ -5,7 +5,7 @@
         <a href="{{ route('products.show', $product->getId()) }}">
             <div class="product-image">
                 @if($product->getImage())
-                    <img src="{{ $product->getImage() }}" alt="{{ $product->getName() }}" class="img-fluid">
+                    <img src="{{ asset('storage/' . $product->getImage()) }}" alt="{{ $product->getName() }}" class="img-fluid">
                 @else
                     <i class="fas fa-leaf"></i>
                 @endif
