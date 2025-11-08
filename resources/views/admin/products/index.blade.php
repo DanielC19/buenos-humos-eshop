@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
-<div class="container py-4">
+<div>
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="mb-0">{{ __('Products Management') }}</h2>
         <a href="{{ route('admin.products.create') }}" class="btn btn-primary">

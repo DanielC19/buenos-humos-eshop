@@ -162,6 +162,11 @@ class User extends Authenticatable
         return $this->attributes['name'].' '.$this->attributes['lastname'];
     }
 
+    public static function customers()
+    {
+        return self::where('role', '!=', UserRole::ADMIN);
+    }
+
     // relationships
 
     public function productReviews(): HasMany
