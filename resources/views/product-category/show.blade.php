@@ -19,7 +19,7 @@
                 <div class="col-lg-4">
                     <div class="text-center">
                         @if ($viewData['category']->getBanner())
-                            <img src="{{ $viewData['category']->getBanner() }}" alt="Buenos Humos Logo" class="astronaut-logo">
+                            <img src="{{ $viewData['category']->getBanner() }}" alt="{{ __('Buenos Humos Logo') }}" class="astronaut-logo">
                         @endif
                     </div>
                 </div>

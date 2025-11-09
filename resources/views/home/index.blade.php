@@ -18,7 +18,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="text-center">
-                        <img src="{{ asset('storage/images/logo.png') }}" alt="Buenos Humos Logo" class="astronaut-logo">
+                        <img src="{{ asset('storage/images/logo.png') }}" alt="{{ __('Buenos Humos Logo') }}" class="astronaut-logo">
                     </div>
                 </div>
             </div>
