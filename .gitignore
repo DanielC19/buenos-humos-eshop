@@ -20,6 +20,8 @@
 /storage/pail
 /storage/app/public/products/*
 !/storage/app/public/products/.gitkeep
+/storage/app/public/invoices/*
+!/storage/app/public/invoices/.gitkeep
 /vendor
 Homestead.json
 Homestead.yaml

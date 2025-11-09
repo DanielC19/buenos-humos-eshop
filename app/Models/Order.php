@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $shipping
  * @property int $total
  * @property string $payment_id
+ * @property string|null $invoice_path
  * @property int $user_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -37,6 +38,7 @@ class Order extends Model
         'shipping',
         'total',
         'payment_id',
+        'invoice_path',
         'user_id',
     ];
 
@@ -125,6 +127,16 @@ class Order extends Model
     public function setPaymentId(string $paymentId): void
     {
         $this->attributes['paymentId'] = $paymentId;
+    }
+
+    public function getInvoicePath(): ?string
+    {
+        return $this->attributes['invoice_path'] ?? null;
+    }
+
+    public function setInvoicePath(?string $invoicePath): void
+    {
+        $this->attributes['invoice_path'] = $invoicePath;
     }
 
     public function getUserId(): int

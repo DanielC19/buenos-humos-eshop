@@ -87,17 +87,75 @@
                                         <strong>{{ __('Total') }}</strong>
                                         <strong class="text-success">${{ number_format($viewData['total'], 2) }}</strong>
                                     </div>
-                                    <div class="d-grid gap-2">
-                                        <form action="{{ route('orders.success') }}" method="POST">
-                                            @csrf
-                                            <button type="submit" class="btn btn-primary-custom btn-lg w-100">
-                                                <i class="fas fa-credit-card me-2"></i>{{ __('Buy') }}
-                                            </button>
-                                        </form>
-                                        <a href="{{ route('products.index') }}" class="btn btn-outline-primary">
-                                            <i class="fas fa-arrow-left me-2"></i>{{ __('Continue Shopping') }}
-                                        </a>
-                                    </div>
+
+                                    <!-- Balance Information -->
+                                    @auth
+                                        <div class="alert alert-info mb-3">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span><i class="fas fa-wallet me-2"></i>{{ __('Your Balance') }}:</span>
+                                                <strong>${{ number_format($viewData['userBalance'], 2) }}</strong>
+                                            </div>
+                                            @if(!$viewData['canPayWithBalance'])
+                                                <small class="text-danger d-block mt-2">
+                                                    <i class="fas fa-exclamation-circle me-1"></i>{{ __('Insufficient balance') }}
+                                                </small>
+                                            @endif
+                                        </div>
+                                    @endauth
+
+                                    <!-- Payment Form -->
+                                    <form action="{{ route('orders.success') }}" method="POST" id="checkoutForm">
+                                        @csrf
+                                        
+                                        <!-- Payment Method Selection -->
+                                        <div class="mb-3">
+                                            <label class="form-label"><strong>{{ __('Payment Method') }}</strong></label>
+                                            @auth
+                                                @if($viewData['canPayWithBalance'])
+                                                    <div class="form-check mb-2">
+                                                        <input class="form-check-input" type="radio" name="payment_method" id="paymentBalance" value="balance" checked>
+                                                        <label class="form-check-label" for="paymentBalance">
+                                                            <i class="fas fa-wallet me-1"></i>{{ __('Pay with Balance') }}
+                                                            <small class="text-muted d-block ms-4">{{ __('Pay now using your account balance') }}</small>
+                                                        </label>
+                                                    </div>
+                                                @endif
+                                                
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="radio" name="payment_method" id="paymentInvoice" value="invoice" {{ !$viewData['canPayWithBalance'] ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="paymentInvoice">
+                                                        <i class="fas fa-file-invoice me-1"></i>{{ __('Generate Invoice') }}
+                                                        <small class="text-muted d-block ms-4">{{ __('Get a PDF invoice to pay later with your preferred method') }}</small>
+                                                    </label>
+                                                </div>
+
+                                                @if(!$viewData['canPayWithBalance'])
+                                                    <div class="alert alert-info mb-2 mt-3">
+                                                        <small><i class="fas fa-info-circle me-1"></i>{{ __('Insufficient balance. You can generate an invoice to pay via other methods.') }}</small>
+                                                    </div>
+                                                @endif
+                                            @else
+                                                <div class="alert alert-warning">
+                                                    <small>{{ __('Please login to complete your purchase.') }}</small>
+                                                </div>
+                                            @endauth
+                                        </div>
+
+                                        <div class="d-grid gap-2">
+                                            @auth
+                                                <button type="submit" class="btn btn-primary-custom btn-lg w-100">
+                                                    <i class="fas fa-check-circle me-2"></i>{{ __('Complete Purchase') }}
+                                                </button>
+                                            @else
+                                                <a href="{{ route('login') }}" class="btn btn-primary-custom btn-lg w-100">
+                                                    <i class="fas fa-sign-in-alt me-2"></i>{{ __('Login to Purchase') }}
+                                                </a>
+                                            @endauth
+                                            <a href="{{ route('products.index') }}" class="btn btn-outline-primary">
+                                                <i class="fas fa-arrow-left me-2"></i>{{ __('Continue Shopping') }}
+                                            </a>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>

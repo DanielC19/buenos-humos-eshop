@@ -27,6 +27,15 @@ class CartController extends Controller
         $viewData['shipping'] = $cartService::$SHIPPING_COST;
         $viewData['total'] = $cartService->calculateTotal();
 
+        // Add user balance for payment
+        if (auth()->check()) {
+            $viewData['userBalance'] = auth()->user()->getBalance();
+            $viewData['canPayWithBalance'] = auth()->user()->getBalance() >= $viewData['total'];
+        } else {
+            $viewData['userBalance'] = 0;
+            $viewData['canPayWithBalance'] = false;
+        }
+
         return view('cart.index')->with('viewData', $viewData);
     }
 
