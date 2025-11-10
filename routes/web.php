@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
@@ -15,6 +16,8 @@ Auth::routes();
 
 Route::get('auth/google', [GoogleController::class, 'redirect'])->name('auth.google');
 Route::get('auth/google/callback', [GoogleController::class, 'callback']);
+
+Route::get('/locale/{locale}', [LocaleController::class, 'switch'])->name('locale.switch');
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 

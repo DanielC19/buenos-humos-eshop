@@ -76,6 +76,17 @@
                             <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                         </li>
                     @endauth
+
+                    {{-- Locale Switcher --}}
+                    <li class="nav-item ms-4 d-flex align-items-center">
+                        <a href="{{ route('locale.switch', 'es') }}" class="nav-link" title="Switch to Spanish">
+                            🇨🇴 CO
+                        </a>
+                        <span class="text-white">|</span>
+                        <a href="{{ route('locale.switch', 'en') }}" class="nav-link" title="Switch to English">
+                            🇺🇸 US
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Services\CurrencyExchangeService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -208,6 +209,26 @@ class Product extends Model
     public function checkStock(int $quantity = 1): bool
     {
         return $this->getStock() >= $quantity;
+    }
+
+    public function getDisplayPrice(): string
+    {
+        $locale = app()->getLocale();
+
+        if ($locale === 'es') {
+            // Convert USD to COP for Spanish locale
+            $exchangeService = app(CurrencyExchangeService::class);
+            $usdToCopRate = $exchangeService->getUsdToCopRate();
+
+            $displayNumber = number_format(($this->getPrice() * $usdToCopRate) / 100, 0, '', '.');
+
+            return "COP $$displayNumber";
+        }
+
+        // Return USD price
+        $displayNumber = number_format($this->getPrice() / 100, 2, '.', ',');
+
+        return "USD $$displayNumber";
     }
 
     // relationships
