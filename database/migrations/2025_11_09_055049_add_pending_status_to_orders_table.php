@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
+use App\Enums\OrderStatus;
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
@@ -12,8 +14,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Update the enum column to include the new 'pending' status
-        DB::statement("ALTER TABLE orders MODIFY COLUMN status ENUM('pending', 'validating', 'confirmed', 'cancelled') NOT NULL DEFAULT 'validating'");
+        Schema::table('orders', function (Blueprint $table) {
+            $table->enum('status', ['pending', 'validating', 'confirmed', 'cancelled'])->default('validating')->change();
+        });
     }
 
     /**
@@ -21,7 +24,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        // Revert back to original enum values
-        DB::statement("ALTER TABLE orders MODIFY COLUMN status ENUM('validating', 'confirmed', 'cancelled') NOT NULL DEFAULT 'validating'");
+        Schema::table('orders', function (Blueprint $table) {
+            $table->enum('status', ['validating', 'confirmed', 'cancelled'])->default('validating')->change();
+        });
     }
 };
