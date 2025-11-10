@@ -4,12 +4,21 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
 
+            <h2 class="fw-bold text-center mt-5">{{ __('Register') }}</h2>
+
+            <div class="card mt-4">
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
+
+                        <div class="row mb-4">
+                            <div class="text-center">
+                                <a href="{{ route('auth.google') }}" class="btn btn-light border">
+                                    <img src="https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png" alt="{{ __('Login with Google') }}">
+                                </a>
+                            </div>
+                        </div>
 
                         <div class="row mb-3">
                             <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
@@ -108,6 +117,9 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Register') }}
                                 </button>
+                                <a class="btn btn-link" href="{{ route('login') }}">
+                                    {{ __('Already registered?') }}
+                                </a>
                             </div>
                         </div>
                     </form>
