@@ -39,7 +39,7 @@
                                             <p class="text-muted small mb-0">{{ Str::limit($product->getDescription(), 60) }}</p>
                                         </div>
                                         <div class="col-md-2">
-                                            <span class="price">${{ number_format($product->getPrice(), 2) }}</span>
+                                            <span class="price">{{ $product->getDisplayPrice() }}</span>
                                         </div>
                                         <div class="col-md-2">
                                             <span>x {{ $viewData['cartProducts'][$product->getId()] }}</span>
