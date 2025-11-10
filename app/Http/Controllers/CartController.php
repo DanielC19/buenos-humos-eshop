@@ -37,14 +37,14 @@ class CartController extends Controller
 
         $product = Product::findOrFail($productId);
         if (! $product->checkStock($quantity)) {
-            return redirect()->back()->with('error', 'Insufficient stock for the requested quantity.');
+            return redirect()->back()->with('error', __('Insufficient stock for the requested quantity.'));
         }
 
         $cart = session()->get('cart', []);
         $cart[$productId] = $quantity;
         session()->put('cart', $cart);
 
-        return redirect()->back()->with('success', 'Product added to cart!');
+        return redirect()->back()->with('success', __('Product added to cart!'));
     }
 
     public function remove(Request $request): RedirectResponse
@@ -57,6 +57,6 @@ class CartController extends Controller
             session()->put('cart', $cart);
         }
 
-        return redirect()->back()->with('success', 'Product removed from cart!');
+        return redirect()->back()->with('success', __('Product removed from cart!'));
     }
 }

@@ -22,7 +22,7 @@ class OrderController extends Controller
         $cartService = new CartService($cartProducts, $products->all());
 
         if (! $cartService->checkStock()) {
-            return redirect()->back()->with('error', 'One or more products in your cart are out of stock.');
+            return redirect()->back()->with('error', __('One or more products in your cart are out of stock.'));
         }
 
         $orderData = [
