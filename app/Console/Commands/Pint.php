@@ -25,7 +25,7 @@ class Pint extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
         passthru('./vendor/bin/pint');
     }

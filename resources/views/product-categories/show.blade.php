@@ -7,6 +7,8 @@
             <div class="row align-items-center">
                 <div class="col-lg-8">
                     <div class="hero-content">
+                        <!-- Breadcrumb -->
+                        <x-breadcrumb :items="$viewData['breadcrumbs']" />
                         <h1 class="display-4 fw-bold mb-4">{{ $viewData['category']->getName() }}</h1>
                         <p class="lead mb-4">{{ $viewData['category']->getDescription() }}</p>
                         <div class="d-flex align-items-center gap-3">
@@ -33,32 +35,7 @@
             @if(count($viewData['products']) > 0)
                 <div class="row">
                     @foreach($viewData['products'] as $product)
-                        <div class="col-lg-3 col-md-6 mb-4">
-                            <div class="product-card">
-                                <a href="{{ route('product.show', $product->getId()) }}">
-                                    <div class="product-image">
-                                        @if($product->getImage())
-                                            <img src="{{ $product->getImage() }}" alt="{{ $product->getName() }}" class="img-fluid">
-                                        @else
-                                            <i class="fas fa-leaf"></i>
-                                        @endif
-                                    </div>
-                                    <div class="p-3">
-                                        <h6>{{ $product->getName() }}</h6>
-                                        <p class="text-muted small">{{ $product->getDescription() }}</p>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <span class="price">${{ number_format($product->getPrice(), 2) }}</span>
-                                            <form action="#" method="POST" class="d-inline">
-                                                @csrf
-                                                <button type="submit" class="btn btn-sm btn-primary-custom">
-                                                    <i class="fas fa-cart-plus"></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
+                        <x-product-item :product="$product" />
                     @endforeach
                 </div>
 

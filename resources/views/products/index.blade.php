@@ -3,16 +3,19 @@
 @section('content')
     <section class="py-5">
         <div class="container">
+            <!-- Breadcrumb -->
+            <x-breadcrumb :items="$viewData['breadcrumbs']" />
+
             <!-- Simple Search and Filter -->
             <div class="row mb-4">
                 <div class="col-md-8">
-                    <form method="GET" action="{{ route('product.index', request()->all()) }}" class="d-flex">
+                    <form method="GET" action="{{ route('products.index', request()->all()) }}" class="d-flex">
                         <input type="text" class="form-control" name="search" placeholder="{{ __('Search products...') }}" value="{{ request('search') }}">
                         <button type="submit" class="btn btn-primary-custom ms-2">{{ __('Search') }}</button>
                     </form>
                 </div>
                 <div class="col-md-4 text-end">
-                    <a href="{{ route('product.index', ['mostSold' => !request('mostSold')] + request()->all()) }}"
+                    <a href="{{ route('products.index', ['mostSold' => !request('mostSold')] + request()->all()) }}"
                        class="btn {{ request('mostSold') ? 'btn-primary-custom' : 'btn-outline-custom' }}">
                         {{ __('Most Sold') }}
                     </a>
@@ -22,32 +25,7 @@
             @if(count($viewData['products']) > 0)
                 <div class="row">
                     @foreach($viewData['products'] as $product)
-                        <div class="col-lg-3 col-md-6 mb-4">
-                            <div class="product-card">
-                                <a href="{{ route('product.show', $product->getId()) }}">
-                                    <div class="product-image">
-                                        @if($product->getImage())
-                                            <img src="{{ $product->getImage() }}" alt="{{ $product->getName() }}" class="img-fluid">
-                                        @else
-                                            <i class="fas fa-leaf"></i>
-                                        @endif
-                                    </div>
-                                    <div class="p-3">
-                                        <h6>{{ $product->getName() }}</h6>
-                                        <p class="text-muted small">{{ $product->getDescription() }}</p>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <span class="price">${{ number_format($product->getPrice(), 2) }}</span>
-                                            <form action="#" method="POST" class="d-inline">
-                                                @csrf
-                                                <button type="submit" class="btn btn-sm btn-primary-custom">
-                                                    <i class="fas fa-cart-plus"></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
+                        <x-product-item :product="$product" />
                     @endforeach
                 </div>
 

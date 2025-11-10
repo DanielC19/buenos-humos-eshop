@@ -19,8 +19,11 @@ class ProductController extends Controller
 
         $viewData = [];
         $viewData['products'] = $products;
+        $viewData['breadcrumbs'] = [
+            ['label' => __('Products'), 'url' => '#'],
+        ];
 
-        return view('product.index')->with('viewData', $viewData);
+        return view('products.index')->with('viewData', $viewData);
     }
 
     public function show(int $productId): View
@@ -29,7 +32,12 @@ class ProductController extends Controller
 
         $viewData = [];
         $viewData['product'] = $product;
+        $viewData['breadcrumbs'] = [
+            ['label' => __('Products'), 'url' => route('products.index')],
+            ['label' => $product->getProductCategory()->getName(), 'url' => route('product-categories.show', ['category_id' => $product->getProductCategory()->getId()])],
+            ['label' => $product->getName(), 'url' => '#'],
+        ];
 
-        return view('product.show')->with('viewData', $viewData);
+        return view('products.show')->with('viewData', $viewData);
     }
 }

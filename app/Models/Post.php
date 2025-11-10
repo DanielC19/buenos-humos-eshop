@@ -26,6 +26,13 @@ class Post extends Model
         'category',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'category' => PostCategory::class,
+        ];
+    }
+
     public static function rules(): array
     {
         return [
@@ -35,14 +42,31 @@ class Post extends Model
         ];
     }
 
+    // setters & getters
+
+    public function getId(): int
+    {
+        return $this->attributes['id'];
+    }
+
     public function getTitle(): string
     {
         return $this->attributes['title'];
     }
 
+    public function setTitle(string $title): void
+    {
+        $this->attributes['title'] = $title;
+    }
+
     public function getContent(): string
     {
         return $this->attributes['content'];
+    }
+
+    public function setContent(string $content): void
+    {
+        $this->attributes['content'] = $content;
     }
 
     public function getCategory(): PostCategory
@@ -55,20 +79,13 @@ class Post extends Model
         $this->attributes['category'] = $category;
     }
 
-    public function setTitle(string $title): void
+    public function getCreatedAt(): ?Carbon
     {
-        $this->attributes['title'] = $title;
+        return $this->attributes['created_at'] ? Carbon::parse($this->attributes['created_at']) : null;
     }
 
-    public function setContent(string $content): void
+    public function getUpdatedAt(): ?Carbon
     {
-        $this->attributes['content'] = $content;
-    }
-
-    protected function casts(): array
-    {
-        return [
-            'category' => PostCategory::class,
-        ];
+        return $this->attributes['updated_at'] ? Carbon::parse($this->attributes['updated_at']) : null;
     }
 }

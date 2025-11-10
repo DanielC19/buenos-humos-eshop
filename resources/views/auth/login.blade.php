@@ -4,12 +4,21 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
 
+            <h2 class="fw-bold text-center mt-5">{{ __('Login') }}</h2>
+
+            <div class="card mt-4">
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
+
+                        <div class="row mb-4">
+                            <div class="text-center">
+                                <a href="{{ route('auth.google') }}" class="btn btn-light border">
+                                    <img src="https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png" alt="{{ __('Login with Google') }}">
+                                </a>
+                            </div>
+                        </div>
 
                         <div class="row mb-3">
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email') }}</label>
@@ -51,17 +60,14 @@
                             </div>
                         </div>
 
-                        <div class="row mb-0">
+                        <div class="row">
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
                                 </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
+                                <a class="btn btn-link" href="{{ route('register') }}">
+                                    {{ __('Still not registered?') }}
+                                </a>
                             </div>
                         </div>
                     </form>

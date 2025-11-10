@@ -7,7 +7,10 @@ namespace App\Models;
 use App\Enums\OrderStatus;
 use app\Models\User;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Author: Daniel Arango
@@ -18,11 +21,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $tax
  * @property int $shipping
  * @property int $total
- * @property string $paymentId
+ * @property string $payment_id
+ * @property int $user_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property User $user
- * @property OrderedProducts[] $orderedProducts
+ * @property OrderedProduct[] $orderedProducts
  */
 class Order extends Model
 {
@@ -32,9 +36,16 @@ class Order extends Model
         'tax',
         'shipping',
         'total',
-        'paymentId',
-        'user',
+        'payment_id',
+        'user_id',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'status' => OrderStatus::class,
+        ];
+    }
 
     public static function rules(): array
     {
@@ -44,14 +55,16 @@ class Order extends Model
             'tax' => ['required', 'numeric'],
             'shipping' => ['required', 'numeric'],
             'total' => ['required', 'numeric'],
-            'paymentId' => ['required', 'string', 'max:255'],
-            'user' => ['required', 'integer', 'exists:users,id'],
+            'payment_id' => ['required', 'string', 'max:255'],
+            'user_id' => ['required', 'integer', 'exists:users,id'],
         ];
     }
 
-    public function user()
+    // setters & getters
+
+    public function getId(): int
     {
-        return $this->belongsTo(User::class);
+        return $this->attributes['id'];
     }
 
     public function getStatus(): string
@@ -59,39 +72,14 @@ class Order extends Model
         return $this->attributes['status'];
     }
 
-    public function getSubtotal(): int
-    {
-        return $this->attributes['subtotal'];
-    }
-
-    public function getTax(): int
-    {
-        return $this->attributes['tax'];
-    }
-
-    public function getShipping(): int
-    {
-        return $this->attributes['shipping'];
-    }
-
-    public function getTotal(): int
-    {
-        return $this->attributes['subtotal'] + $this->attributes['tax'] + $this->attributes['shipping'];
-    }
-
-    public function getPaymentId(): string
-    {
-        return $this->attributes['paymentId'];
-    }
-
-    public function getUserId(): int
-    {
-        return $this->attributes['userId'];
-    }
-
     public function setStatus(string $status): void
     {
         $this->attributes['status'] = $status;
+    }
+
+    public function getSubtotal(): int
+    {
+        return $this->attributes['subtotal'];
     }
 
     public function setSubtotal(int $subtotal): void
@@ -99,9 +87,19 @@ class Order extends Model
         $this->attributes['subtotal'] = $subtotal;
     }
 
+    public function getTax(): int
+    {
+        return $this->attributes['tax'];
+    }
+
     public function setTax(int $tax): void
     {
         $this->attributes['tax'] = $tax;
+    }
+
+    public function getShipping(): int
+    {
+        return $this->attributes['shipping'];
     }
 
     public function setShipping(int $shipping): void
@@ -109,9 +107,29 @@ class Order extends Model
         $this->attributes['shipping'] = $shipping;
     }
 
+    public function getTotal(): int
+    {
+        return $this->attributes['total'];
+    }
+
+    public function setTotal(int $total): void
+    {
+        $this->attributes['total'] = $total;
+    }
+
+    public function getPaymentId(): string
+    {
+        return $this->attributes['payment_id'];
+    }
+
     public function setPaymentId(string $paymentId): void
     {
         $this->attributes['paymentId'] = $paymentId;
+    }
+
+    public function getUserId(): int
+    {
+        return $this->attributes['user_id'];
     }
 
     public function setUserId(int $userId): void
@@ -119,14 +137,39 @@ class Order extends Model
         $this->attributes['userId'] = $userId;
     }
 
-    protected function casts(): array
+    public function getUser(): User
     {
-        return [
-            'status' => OrderStatus::class,
-        ];
+        return User::find($this->getUserId());
     }
 
-    protected function orderedProducts()
+    public function setUser(User $user): void
+    {
+        $this->user()->associate($user);
+    }
+
+    public function getOrderedProducts(): Collection
+    {
+        return OrderedProduct::where('order_id', $this->getId())->get();
+    }
+
+    public function getCreatedAt(): ?Carbon
+    {
+        return $this->attributes['created_at'] ? Carbon::parse($this->attributes['created_at']) : null;
+    }
+
+    public function getUpdatedAt(): ?Carbon
+    {
+        return $this->attributes['updated_at'] ? Carbon::parse($this->attributes['updated_at']) : null;
+    }
+
+    // relationships
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function orderedProducts(): HasMany
     {
         return $this->hasMany(OrderedProduct::class);
     }

@@ -4,11 +4,26 @@
     <!-- Product Details -->
     <section class="py-5">
         <div class="container">
+            <!-- Breadcrumb -->
+            <x-breadcrumb :items="$viewData['breadcrumbs']" />
+
+            @if(session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{{ __('Close') }}"></button>
+                </div>
+            @endif
+            @if(session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{{ __('Close') }}"></button>
+                </div>
+            @endif
             <div class="row">
                 <div class="col-lg-6 mb-4">
                     <div class="product-image-large">
                         @if($viewData['product']->getImage())
-                            <img src="{{ $viewData['product']->getImage() }}"
+                            <img src="{{ asset('storage/' . $viewData['product']->getImage()) }}"
                                  alt="{{ $viewData['product']->getName() }}"
                                  class="img-fluid rounded shadow">
                         @else
@@ -35,18 +50,23 @@
 
                         <!-- Add to Cart Form -->
                         <div class="cart-section mb-4">
-                            <form action="#" method="POST" class="d-flex align-items-center gap-3">
-                                @csrf
-                                <div class="quantity-selector">
-                                    <label for="quantity" class="form-label">{{ __('Quantity') }}</label>
-                                    <input type="number" class="form-control" id="quantity" name="quantity" value="1" min="1" max="10">
-                                </div>
-                                <div class="add-to-cart-btn">
-                                    <button type="submit" class="btn btn-primary-custom btn-lg">
-                                        <i class="fas fa-cart-plus me-2"></i>{{ __('Add to Cart') }}
-                                    </button>
-                                </div>
-                            </form>
+                            @if (!$viewData['product']->checkStock())
+                                {{ __('Out of Stock :(') }}
+                            @else
+                                <form action="{{ route('cart.add') }}" method="POST" class="d-flex align-items-center gap-3">
+                                    @csrf
+                                    <div class="quantity-selector">
+                                        <label for="quantity" class="form-label">{{ __('Quantity') }}</label>
+                                        <input type="number" class="form-control" id="quantity" name="quantity" value="1" min="1">
+                                    </div>
+                                    <div class="add-to-cart-btn">
+                                        <input type="hidden" name="productId" value="{{ $viewData['product']->getId() }}">
+                                        <button type="submit" class="btn btn-primary-custom btn-lg">
+                                            <i class="fas fa-cart-plus me-2"></i>{{ __('Add to Cart') }}
+                                        </button>
+                                    </div>
+                                </form>
+                            @endif
                         </div>
 
                         <!-- Product Features -->
@@ -79,21 +99,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Related Products -->
-    <section class="py-5 bg-light">
-        <div class="container">
-            <h3 class="text-center section-title mb-4">{{ __('Related Products') }}</h3>
-            <div class="row">
-                <!-- Placeholder for related products - you can add this functionality later -->
-                <div class="col-12 text-center">
-                    <a href="{{ route('product.index') }}" class="btn btn-outline-primary">
-                        {{ __('View All Products') }}
-                    </a>
                 </div>
             </div>
         </div>

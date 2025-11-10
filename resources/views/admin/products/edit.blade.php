@@ -1,15 +1,14 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
-<div class="container-fluid py-4">
-    <div class="row">
-        <div class="col-12">
+<div class="row">
+    <div class="col-12">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <div>
-                    <h2 class="mb-0">{{ __('Create Product') }}</h2>
-                    <p class="text-muted mb-0">{{ __('Add a new product to the inventory') }}</p>
+                    <h2 class="mb-0">{{ __('Edit Product') }}</h2>
+                    <p class="text-muted mb-0">{{ __('Modify product information') }}</p>
                 </div>
-                <a href="{{ route('admin.product.index') }}" class="btn btn-outline-secondary">
+                <a href="{{ route('admin.products.index') }}" class="btn btn-outline-secondary">
                     <i class="fas fa-arrow-left me-2"></i>{{ __('Back to Products') }}
                 </a>
             </div>
@@ -18,8 +17,9 @@
 
     <div class="row">
         <div class="col-lg-8">
-            <form action="{{ route('admin.product.store') }}" method="POST">
+            <form action="{{ route('admin.products.update', $viewData['product']->getId()) }}" method="POST" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
                 <div class="card">
                     <div class="card-header">
                         <h5 class="mb-0">{{ __('Product Information') }}</h5>
@@ -32,7 +32,7 @@
                                        class="form-control @error('name') is-invalid @enderror"
                                        id="name"
                                        name="name"
-                                       value="{{ old('name') }}"
+                                       value="{{ old('name', $viewData['product']->getName()) }}"
                                        required>
                                 @error('name')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -44,7 +44,7 @@
                                        class="form-control @error('sku') is-invalid @enderror"
                                        id="sku"
                                        name="sku"
-                                       value="{{ old('sku') }}"
+                                       value="{{ old('sku', $viewData['product']->getSku()) }}"
                                        required>
                                 @error('sku')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -58,7 +58,7 @@
                                       id="description"
                                       name="description"
                                       rows="4"
-                                      required>{{ old('description') }}</textarea>
+                                      required>{{ old('description', $viewData['product']->getDescription()) }}</textarea>
                             @error('description')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -73,7 +73,7 @@
                                            class="form-control @error('price') is-invalid @enderror"
                                            id="price"
                                            name="price"
-                                           value="{{ old('price') }}"
+                                           value="{{ old('price', number_format($viewData['product']->getPrice() / 100, 2, '.', '')) }}"
                                            step="0.01"
                                            min="0"
                                            required>
@@ -88,7 +88,7 @@
                                        class="form-control @error('stock') is-invalid @enderror"
                                        id="stock"
                                        name="stock"
-                                       value="{{ old('stock') }}"
+                                       value="{{ old('stock', $viewData['product']->getStock()) }}"
                                        min="0"
                                        required>
                                 @error('stock')
@@ -101,7 +101,7 @@
                                        class="form-control @error('brand') is-invalid @enderror"
                                        id="brand"
                                        name="brand"
-                                       value="{{ old('brand') }}">
+                                       value="{{ old('brand', $viewData['product']->getBrand()) }}">
                                 @error('brand')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -118,7 +118,7 @@
                                     <option value="">{{ __('Select a category') }}</option>
                                     @foreach($viewData['categories'] ?? [] as $category)
                                         <option value="{{ $category->getId() }}"
-                                                {{ old('product_category_id') == $category->getId() ? 'selected' : '' }}>
+                                                {{ old('product_category_id', $viewData['product']->getCategoryId()) == $category->getId() ? 'selected' : '' }}>
                                             {{ $category->getName() }}
                                         </option>
                                     @endforeach
@@ -128,14 +128,29 @@
                                 @enderror
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label for="image" class="form-label">{{ __('Product Image URL') }}</label>
-                                <input type="url"
+                                <label for="image" class="form-label">{{ __('Product Image') }}</label>
+
+                                @if($viewData['product']->getImage())
+                                    <div class="mb-2">
+                                        <img src="{{ asset('storage/' . $viewData['product']->getImage()) }}"
+                                             alt="{{ $viewData['product']->getName() }}"
+                                             class="img-thumbnail"
+                                             style="max-width: 200px; max-height: 200px; object-fit: cover;">
+                                        <div class="form-text">{{ __('Current image') }}</div>
+                                    </div>
+                                @endif
+
+                                <input type="file"
                                        class="form-control @error('image') is-invalid @enderror"
                                        id="image"
                                        name="image"
-                                       value="{{ old('image') }}"
-                                       placeholder="https://example.com/image.jpg">
-                                <div class="form-text">{{ __('Enter a valid image URL from the internet') }}</div>
+                                       accept="image/jpeg,image/jpg,image/png,image/gif,image/webp">
+                                <div class="form-text">
+                                    @if($viewData['product']->getImage())
+                                        {{ __('Leave empty to keep current image. ') }}
+                                    @endif
+                                    {{ __('Accepted formats: JPEG, PNG, GIF, WebP. Max size: 2MB') }}
+                                </div>
                                 @error('image')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -148,7 +163,7 @@
                                 {{ __('Reset') }}
                             </button>
                             <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save me-2"></i>{{ __('Create Product') }}
+                                <i class="fas fa-save me-2"></i>{{ __('Update Product') }}
                             </button>
                         </div>
                     </div>
@@ -168,16 +183,39 @@
                     </div>
                     <div class="mb-3">
                         <h6 class="text-primary">{{ __('SKU Format') }}</h6>
-                        <small class="text-muted">{{ __('Use a unique identifier. Example: PRD-001, SMOKE-PIPE-01') }}</small>
+                        <small class="text-muted">{{ __('Keep the same format when editing. Example: PRD-001, SMOKE-PIPE-01') }}</small>
                     </div>
                     <div class="mb-3">
-                        <h6 class="text-primary">{{ __('Image Requirements') }}</h6>
-                        <small class="text-muted">{{ __('Upload high-quality images. Square format (1:1) works best.') }}</small>
+                        <h6 class="text-primary">{{ __('Price Input') }}</h6>
+                        <small class="text-muted">{{ __('Enter the price in dollars (e.g., enter 20.99 for $20.99). The system will automatically convert to cents for storage.') }}</small>
+                    </div>
+                    <div class="mb-3">
+                        <h6 class="text-primary">{{ __('Image Guidelines') }}</h6>
+                        <small class="text-muted">{{ __('Upload high-quality images. Accepted formats: JPEG, PNG, GIF, WebP. Max size: 2MB.') }}</small>
                     </div>
                     <div class="mb-0">
                         <h6 class="text-primary">{{ __('Stock Management') }}</h6>
-                        <small class="text-muted">{{ __('Keep accurate stock levels to prevent overselling.') }}</small>
+                        <small class="text-muted">{{ __('Update stock levels carefully to prevent overselling.') }}</small>
                     </div>
+                </div>
+            </div>
+
+            <div class="card mt-3">
+                <div class="card-header bg-danger text-white">
+                    <h6 class="mb-0">{{ __('Danger Zone') }}</h6>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted small mb-3">{{ __('Once you delete a product, there is no going back. Please be certain.') }}</p>
+                    <form action="{{ route('admin.products.destroy', $viewData['product']->getId()) }}"
+                          method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit"
+                                class="btn btn-danger btn-sm w-100"
+                                onclick="return confirm('{{ __('Are you sure you want to delete this product? This action cannot be undone.') }}')">
+                            <i class="fas fa-trash me-2"></i>{{ __('Delete Product') }}
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
