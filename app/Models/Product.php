@@ -220,11 +220,15 @@ class Product extends Model
             $exchangeService = app(CurrencyExchangeService::class);
             $usdToCopRate = $exchangeService->getUsdToCopRate();
 
-            return number_format(($this->getPrice() * $usdToCopRate) / 100, 0, '', '.');
+            $displayNumber = number_format(($this->getPrice() * $usdToCopRate) / 100, 0, '', '.');
+
+            return "COP $$displayNumber";
         }
 
         // Return USD price
-        return number_format($this->getPrice() / 100, 2, ',', '.');
+        $displayNumber = number_format($this->getPrice() / 100, 2, ',', '.');
+
+        return "USD $$displayNumber";
     }
 
     // relationships
