@@ -133,18 +133,17 @@
                                 @if($viewData['product']->getImage())
                                     <div class="mb-2">
                                         <img src="{{ asset('storage/' . $viewData['product']->getImage()) }}"
-                                             alt="{{ $viewData['product']->getName() }}"
-                                             class="img-thumbnail"
-                                             style="max-width: 200px; max-height: 200px; object-fit: cover;">
+                                            alt="{{ $viewData['product']->getName() }}"
+                                            class="img-thumbnail">
                                         <div class="form-text">{{ __('Current image') }}</div>
                                     </div>
                                 @endif
 
                                 <input type="file"
-                                       class="form-control @error('image') is-invalid @enderror"
-                                       id="image"
-                                       name="image"
-                                       accept="image/jpeg,image/jpg,image/png,image/gif,image/webp">
+                                    class="form-control @error('image') is-invalid @enderror"
+                                    id="image"
+                                    name="image"
+                                    accept="image/jpeg,image/jpg,image/png,image/gif,image/webp">
                                 <div class="form-text">
                                     @if($viewData['product']->getImage())
                                         {{ __('Leave empty to keep current image. ') }}
