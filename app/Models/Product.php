@@ -226,7 +226,7 @@ class Product extends Model
         }
 
         // Return USD price
-        $displayNumber = number_format($this->getPrice() / 100, 2, ',', '.');
+        $displayNumber = number_format($this->getPrice() / 100, 2, '.', ',');
 
         return "USD $$displayNumber";
     }
