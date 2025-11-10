@@ -6,6 +6,7 @@ namespace App\Services\Payment;
 
 use App\Models\Order;
 use App\Models\User;
+use App\Interfaces\PaymentServiceInterface;
 
 class BalancePaymentService implements PaymentServiceInterface
 {

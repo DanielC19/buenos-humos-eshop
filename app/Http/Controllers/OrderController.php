@@ -9,9 +9,7 @@ use App\Models\Order;
 use App\Models\OrderedProduct;
 use App\Models\Product;
 use App\Services\CartService;
-use App\Services\Payment\BalancePaymentService;
-use App\Services\Payment\InvoicePaymentService;
-use App\Services\Payment\PaymentServiceInterface;
+use App\Interfaces\PaymentServiceInterface;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -31,8 +29,7 @@ class OrderController extends Controller
 
         $paymentMethod = $request->input('payment_method', 'balance');
 
-        // Dependency Injection - Get the appropriate payment service
-        $paymentService = $this->getPaymentService($paymentMethod);
+        $paymentService = app(PaymentServiceInterface::class, ['paymentMethod' => $paymentMethod]);
 
         $orderData = [
             'status' => OrderStatus::CONFIRMED->value,
@@ -86,14 +83,5 @@ class OrderController extends Controller
         }
 
         return view('orders.success')->with('viewData', $viewData);
-    }
-
-    private function getPaymentService(string $method): PaymentServiceInterface
-    {
-        return match ($method) {
-            'balance' => new BalancePaymentService,
-            'invoice' => new InvoicePaymentService,
-            default => new BalancePaymentService,
-        };
     }
 }

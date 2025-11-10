@@ -8,6 +8,7 @@ use App\Enums\OrderStatus;
 use App\Models\Order;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Interfaces\PaymentServiceInterface;
 
 class InvoicePaymentService implements PaymentServiceInterface
 {
@@ -47,7 +48,7 @@ class InvoicePaymentService implements PaymentServiceInterface
         ];
     }
 
-    private function generateInvoice(Order $order, User $user): \Barryvdh\DomPDF\PDF
+    private function generateInvoice(Order $order, User $user): mixed
     {
         $data = [
             'order' => $order,
