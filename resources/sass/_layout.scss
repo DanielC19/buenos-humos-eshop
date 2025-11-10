@@ -1,0 +1,41 @@
+// * Navbar Styles
+
+.navbar-custom {
+    background: linear-gradient(135deg, var(--primary-purple) 0%, var(--dark-purple) 100%);
+    padding: 1rem 0;
+    box-shadow: 0 4px 20px rgba(45, 27, 105, 0.3);
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--accent-green) !important;
+}
+
+.nav-link {
+    color: white !important;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--accent-green) !important;
+}
+
+// * Footer Styles
+
+.footer {
+    background: var(--dark-purple);
+    color: white;
+    padding: 50px 0 20px;
+}
+
+.footer-links a {
+    color: #cbd5e1;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--accent-green);
+}
