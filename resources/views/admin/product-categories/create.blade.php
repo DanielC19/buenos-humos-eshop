@@ -1,15 +1,14 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
-<div class="container py-4">
-    <div class="row">
-        <div class="col-12">
+<div class="row">
+    <div class="col-12">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <div>
                     <h2 class="mb-0">{{ __('Create Category') }}</h2>
                     <p class="text-muted mb-0">{{ __('Add a new product category') }}</p>
                 </div>
-                <a href="{{ route('admin.product-category.index') }}" class="btn btn-outline-secondary">
+                <a href="{{ route('admin.product-categories.index') }}" class="btn btn-outline-secondary">
                     <i class="fas fa-arrow-left me-2"></i>{{ __('Back to Categories') }}
                 </a>
             </div>
@@ -18,7 +17,7 @@
 
     <div class="row">
         <div class="col-lg-8">
-            <form action="{{ route('admin.product-category.store') }}" method="POST">
+            <form action="{{ route('admin.product-categories.store') }}" method="POST">
                 @csrf
                 <div class="card">
                     <div class="card-header">

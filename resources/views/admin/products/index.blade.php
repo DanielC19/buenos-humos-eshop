@@ -1,12 +1,31 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
-<div class="container py-4">
+<div>
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="mb-0">{{ __('Products Management') }}</h2>
-        <a href="{{ route('admin.product.create') }}" class="btn btn-primary">
-            <i class="fas fa-plus me-2"></i>{{ __('Add Product') }}
-        </a>
+        <div class="d-flex gap-2">
+            <form action="{{ route('admin.products.index') }}" method="GET">
+                <div class="input-group input-group-sm" style="width: 250px;">
+                    <input type="text"
+                           class="form-control"
+                           name="search"
+                           placeholder="{{ __('Search products...') }}"
+                           value="{{ $viewData['search'] ?? '' }}">
+                    <button class="btn btn-outline-secondary" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    @if(isset($viewData['search']) && $viewData['search'])
+                        <a href="{{ route('admin.products.index') }}" class="btn btn-outline-danger" title="{{ __('Clear search') }}">
+                            <i class="fas fa-times"></i>
+                        </a>
+                    @endif
+                </div>
+            </form>
+            <a href="{{ route('admin.products.create') }}" class="btn btn-primary btn-sm">
+                <i class="fas fa-plus me-2"></i>{{ __('Add Product') }}
+            </a>
+        </div>
     </div>
 
     @if($viewData['products']->isEmpty())
@@ -14,29 +33,31 @@
             <div class="card-body text-center py-5">
                 <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
                 <h4 class="text-muted">{{ __('No products found') }}</h4>
-                <p class="text-muted">{{ __('Start by creating your first product.') }}</p>
-                <a href="{{ route('admin.product.create') }}" class="btn btn-primary">
-                    <i class="fas fa-plus me-2"></i>{{ __('Create Product') }}
-                </a>
+                @if(isset($viewData['search']) && $viewData['search'])
+                    <p class="text-muted">{{ __('No products match your search criteria.') }}</p>
+                    <a href="{{ route('admin.products.index') }}" class="btn btn-outline-primary">
+                        <i class="fas fa-arrow-left me-2"></i>{{ __('Show All Products') }}
+                    </a>
+                @else
+                    <p class="text-muted">{{ __('Start by creating your first product.') }}</p>
+                    <a href="{{ route('admin.products.create') }}" class="btn btn-primary">
+                        <i class="fas fa-plus me-2"></i>{{ __('Create Product') }}
+                    </a>
+                @endif
             </div>
         </div>
     @else
         <div class="card">
             <div class="card-header bg-white">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h5 class="mb-0">{{ __('Products List') }}</h5>
-                        <small class="text-muted">{{ $viewData['products']->count() }} {{ __('products total') }}</small>
-                    </div>
-                    <div class="col-auto">
-                        <div class="input-group input-group-sm" style="width: 250px;">
-                            <input type="text" class="form-control" placeholder="{{ __('Search products...') }}" id="searchInput">
-                            <button class="btn btn-outline-secondary" type="button">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                <h5 class="mb-0">{{ __('Products List') }}</h5>
+                <small class="text-muted">
+                    {{ $viewData['products']->count() }}
+                    @if(isset($viewData['search']) && $viewData['search'])
+                        {{ __('results found') }}
+                    @else
+                        {{ __('products total') }}
+                    @endif
+                </small>
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive">
@@ -59,7 +80,7 @@
                                         <div class="d-flex align-items-center">
                                             <div class="flex-shrink-0 me-3">
                                                 @if($product->getImage())
-                                                    <img src="{{ $product->getImage() }}"
+                                                    <img src="{{ asset('storage/' . $product->getImage()) }}"
                                                          alt="{{ $product->getName() }}"
                                                          class="rounded"
                                                          style="width: 50px; height: 50px; object-fit: cover;">
@@ -82,8 +103,8 @@
                                         <code class="bg-light px-2 py-1 rounded">{{ $product->getSku() }}</code>
                                     </td>
                                     <td>
-                                        @if($product->productCategory)
-                                            <span class="badge bg-secondary">{{ $product->productCategory->getName() }}</span>
+                                        @if($product->getProductCategory())
+                                            <span class="badge bg-secondary">{{ $product->getProductCategory()->getName() }}</span>
                                         @else
                                             <span class="text-muted">{{ __('No category') }}</span>
                                         @endif
@@ -107,10 +128,10 @@
                                     </td>
                                     <td>
                                         <div class="btn-group btn-group-sm">
-                                            <a href="{{ route('admin.product.edit', $product->getId()) }}" class="btn btn-outline-primary" title="{{ __('Edit') }}">
+                                            <a href="{{ route('admin.products.edit', $product->getId()) }}" class="btn btn-outline-primary" title="{{ __('Edit') }}">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <form action="{{ route('admin.product.destroy', $product->getId()) }}"
+                                            <form action="{{ route('admin.products.destroy', $product->getId()) }}"
                                                   method="POST"
                                                   style="display: inline;">
                                                 @csrf

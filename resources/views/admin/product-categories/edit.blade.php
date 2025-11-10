@@ -1,15 +1,14 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
-<div class="container py-4">
-    <div class="row">
-        <div class="col-12">
+<div class="row">
+    <div class="col-12">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <div>
                     <h2 class="mb-0">{{ __('Edit Category') }}</h2>
                     <p class="text-muted mb-0">{{ __('Modify category information') }}</p>
                 </div>
-                <a href="{{ route('admin.product-category.index') }}" class="btn btn-outline-secondary">
+                <a href="{{ route('admin.product-categories.index') }}" class="btn btn-outline-secondary">
                     <i class="fas fa-arrow-left me-2"></i>{{ __('Back to Categories') }}
                 </a>
             </div>
@@ -18,7 +17,7 @@
 
     <div class="row">
         <div class="col-lg-8">
-            <form action="{{ route('admin.product-category.update', $viewData['category']->getId()) }}" method="POST">
+            <form action="{{ route('admin.product-categories.update', $viewData['category']->getId()) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="card">
@@ -70,46 +69,6 @@
         <div class="col-lg-4">
             <div class="card">
                 <div class="card-header">
-                    <h6 class="mb-0">{{ __('Category Details') }}</h6>
-                </div>
-                <div class="card-body">
-                    <div class="mb-3">
-                        <h6 class="text-primary">{{ __('Category ID') }}</h6>
-                        <span class="badge bg-light text-dark">{{ $viewData['category']->getId() }}</span>
-                    </div>
-                    <div class="mb-3">
-                        <h6 class="text-primary">{{ __('Current Name') }}</h6>
-                        <p class="mb-0">{{ $viewData['category']->getName() }}</p>
-                    </div>
-                    <div class="mb-3">
-                        <h6 class="text-primary">{{ __('Current Description') }}</h6>
-                        <p class="mb-0 text-muted">{{ $viewData['category']->getDescription() }}</p>
-                    </div>
-                    <div class="mb-3">
-                        <h6 class="text-primary">{{ __('Created') }}</h6>
-                        <small class="text-muted">
-                            @if($viewData['category']->getCreatedAt())
-                                {{ $viewData['category']->getCreatedAt()->format('M d, Y \a\t H:i') }}
-                            @else
-                                {{ __('N/A') }}
-                            @endif
-                        </small>
-                    </div>
-                    <div class="mb-0">
-                        <h6 class="text-primary">{{ __('Last Updated') }}</h6>
-                        <small class="text-muted">
-                            @if($viewData['category']->getUpdatedAt())
-                                {{ $viewData['category']->getUpdatedAt()->format('M d, Y \a\t H:i') }}
-                            @else
-                                {{ __('N/A') }}
-                            @endif
-                        </small>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card mt-3">
-                <div class="card-header">
                     <h6 class="mb-0">{{ __('Guidelines') }}</h6>
                 </div>
                 <div class="card-body">
@@ -130,7 +89,7 @@
                 </div>
                 <div class="card-body">
                     <p class="text-muted small mb-3">{{ __('Once you delete a category, there is no going back. Please be certain.') }}</p>
-                    <form action="{{ route('admin.product-category.destroy', $viewData['category']->getId()) }}"
+                    <form action="{{ route('admin.product-categories.destroy', $viewData['category']->getId()) }}"
                           method="POST">
                         @csrf
                         @method('DELETE')

@@ -6,13 +6,13 @@
             @if(session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{{ __('Close') }}"></button>
                 </div>
             @endif
             @if(session('error'))
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     {{ session('error') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{{ __('Close') }}"></button>
                 </div>
             @endif
             @if(!empty($viewData['cartProducts']) && count($viewData['products']) > 0)
@@ -26,7 +26,7 @@
                                         <div class="col-md-2">
                                             <div class="product-image-small">
                                                 @if($product->getImage())
-                                                    <img src="{{ $product->getImage() }}" alt="{{ $product->getName() }}" class="img-fluid rounded">
+                                                    <img src="{{ asset('storage/' . $product->getImage()) }}" alt="{{ $product->getName() }}" class="img-fluid rounded">
                                                 @else
                                                     <div class="placeholder-image-small">
                                                         <i class="fas fa-leaf"></i>
@@ -46,7 +46,7 @@
                                         </div>
                                         <div class="col-md-2 text-end">
                                             <div class="d-flex flex-column align-items-end">
-                                                <form action="{{ route('product.cart.remove') }}" method="POST" class="mt-1">
+                                                <form action="{{ route('cart.remove') }}" method="POST" class="mt-1">
                                                     @csrf
                                                     @method('DELETE')
                                                     <input type="hidden" name="productId" value="{{ $product->getId() }}">
@@ -88,13 +88,13 @@
                                         <strong class="text-success">${{ number_format($viewData['total'], 2) }}</strong>
                                     </div>
                                     <div class="d-grid gap-2">
-                                        <form action="{{ route('order.success') }}" method="POST">
+                                        <form action="{{ route('orders.success') }}" method="POST">
                                             @csrf
                                             <button type="submit" class="btn btn-primary-custom btn-lg w-100">
                                                 <i class="fas fa-credit-card me-2"></i>{{ __('Buy') }}
                                             </button>
                                         </form>
-                                        <a href="{{ route('product.index') }}" class="btn btn-outline-primary">
+                                        <a href="{{ route('products.index') }}" class="btn btn-outline-primary">
                                             <i class="fas fa-arrow-left me-2"></i>{{ __('Continue Shopping') }}
                                         </a>
                                     </div>
@@ -110,7 +110,7 @@
                         <i class="fas fa-shopping-cart fa-4x text-muted mb-4"></i>
                         <h3 class="text-muted">{{ __('Your cart is empty') }}</h3>
                         <p class="text-muted">{{ __('Add some products to get started') }}</p>
-                        <a href="{{ route('product.index') }}" class="btn btn-primary-custom mt-3">
+                        <a href="{{ route('products.index') }}" class="btn btn-primary-custom mt-3">
                             <i class="fas fa-shopping-bag me-2"></i>{{ __('Start Shopping') }}
                         </a>
                     </div>

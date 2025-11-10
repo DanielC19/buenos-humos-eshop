@@ -13,12 +13,24 @@ use Illuminate\View\View;
 
 class ProductController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
         $viewData = [];
-        $viewData['products'] = Product::all();
+        $search = $request->query('search');
 
-        return view('admin.product.index')->with('viewData', $viewData);
+        if ($search) {
+            $viewData['products'] = Product::where('name', 'like', "%{$search}%")
+                ->orWhere('description', 'like', "%{$search}%")
+                ->orWhere('sku', 'like', "%{$search}%")
+                ->orWhere('brand', 'like', "%{$search}%")
+                ->get();
+        } else {
+            $viewData['products'] = Product::all();
+        }
+
+        $viewData['search'] = $search;
+
+        return view('admin.products.index')->with('viewData', $viewData);
     }
 
     public function create(): View
@@ -26,15 +38,24 @@ class ProductController extends Controller
         $viewData = [];
         $viewData['categories'] = ProductCategory::all();
 
-        return view('admin.product.create')->with('viewData', $viewData);
+        return view('admin.products.create')->with('viewData', $viewData);
     }
 
     public function destroy(int $product_id): RedirectResponse
     {
         $product = Product::findOrFail($product_id);
+
+        // Delete image if it exists
+        if ($product->getImage()) {
+            $imagePath = storage_path('app/public/'.$product->getImage());
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+        }
+
         $product->delete();
 
-        return redirect()->route('admin.product.index');
+        return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully!');
     }
 
     public function edit(int $product_id): View
@@ -43,16 +64,25 @@ class ProductController extends Controller
         $viewData['categories'] = ProductCategory::all();
         $viewData['product'] = Product::findOrFail($product_id);
 
-        return view('admin.product.edit')->with('viewData', $viewData);
+        return view('admin.products.edit')->with('viewData', $viewData);
     }
 
     public function store(Request $request): RedirectResponse
     {
         $productData = $request->validate(Product::rules());
         $productData['price'] = $productData['price'] * 100;
+
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time().'_'.$image->getClientOriginalName();
+            $imagePath = $image->storeAs('products', $imageName, 'public');
+            $productData['image'] = $imagePath;
+        }
+
         Product::create($productData);
 
-        return redirect()->route('admin.product.index');
+        return redirect()->route('admin.products.index')->with('success', 'Product created successfully!');
     }
 
     public function update(Request $request, int $product_id): RedirectResponse
@@ -60,8 +90,25 @@ class ProductController extends Controller
         $productData = $request->validate(Product::rules($product_id));
         $productData['price'] = $productData['price'] * 100;
         $product = Product::findOrFail($product_id);
+
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            // Delete old image if it exists
+            if ($product->getImage()) {
+                $oldImagePath = storage_path('app/public/'.$product->getImage());
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
+            }
+
+            $image = $request->file('image');
+            $imageName = time().'_'.$image->getClientOriginalName();
+            $imagePath = $image->storeAs('products', $imageName, 'public');
+            $productData['image'] = $imagePath;
+        }
+
         $product->update($productData);
 
-        return redirect()->route('admin.product.index');
+        return redirect()->route('admin.products.index')->with('success', 'Product updated successfully!');
     }
 }

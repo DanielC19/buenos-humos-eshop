@@ -40,24 +40,11 @@ class ProductReview extends Model
         ];
     }
 
-    public function getProductId(): int
-    {
-        return $this->attributes['product_id'];
-    }
+    // setters & getters
 
-    public function setProductId(int $productId): void
+    public function getId(): int
     {
-        $this->attributes['product_id'] = $productId;
-    }
-
-    public function getUserId(): int
-    {
-        return $this->attributes['user_id'];
-    }
-
-    public function setUserId(int $userId): void
-    {
-        $this->attributes['user_id'] = $userId;
+        return $this->attributes['id'];
     }
 
     public function getScore(): int
@@ -79,6 +66,58 @@ class ProductReview extends Model
     {
         $this->attributes['comment'] = $comment;
     }
+
+    public function getProductId(): int
+    {
+        return $this->attributes['product_id'];
+    }
+
+    public function setProductId(int $productId): void
+    {
+        $this->attributes['product_id'] = $productId;
+    }
+
+    public function getUserId(): int
+    {
+        return $this->attributes['user_id'];
+    }
+
+    public function setUserId(int $userId): void
+    {
+        $this->attributes['user_id'] = $userId;
+    }
+
+    public function getProduct(): Product
+    {
+        return Product::find($this->getProductId());
+    }
+
+    public function setProduct(Product $product): void
+    {
+        $this->product()->associate($product);
+    }
+
+    public function getUser(): User
+    {
+        return User::find($this->getUserId());
+    }
+
+    public function setUser(User $user): void
+    {
+        $this->user()->associate($user);
+    }
+
+    public function getCreatedAt(): ?Carbon
+    {
+        return $this->attributes['created_at'] ? Carbon::parse($this->attributes['created_at']) : null;
+    }
+
+    public function getUpdatedAt(): ?Carbon
+    {
+        return $this->attributes['updated_at'] ? Carbon::parse($this->attributes['updated_at']) : null;
+    }
+
+    // relationships
 
     public function product(): BelongsTo
     {

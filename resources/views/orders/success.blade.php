@@ -9,7 +9,7 @@
                     <i class="fas fa-check-circle fa-4x text-success mb-4"></i>
                     <h1 class="h2 text-success mb-3">{{ __('Order Successful!') }}</h1>
                     <p class="lead text-muted mb-4">{{ __('Thank you for your purchase. Your order has been confirmed and is being processed.') }}</p>
-                    
+
                     <!-- Order Info -->
                     <div class="card mb-4">
                         <div class="card-body">
@@ -24,7 +24,7 @@
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <strong>{{ __('Total Amount:') }}</strong><br>
-                                    <span class="text-success fw-bold">${{ number_format($viewData['order']->getTotal() / 100, 2) }}</span>
+                                    <span class="text-success fw-bold">${{ number_format($viewData['order']->getTotal(), 2) }}</span>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <strong>{{ __('Status:') }}</strong><br>
@@ -75,7 +75,7 @@
 
                     <!-- Actions -->
                     <div class="d-flex flex-wrap justify-content-center gap-3 mb-3">
-                        <a href="{{ route('product.index') }}" class="btn btn-success btn-lg">
+                        <a href="{{ route('products.index') }}" class="btn btn-success btn-lg">
                             <i class="fas fa-shopping-bag me-2"></i>{{ __('Continue Shopping') }}
                         </a>
                         <a href="{{ route('home.index') }}" class="btn btn-outline-secondary btn-lg">

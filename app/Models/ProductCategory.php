@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -39,10 +40,7 @@ class ProductCategory extends Model
         ];
     }
 
-    public function products(): HasMany
-    {
-        return $this->hasMany(Product::class);
-    }
+    // setters & getters
 
     public function getId(): int
     {
@@ -79,16 +77,6 @@ class ProductCategory extends Model
         $this->attributes['banner'] = $banner;
     }
 
-    public function getProducts(): array
-    {
-        return $this->attributes['products'] ?? [];
-    }
-
-    public function setProducts(array $products): void
-    {
-        $this->attributes['products'] = $products;
-    }
-
     public function getCreatedAt(): ?Carbon
     {
         return $this->attributes['created_at'] ? Carbon::parse($this->attributes['created_at']) : null;
@@ -97,5 +85,17 @@ class ProductCategory extends Model
     public function getUpdatedAt(): ?Carbon
     {
         return $this->attributes['updated_at'] ? Carbon::parse($this->attributes['updated_at']) : null;
+    }
+
+    public function getProducts(): Collection
+    {
+        return Product::where('product_category_id', $this->getId())->get();
+    }
+
+    // relationships
+
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
     }
 }
