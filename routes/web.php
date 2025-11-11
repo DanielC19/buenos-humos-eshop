@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\AlliesController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
@@ -27,6 +28,8 @@ Route::prefix('products')->name('products.')->group(function () {
     Route::get('/', [ProductController::class, 'index'])->name('index');
     Route::get('show/{product_id}', [ProductController::class, 'show'])->name('show');
 });
+
+Route::get('/allies', [AlliesController::class, 'index'])->name('allies.index');
 
 Route::prefix('cart')->name('cart.')->group(function () {
     Route::get('/', [CartController::class, 'index'])->name('index');
