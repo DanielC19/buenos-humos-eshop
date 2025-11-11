@@ -10,6 +10,7 @@ use App\Models\Order;
 use App\Models\OrderedProduct;
 use App\Models\Product;
 use App\Services\CartService;
+use App\Services\CurrencyExchangeService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -36,7 +37,7 @@ class OrderController extends Controller
         $paymentId = str_replace(['.', '/', '#'], '', $paymentId);
 
         $orderData = [
-            'status' => OrderStatus::PENDING->value,
+            'status' => $paymentMethod === 'balance' ? OrderStatus::CONFIRMED->value : OrderStatus::PENDING->value,
             'subtotal' => $cartService->calculateSubtotal(),
             'tax' => $cartService->calculateTax(),
             'shipping' => CartService::$SHIPPING_COST,
@@ -107,10 +108,13 @@ class OrderController extends Controller
             abort(403, 'Unauthorized access to this order.');
         }
 
+        $exchangeService = app(CurrencyExchangeService::class);
+
         $viewData = [];
         $viewData['order'] = $order;
-        $viewData['newBalance'] = $order->getUser()->getBalance();
-        $viewData['previousBalance'] = $viewData['newBalance'] + $order->getTotal();
+        $viewData['total'] = $exchangeService->formatMoney($order->getTotal());
+        $viewData['newBalance'] = $exchangeService->formatMoney($order->getUser()->getBalance());
+        $viewData['previousBalance'] = $exchangeService->formatMoney($order->getUser()->getBalance() + $order->getTotal());
 
         return view('orders.success')->with('viewData', $viewData);
     }

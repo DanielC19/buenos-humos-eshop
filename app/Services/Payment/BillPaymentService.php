@@ -56,6 +56,7 @@ class BillPaymentService implements PaymentServiceInterface
             'user' => $user,
             'orderedProducts' => $order->getOrderedProducts(),
             'date' => now()->format('F d, Y'),
+            'qrLink' => config('app.url').'/orders/confirm/'.$order->getPaymentId(),
         ];
 
         return Pdf::loadView('pdf.bill', $pdfData);

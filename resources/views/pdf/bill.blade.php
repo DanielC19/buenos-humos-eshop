@@ -34,11 +34,21 @@
         .invoice-info td {
             padding: 5px;
         }
+        .info-left {
+            width: 50%;
+        }
+        .info-right {
+            width: 50%;
+            text-align: right;
+        }
         .customer-info {
             background: #f8f9fa;
             padding: 15px;
             margin-bottom: 20px;
             border-radius: 5px;
+        }
+        .customer-info-title {
+            margin-top: 0;
         }
         .items-table {
             width: 100%;
@@ -79,6 +89,25 @@
             border-top: 1px solid #ddd;
             padding-top: 20px;
         }
+        .qr-section {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+        }
+        .qr-section p {
+            margin-bottom: 10px;
+        }
+        .qr-section img {
+            display: block;
+            margin: 0 auto;
+        }
+        .qr-section .qr-url {
+            font-size: 10px;
+            color: #666;
+            margin-top: 10px;
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -90,12 +119,12 @@
     <div class="invoice-info">
         <table>
             <tr>
-                <td style="width: 50%;">
+                <td class="info-left">
                     <strong>{{ __('Invoice Number') }}:</strong> #{{ $order->getId() }}<br>
                     <strong>{{ __('Payment ID') }}:</strong> {{ $order->getPaymentId() }}<br>
                     <strong>{{ __('Date') }}:</strong> {{ $date }}
                 </td>
-                <td style="width: 50%; text-align: right;">
+                <td class="info-right">
                     <strong>{{ __('Status') }}:</strong> {{ __(ucfirst($order->getStatus())) }}
                 </td>
             </tr>
@@ -103,10 +132,17 @@
     </div>
 
     <div class="customer-info">
-        <h3 style="margin-top: 0;">{{ __('Customer Information') }}</h3>
+        <h3 class="customer-info-title">{{ __('Customer Information') }}</h3>
         <strong>{{ __('Name') }}:</strong> {{ $user->getFullName() }}<br>
         <strong>{{ __('Email') }}:</strong> {{ $user->getEmail() }}<br>
         <strong>{{ __('Phone') }}:</strong> {{ $user->getPhone() }}
+    </div>
+
+    <div class="qr-section">
+        <p><strong>{{ __('Scan to confirm payment') }}</strong></p>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data={{ urlencode($qrLink) }}"
+            alt="{{ __('Payment Confirmation QR Code') }}">
+        <a href="{{ $qrLink }}" class="qr-url">{{ $qrLink }}</a>
     </div>
 
     <h3>{{ __('Order Items') }}</h3>
