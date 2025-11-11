@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\AlliesController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
@@ -16,6 +18,8 @@ Auth::routes();
 Route::get('auth/google', [GoogleController::class, 'redirect'])->name('auth.google');
 Route::get('auth/google/callback', [GoogleController::class, 'callback']);
 
+Route::get('/locale/{locale}', [LocaleController::class, 'switch'])->name('locale.switch');
+
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
 Route::get('product-categories/{category_id}', [ProductCategoryController::class, 'show'])->name('product-categories.show');
@@ -25,10 +29,16 @@ Route::prefix('products')->name('products.')->group(function () {
     Route::get('show/{product_id}', [ProductController::class, 'show'])->name('show');
 });
 
+Route::get('/allies', [AlliesController::class, 'index'])->name('allies.index');
+
 Route::prefix('cart')->name('cart.')->group(function () {
     Route::get('/', [CartController::class, 'index'])->name('index');
     Route::post('add', [CartController::class, 'add'])->name('add');
     Route::delete('remove', [CartController::class, 'remove'])->name('remove');
 });
 
-Route::post('orders/success', [OrderController::class, 'success'])->name('orders.success');
+Route::prefix('orders')->name('orders.')->group(function () {
+    Route::post('create', [OrderController::class, 'create'])->name('create');
+    Route::get('confirm/{payment_id}', [OrderController::class, 'confirm'])->name('confirm');
+    Route::get('success/{order_id}', [OrderController::class, 'success'])->name('success');
+});

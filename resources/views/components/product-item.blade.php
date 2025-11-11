@@ -11,10 +11,10 @@
                 @endif
             </div>
             <div class="p-3">
-                <h6>{{ $product->getName() }}</h6>
-                <p class="text-muted small">{{ $product->getDescription() }}</p>
+                <h6>{{ __($product->getName()) }}</h6>
+                <p class="text-muted small">{{ __($product->getDescription()) }}</p>
                 <div class="d-flex justify-content-between align-items-center">
-                    <span class="price">${{ number_format($product->getPrice(), 2) }}</span>
+                    <span class="price">{{ $product->getDisplayPrice() }}</span>
                     @if ($product->checkStock())
                         <form action="{{ route('cart.add') }}" method="POST" class="d-inline">
                             @csrf

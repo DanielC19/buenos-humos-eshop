@@ -8,7 +8,7 @@ class CartService
 {
     public static int $TAX_PERCENTAGE = 19;
 
-    public static int $SHIPPING_COST = 5;
+    public static int $SHIPPING_COST = 500;
 
     private array $cartProducts;
 

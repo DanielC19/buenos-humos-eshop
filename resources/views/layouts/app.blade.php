@@ -35,6 +35,9 @@
                         <a class="nav-link" href="{{ route('products.index') }}">{{ __('Products') }}</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ route('allies.index') }}">{{ __('Allies') }}</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ route('cart.index') }}">{{ __('Cart') }}</a>
                     </li>
                     @auth
@@ -59,7 +62,7 @@
                                 @endif
 
                                 <p class="dropdown-item">
-                                    {{ __('Balance') }}: <span class="text-success fw-bold">${{ number_format(Auth::user()->getBalance(), 2) }}</span>
+                                    {{ __('Balance') }}: <span class="text-success fw-bold">{{ Auth::user()->getDisplayBalance() }}</span>
                                 </p>
 
                                 <a class="dropdown-item" onclick="document.getElementById('logout-form').submit();">
@@ -76,6 +79,17 @@
                             <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                         </li>
                     @endauth
+
+                    {{-- Locale Switcher --}}
+                    <li class="nav-item ms-4 d-flex align-items-center">
+                        <a href="{{ route('locale.switch', 'es') }}" class="nav-link" title="Switch to Spanish">
+                            🇨🇴 CO
+                        </a>
+                        <span class="text-white">|</span>
+                        <a href="{{ route('locale.switch', 'en') }}" class="nav-link" title="Switch to English">
+                            🇺🇸 US
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>

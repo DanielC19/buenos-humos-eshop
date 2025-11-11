@@ -6,12 +6,12 @@
         <h2 class="mb-0">{{ __('Products Management') }}</h2>
         <div class="d-flex gap-2">
             <form action="{{ route('admin.products.index') }}" method="GET">
-                <div class="input-group input-group-sm" style="width: 250px;">
+                <div class="input-group input-group-sm">
                     <input type="text"
-                           class="form-control"
-                           name="search"
-                           placeholder="{{ __('Search products...') }}"
-                           value="{{ $viewData['search'] ?? '' }}">
+                        class="form-control"
+                        name="search"
+                        placeholder="{{ __('Search products...') }}"
+                        value="{{ $viewData['search'] ?? '' }}">
                     <button class="btn btn-outline-secondary" type="submit">
                         <i class="fas fa-search"></i>
                     </button>
@@ -81,12 +81,10 @@
                                             <div class="flex-shrink-0 me-3">
                                                 @if($product->getImage())
                                                     <img src="{{ asset('storage/' . $product->getImage()) }}"
-                                                         alt="{{ $product->getName() }}"
-                                                         class="rounded"
-                                                         style="width: 50px; height: 50px; object-fit: cover;">
+                                                        alt="{{ $product->getName() }}"
+                                                        class="admin-product-image rounded">
                                                 @else
-                                                    <div class="bg-light rounded d-flex align-items-center justify-content-center"
-                                                         style="width: 50px; height: 50px;">
+                                                    <div class="admin-product-image bg-light rounded d-flex align-items-center justify-content-center"
                                                         <i class="fas fa-image text-muted"></i>
                                                     </div>
                                                 @endif
@@ -127,13 +125,13 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <div class="btn-group btn-group-sm">
-                                            <a href="{{ route('admin.products.edit', $product->getId()) }}" class="btn btn-outline-primary" title="{{ __('Edit') }}">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                            <form action="{{ route('admin.products.destroy', $product->getId()) }}"
-                                                  method="POST"
-                                                  style="display: inline;">
+                                        <div class="btn-group gap-1">
+                                            <span>
+                                                <a href="{{ route('admin.products.edit', $product->getId()) }}" class="btn btn-outline-primary" title="{{ __('Edit') }}">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                            </span>
+                                            <form action="{{ route('admin.products.destroy', $product->getId()) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"

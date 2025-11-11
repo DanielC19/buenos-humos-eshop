@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Services\CurrencyExchangeService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -208,6 +209,13 @@ class Product extends Model
     public function checkStock(int $quantity = 1): bool
     {
         return $this->getStock() >= $quantity;
+    }
+
+    public function getDisplayPrice(): string
+    {
+        $exchangeService = app(CurrencyExchangeService::class);
+
+        return $exchangeService->formatMoney($this->getPrice());
     }
 
     // relationships
