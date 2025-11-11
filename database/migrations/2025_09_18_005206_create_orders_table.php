@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Enums\OrderStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->enum('status', OrderStatus::cases())->default(OrderStatus::VALIDATING);
+            $table->enum('status', ['validating', 'confirmed', 'cancelled'])->default('validating');
             $table->integer('subtotal');
             $table->integer('tax');
             $table->integer('shipping');

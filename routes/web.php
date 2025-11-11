@@ -34,4 +34,8 @@ Route::prefix('cart')->name('cart.')->group(function () {
     Route::delete('remove', [CartController::class, 'remove'])->name('remove');
 });
 
-Route::post('orders/success', [OrderController::class, 'success'])->name('orders.success');
+Route::prefix('orders')->name('orders.')->group(function () {
+    Route::post('create', [OrderController::class, 'create'])->name('create');
+    Route::get('confirm/{payment_id}', [OrderController::class, 'confirm'])->name('confirm');
+    Route::get('success/{order_id}', [OrderController::class, 'success'])->name('success');
+});

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\OrderStatus;
-use app\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -22,6 +21,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $shipping
  * @property int $total
  * @property string $payment_id
+ * @property string|null $invoice_path
  * @property int $user_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -37,6 +37,8 @@ class Order extends Model
         'shipping',
         'total',
         'payment_id',
+        'payment_method',
+        'invoice_path',
         'user_id',
     ];
 
@@ -56,6 +58,7 @@ class Order extends Model
             'shipping' => ['required', 'numeric'],
             'total' => ['required', 'numeric'],
             'payment_id' => ['required', 'string', 'max:255'],
+            'payment_method' => ['required', 'string', 'max:100'],
             'user_id' => ['required', 'integer', 'exists:users,id'],
         ];
     }
@@ -125,6 +128,26 @@ class Order extends Model
     public function setPaymentId(string $paymentId): void
     {
         $this->attributes['paymentId'] = $paymentId;
+    }
+
+    public function getPaymentMethod(): string
+    {
+        return $this->attributes['payment_method'];
+    }
+
+    public function setPaymentMethod(string $paymentMethod): void
+    {
+        $this->attributes['payment_method'] = $paymentMethod;
+    }
+
+    public function getInvoicePath(): ?string
+    {
+        return $this->attributes['invoice_path'] ?? null;
+    }
+
+    public function setInvoicePath(?string $invoicePath): void
+    {
+        $this->attributes['invoice_path'] = $invoicePath;
     }
 
     public function getUserId(): int
