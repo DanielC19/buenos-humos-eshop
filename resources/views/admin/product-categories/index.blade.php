@@ -68,15 +68,15 @@
                                         </small>
                                     </td>
                                     <td>
-                                        <div class="btn-group btn-group-sm">
-                                            <a href="{{ route('admin.product-categories.edit', $category->getId()) }}"
-                                               class="btn btn-outline-primary"
-                                               title="{{ __('Edit') }}">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                            <form action="{{ route('admin.product-categories.destroy', $category->getId()) }}"
-                                                  method="POST"
-                                                  style="display: inline;">
+                                        <div class="btn-group gap-1">
+                                            <span>
+                                                <a href="{{ route('admin.product-categories.edit', $category->getId()) }}"
+                                                    class="btn btn-outline-primary"
+                                                    title="{{ __('Edit') }}">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                            </span>
+                                            <form action="{{ route('admin.product-categories.destroy', $category->getId()) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"

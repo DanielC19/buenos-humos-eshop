@@ -37,6 +37,7 @@ class User extends Authenticatable
         'name',
         'lastname',
         'email',
+        'google_id',
         'phone',
         'birthdate',
         'role',
@@ -105,6 +106,16 @@ class User extends Authenticatable
     public function setEmail(string $email): void
     {
         $this->attributes['email'] = $email;
+    }
+
+    public function getGoogleId(): ?string
+    {
+        return $this->attributes['google_id'];
+    }
+
+    public function setGoogleId(?string $googleId): void
+    {
+        $this->attributes['google_id'] = $googleId;
     }
 
     public function getPhone(): string

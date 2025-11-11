@@ -37,4 +37,14 @@ return [
         ],
     ],
 
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('GOOGLE_URL'),
+    ],
+
+    'exchangerate' => [
+        'api_key' => env('EXCHANGE_RATE_API_KEY'),
+        'url' => env('EXCHANGE_RATE_API_URL', 'https://v6.exchangerate-api.com/v6'),
+    ],
 ];
