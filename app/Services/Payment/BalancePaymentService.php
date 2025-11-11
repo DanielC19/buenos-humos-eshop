@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Services\Payment;
 
+use App\Interfaces\PaymentServiceInterface;
 use App\Models\Order;
 use App\Models\User;
-use App\Interfaces\PaymentServiceInterface;
 
 class BalancePaymentService implements PaymentServiceInterface
 {

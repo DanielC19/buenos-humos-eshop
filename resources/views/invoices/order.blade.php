@@ -96,7 +96,7 @@
                     <strong>{{ __('Date') }}:</strong> {{ $date }}
                 </td>
                 <td style="width: 50%; text-align: right;">
-                    <strong>{{ __('Status') }}:</strong> {{ ucfirst($order->getStatus()) }}
+                    <strong>{{ __('Status') }}:</strong> {{ __(ucfirst($order->getStatus())) }}
                 </td>
             </tr>
         </table>

@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace App\Services\Payment;
 
 use App\Enums\OrderStatus;
+use App\Interfaces\PaymentServiceInterface;
 use App\Models\Order;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
-use App\Interfaces\PaymentServiceInterface;
+use Barryvdh\DomPDF\PDF as PDFDocument;
 
 class InvoicePaymentService implements PaymentServiceInterface
 {
@@ -48,7 +49,7 @@ class InvoicePaymentService implements PaymentServiceInterface
         ];
     }
 
-    private function generateInvoice(Order $order, User $user): mixed
+    private function generateInvoice(Order $order, User $user): PDFDocument
     {
         $data = [
             'order' => $order,

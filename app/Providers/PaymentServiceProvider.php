@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use App\Interfaces\PaymentServiceInterface;
 use App\Services\Payment\BalancePaymentService;
 use App\Services\Payment\InvoicePaymentService;
+use Illuminate\Support\ServiceProvider;
 use InvalidArgumentException;
 
 class PaymentServiceProvider extends ServiceProvider
@@ -13,11 +15,12 @@ class PaymentServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(PaymentServiceInterface::class, function ($app, $params) {
-            $paymentMethod = $params["paymentMethod"] ?? null;
+            $paymentMethod = $params['paymentMethod'] ?? null;
+
             return match ($paymentMethod) {
-                'balance' => new BalancePaymentService(),
-                'invoice' => new InvoicePaymentService(),
-                default => throw new InvalidArgumentException("Invalid payment method"),
+                'balance' => new BalancePaymentService,
+                'invoice' => new InvoicePaymentService,
+                default => throw new InvalidArgumentException('Invalid payment method'),
             };
         });
     }

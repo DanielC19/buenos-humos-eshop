@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Enums\OrderStatus;
+use App\Interfaces\PaymentServiceInterface;
 use App\Models\Order;
 use App\Models\OrderedProduct;
 use App\Models\Product;
 use App\Services\CartService;
-use App\Interfaces\PaymentServiceInterface;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -32,7 +32,7 @@ class OrderController extends Controller
         $paymentService = app(PaymentServiceInterface::class, ['paymentMethod' => $paymentMethod]);
 
         $orderData = [
-            'status' => OrderStatus::CONFIRMED->value,
+            'status' => OrderStatus::PENDING->value,
             'subtotal' => $cartService->calculateSubtotal(),
             'tax' => $cartService->calculateTax(),
             'shipping' => CartService::$SHIPPING_COST,
