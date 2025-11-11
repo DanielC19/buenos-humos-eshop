@@ -1,59 +1,32 @@
-# Multi-stage build for production
-FROM php:8.2-fpm-alpine AS base
+FROM php:8.3.11-apache
+RUN apt-get update -y && apt-get install -y openssl zip unzip git
+RUN docker-php-ext-install pdo_mysql
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Set working directory
+COPY . /var/www/html
+
+COPY ./public/.htaccess /var/www/html/public/.htaccess
 WORKDIR /var/www/html
 
-# Install system dependencies and PHP extensions
-RUN apk add --no-cache \
-    git \
-    curl \
-    libpng-dev \
-    libxml2-dev \
-    zip \
-    unzip \
-    oniguruma-dev \
-    freetype-dev \
-    libjpeg-turbo-dev \
-    libzip-dev \
-    icu-dev \
-    bash \
-    mysql-client \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install \
-    pdo_mysql \
-    mbstring \
-    exif \
-    pcntl \
-    bcmath \
-    gd \
-    zip \
-    intl \
-    opcache
+ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 
-# Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+RUN sed -ri -e "s!/var/www/html!${APACHE_DOCUMENT_ROOT}!g" /etc/apache2/sites-available/*.conf \
+    && sed -ri -e "s!<Directory /var/www/html>!<Directory ${APACHE_DOCUMENT_ROOT}>!g" /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
-# Copy composer files first for better layer caching
-COPY composer.json composer.lock ./
+RUN composer install \
+    --ignore-platform-reqs \
+    --no-interaction \
+    --no-plugins \
+    --no-scripts \
+    --prefer-dist
 
-# Install PHP dependencies (including dev dependencies)
-RUN composer install --no-scripts --no-autoloader --prefer-dist
+RUN php artisan key:generate
+RUN php artisan migrate
+RUN php artisan db:seed
+RUN php artisan storage:link
+RUN chmod -R 777 storage
 
-# Copy application code
-COPY . .
+RUN chown -R www-data:www-data /var/www/html
 
-# Complete composer installation
-RUN composer install --optimize-autoloader --no-interaction \
-    && composer dump-autoload --optimize
-
-# Set proper permissions
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html/storage \
-    && chmod -R 755 /var/www/html/bootstrap/cache
-
-# Expose PHP-FPM port
-EXPOSE 9000
-
-# Start PHP-FPM
-CMD ["php-fpm"]
+RUN a2enmod rewrite
+RUN service apache2 restart
