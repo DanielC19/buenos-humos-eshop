@@ -35,6 +35,9 @@
                         <a class="nav-link" href="{{ route('products.index') }}">{{ __('Products') }}</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ route('allies.index') }}">{{ __('Allies') }}</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ route('cart.index') }}">{{ __('Cart') }}</a>
                     </li>
                     @auth
