@@ -72,20 +72,20 @@
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between mb-2">
                                         <span>{{ __('Subtotal') }}</span>
-                                        <span>${{ number_format($viewData['subtotal'], 2) }}</span>
+                                        <span>{{ $viewData['subtotal'] }}</span>
                                     </div>
                                     <div class="d-flex justify-content-between mb-2">
                                         <span>{{ __('Shipping') }}</span>
-                                        <span>${{ number_format($viewData['shipping'], 2) }}</span>
+                                        <span>{{ $viewData['shipping'] }}</span>
                                     </div>
                                     <div class="d-flex justify-content-between mb-2">
                                         <span>{{ __('Tax') }}</span>
-                                        <span>${{ number_format($viewData['tax'], 2) }}</span>
+                                        <span>{{ $viewData['tax'] }}</span>
                                     </div>
                                     <hr>
                                     <div class="d-flex justify-content-between mb-3">
                                         <strong>{{ __('Total') }}</strong>
-                                        <strong class="text-success">${{ number_format($viewData['total'], 2) }}</strong>
+                                        <strong class="text-success">{{ $viewData['total'] }}</strong>
                                     </div>
 
                                     <!-- Balance Information -->
@@ -93,7 +93,7 @@
                                         <div class="alert alert-info mb-3">
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <span><i class="fas fa-wallet me-2"></i>{{ __('Your Balance') }}:</span>
-                                                <strong>${{ number_format($viewData['userBalance'], 2) }}</strong>
+                                                <strong>{{ $viewData['userBalance'] }}</strong>
                                             </div>
                                             @if(!$viewData['canPayWithBalance'])
                                                 <small class="text-danger d-block mt-2">

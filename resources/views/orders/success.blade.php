@@ -24,7 +24,7 @@
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <strong>{{ __('Total Amount:') }}</strong><br>
-                                    <span class="text-success fw-bold">${{ number_format($viewData['order']->getTotal(), 2) }}</span>
+                                    <span class="text-success fw-bold">{{ $viewData['total'] }}</span>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <strong>{{ __('Status:') }}</strong><br>
@@ -59,19 +59,19 @@
                                         <div class="col-md-4 mb-3">
                                             <div class="text-center p-3 bg-light rounded">
                                                 <small class="text-muted d-block">{{ __('Previous Balance') }}</small>
-                                                <h4 class="mb-0">${{ number_format($viewData['previousBalance'], 2) }}</h4>
+                                                <h4 class="mb-0">{{ $viewData['previousBalance'] }}</h4>
                                             </div>
                                         </div>
                                         <div class="col-md-4 mb-3">
                                             <div class="text-center p-3 bg-light rounded">
                                                 <small class="text-muted d-block">{{ __('Amount Paid') }}</small>
-                                                <h4 class="mb-0 text-danger">-${{ number_format($viewData['order']->getTotal(), 2) }}</h4>
+                                                <h4 class="mb-0 text-danger">-{{ $viewData['total'] }}</h4>
                                             </div>
                                         </div>
                                         <div class="col-md-4 mb-3">
                                             <div class="text-center p-3 bg-success text-white rounded">
                                                 <small class="d-block opacity-75">{{ __('Remaining Balance') }}</small>
-                                                <h4 class="mb-0">${{ number_format($viewData['newBalance'], 2) }}</h4>
+                                                <h4 class="mb-0">{{ $viewData['newBalance'] }}</h4>
                                             </div>
                                         </div>
                                     </div>

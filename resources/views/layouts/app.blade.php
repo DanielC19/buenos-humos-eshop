@@ -59,7 +59,7 @@
                                 @endif
 
                                 <p class="dropdown-item">
-                                    {{ __('Balance') }}: <span class="text-success fw-bold">${{ number_format(Auth::user()->getBalance(), 2) }}</span>
+                                    {{ __('Balance') }}: <span class="text-success fw-bold">{{ Auth::user()->getDisplayBalance() }}</span>
                                 </p>
 
                                 <a class="dropdown-item" onclick="document.getElementById('logout-form').submit();">
