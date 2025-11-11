@@ -25,9 +25,31 @@ class CurrencyExchangeService
     }
 
     /**
+     * Format money based on the current locale
+     */
+    public function formatMoney(int $amount): string
+    {
+        $locale = app()->getLocale();
+
+        if ($locale === 'es') {
+            // Convert USD to COP for Spanish locale
+            $usdToCopRate = $this->getUsdToCopRate();
+
+            $displayNumber = number_format(($amount * $usdToCopRate) / 100, 0, '', '.');
+
+            return "COP $$displayNumber";
+        }
+
+        // Return USD price
+        $displayNumber = number_format($amount / 100, 2, '.', ',');
+
+        return "USD $$displayNumber";
+    }
+
+    /**
      * Get the USD to COP exchange rate (cached for 24 hours)
      */
-    public function getUsdToCopRate(): int
+    private function getUsdToCopRate(): int
     {
         return Cache::remember(self::CACHE_KEY, self::CACHE_TTL, function () {
             return $this->fetchUsdToCopRate();

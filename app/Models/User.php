@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\UserRole;
+use App\Services\CurrencyExchangeService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -185,6 +186,13 @@ class User extends Authenticatable
     public function getFullName(): string
     {
         return $this->attributes['name'].' '.$this->attributes['lastname'];
+    }
+
+    public function getDisplayBalance(): string
+    {
+        $exchangeService = app(CurrencyExchangeService::class);
+
+        return $exchangeService->formatMoney($this->getBalance());
     }
 
     /**

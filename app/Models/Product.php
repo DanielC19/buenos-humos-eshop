@@ -213,22 +213,9 @@ class Product extends Model
 
     public function getDisplayPrice(): string
     {
-        $locale = app()->getLocale();
+        $exchangeService = app(CurrencyExchangeService::class);
 
-        if ($locale === 'es') {
-            // Convert USD to COP for Spanish locale
-            $exchangeService = app(CurrencyExchangeService::class);
-            $usdToCopRate = $exchangeService->getUsdToCopRate();
-
-            $displayNumber = number_format(($this->getPrice() * $usdToCopRate) / 100, 0, '', '.');
-
-            return "COP $$displayNumber";
-        }
-
-        // Return USD price
-        $displayNumber = number_format($this->getPrice() / 100, 2, '.', ',');
-
-        return "USD $$displayNumber";
+        return $exchangeService->formatMoney($this->getPrice());
     }
 
     // relationships
