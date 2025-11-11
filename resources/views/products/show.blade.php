@@ -37,15 +37,15 @@
                 <!-- Product Info -->
                 <div class="col-lg-6">
                     <div class="product-details">
-                        <h1 class="h2 mb-3">{{ $viewData['product']->getName() }}</h1>
+                        <h1 class="h2 mb-3">{{ __($viewData['product']->getName()) }}</h1>
 
                         <div class="price-section mb-4">
-                            <span class="price-large">${{ number_format($viewData['product']->getPrice(), 2) }}</span>
+                            <span class="price-large">{{ $viewData['product']->getDisplayPrice() }}</span>
                         </div>
 
                         <div class="description-section mb-4">
                             <h5>{{ __('Description') }}</h5>
-                            <p class="text-muted">{{ $viewData['product']->getDescription() }}</p>
+                            <p class="text-muted">{{ __($viewData['product']->getDescription()) }}</p>
                         </div>
 
                         <!-- Add to Cart Form -->

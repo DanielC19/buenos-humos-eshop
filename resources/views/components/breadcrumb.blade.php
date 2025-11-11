@@ -12,7 +12,7 @@
                 <li class="breadcrumb-item active" aria-current="page">{{ $item['label'] }}</li>
             @else
                 <li class="breadcrumb-item">
-                    <a href="{{ $item['url'] }}">{{ $item['label'] }}</a>
+                    <a href="{{ $item['url'] }}">{{ __($item['label']) }}</a>
                 </li>
             @endif
         @endforeach

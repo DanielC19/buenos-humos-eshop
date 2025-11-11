@@ -37,8 +37,8 @@
                                 <div class="category-icon">
                                     <i class="fas fa-leaf"></i>
                                 </div>
-                                <h5>{{ $category->getName() }}</h5>
-                                <p class="text-muted">{{ $category->getDescription() }}</p>
+                                <h5>{{ __($category->getName()) }}</h5>
+                                <p class="text-muted">{{ __($category->getDescription()) }}</p>
                                 <button class="btn btn-sm btn-outline-primary">
                                     {{ __('See Products') }}
                                 </button>
