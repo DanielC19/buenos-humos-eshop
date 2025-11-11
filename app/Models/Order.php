@@ -38,6 +38,7 @@ class Order extends Model
         'shipping',
         'total',
         'payment_id',
+        'payment_method',
         'invoice_path',
         'user_id',
     ];
@@ -58,6 +59,7 @@ class Order extends Model
             'shipping' => ['required', 'numeric'],
             'total' => ['required', 'numeric'],
             'payment_id' => ['required', 'string', 'max:255'],
+            'payment_method' => ['required', 'string', 'max:100'],
             'user_id' => ['required', 'integer', 'exists:users,id'],
         ];
     }
@@ -127,6 +129,16 @@ class Order extends Model
     public function setPaymentId(string $paymentId): void
     {
         $this->attributes['paymentId'] = $paymentId;
+    }
+
+    public function getPaymentMethod(): string
+    {
+        return $this->attributes['payment_method'];
+    }
+
+    public function setPaymentMethod(string $paymentMethod): void
+    {
+        $this->attributes['payment_method'] = $paymentMethod;
     }
 
     public function getInvoicePath(): ?string

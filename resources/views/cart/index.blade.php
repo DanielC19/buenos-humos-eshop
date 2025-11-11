@@ -104,9 +104,8 @@
                                     @endauth
 
                                     <!-- Payment Form -->
-                                    <form action="{{ route('orders.success') }}" method="POST" id="checkoutForm">
+                                    <form action="{{ route('orders.create') }}" method="POST" id="checkoutForm">
                                         @csrf
-                                        
                                         <!-- Payment Method Selection -->
                                         <div class="mb-3">
                                             <label class="form-label"><strong>{{ __('Payment Method') }}</strong></label>
@@ -120,7 +119,7 @@
                                                         </label>
                                                     </div>
                                                 @endif
-                                                
+
                                                 <div class="form-check mb-2">
                                                     <input class="form-check-input" type="radio" name="payment_method" id="paymentInvoice" value="invoice" {{ !$viewData['canPayWithBalance'] ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="paymentInvoice">

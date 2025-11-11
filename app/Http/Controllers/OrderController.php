@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function success(Request $request): View|RedirectResponse
+    public function create(Request $request): RedirectResponse
     {
         $cartProducts = session()->get('cart', []);
         $products = Product::whereIn('id', array_keys($cartProducts))->get();
@@ -31,13 +31,17 @@ class OrderController extends Controller
 
         $paymentService = app(PaymentServiceInterface::class, ['paymentMethod' => $paymentMethod]);
 
+        $paymentId = uniqid('pay_', true);
+        $paymentId = str_replace(['.', '/', '#'], '', $paymentId);
+
         $orderData = [
             'status' => OrderStatus::PENDING->value,
             'subtotal' => $cartService->calculateSubtotal(),
             'tax' => $cartService->calculateTax(),
             'shipping' => CartService::$SHIPPING_COST,
             'total' => $cartService->calculateTotal(),
-            'payment_id' => uniqid('pay_', true),
+            'payment_id' => $paymentId,
+            'payment_method' => $paymentMethod,
             'user_id' => $request->user()->getId(),
         ];
         $order = Order::create($orderData);
@@ -54,9 +58,6 @@ class OrderController extends Controller
             $product->save();
         }
 
-        // Store balance before payment for display
-        $previousBalance = $request->user()->getBalance();
-
         // Process payment using the injected service
         if (! $paymentService->processPayment($order, $request->user())) {
             // Rollback if payment fails
@@ -71,16 +72,31 @@ class OrderController extends Controller
 
         session()->forget('cart');
 
+        return redirect()->route('orders.success', ['order_id' => $order->getId()]);
+    }
+
+    public function confirm(string $paymentId): RedirectResponse
+    {
+        $order = Order::where('payment_id', $paymentId)->firstOrFail();
+
+        $order->setStatus(OrderStatus::CONFIRMED->value);
+        $order->save();
+
+        return redirect()->route('orders.success', ['order_id' => $order->getId()]);
+    }
+
+    public function success(int $orderId): View
+    {
+        $order = Order::findOrFail($orderId);
+
+        if ($order->getUserId() !== auth()->user()->getId()) {
+            abort(403, 'Unauthorized access to this order.');
+        }
+
         $viewData = [];
         $viewData['order'] = $order;
-        $viewData['paymentMethod'] = $paymentMethod;
-
-        // Add balance information for balance payments
-        if ($paymentMethod === 'balance') {
-            $viewData['previousBalance'] = $previousBalance;
-            $viewData['newBalance'] = $request->user()->getBalance();
-            $viewData['paidAmount'] = $order->getTotal();
-        }
+        $viewData['newBalance'] = $order->getUser()->getBalance();
+        $viewData['previousBalance'] = $viewData['newBalance'] + $order->getTotal();
 
         return view('orders.success')->with('viewData', $viewData);
     }
