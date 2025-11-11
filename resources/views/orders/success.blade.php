@@ -76,32 +76,44 @@
                                         </div>
                                     </div>
                                 @endif
+                                @if($viewData['order']->getInvoicePath())
+                                    <div class="text-center p-4 bg-light rounded">
+                                        <i class="fas fa-file-pdf fa-3x text-danger mb-3"></i>
+                                        <h5>{{ __('Your Invoice is Ready') }}</h5>
+                                        <a href="{{ asset('storage/' . $viewData['order']->getInvoicePath()) }}"
+                                            class="btn btn-primary-custom"
+                                            download="invoice_{{ $viewData['order']->getId() }}.pdf"
+                                            target="_blank">
+                                            <i class="fas fa-download me-2"></i>{{ __('Download Invoice (PDF)') }}
+                                        </a>
+                                    </div>
+                                @endif
                                 <div class="alert alert-info mb-0">
                                     <i class="fas fa-info-circle me-2"></i>{{ __('Your payment has been processed successfully.') }}
                                 </div>
                             </div>
                         </div>
                     @else
-                        <!-- Invoice Payment Details -->
+                        <!-- Invoice Bill Details -->
                         <div class="card mb-4">
                             <div class="card-header bg-warning text-dark">
-                                <h5 class="mb-0"><i class="fas fa-file-invoice me-2"></i>{{ __('Invoice Generated') }}</h5>
+                                <h5 class="mb-0"><i class="fas fa-file-invoice me-2"></i>{{ __('Bill Generated') }}</h5>
                             </div>
                             <div class="card-body">
                                 <div class="alert alert-warning mb-3">
-                                    <i class="fas fa-exclamation-triangle me-2"></i>{{ __('This order is pending payment. Please download your invoice and proceed with payment using your preferred method.') }}
+                                    <i class="fas fa-exclamation-triangle me-2"></i>{{ __('This order is pending payment. Please download your bill and proceed with payment using your preferred method.') }}
                                 </div>
 
                                 @if($viewData['order']->getInvoicePath())
                                     <div class="text-center p-4 bg-light rounded">
                                         <i class="fas fa-file-pdf fa-3x text-danger mb-3"></i>
-                                        <h5>{{ __('Your Invoice is Ready') }}</h5>
-                                        <p class="text-muted">{{ __('Download your invoice and complete the payment at your convenience.') }}</p>
+                                        <h5>{{ __('Your Bill is Ready') }}</h5>
+                                        <p class="text-muted">{{ __('Download your bill and complete the payment at your convenience.') }}</p>
                                         <a href="{{ asset('storage/' . $viewData['order']->getInvoicePath()) }}"
-                                           class="btn btn-danger btn-lg"
-                                           download="invoice_{{ $viewData['order']->getId() }}.pdf"
-                                           target="_blank">
-                                            <i class="fas fa-download me-2"></i>{{ __('Download Invoice (PDF)') }}
+                                            class="btn btn-danger btn-lg"
+                                            download="bill_{{ $viewData['order']->getId() }}.pdf"
+                                            target="_blank">
+                                            <i class="fas fa-download me-2"></i>{{ __('Download Bill (PDF)') }}
                                         </a>
                                     </div>
                                 @endif

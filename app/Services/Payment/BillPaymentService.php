@@ -11,19 +11,19 @@ use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Barryvdh\DomPDF\PDF as PDFDocument;
 
-class InvoicePaymentService implements PaymentServiceInterface
+class BillPaymentService implements PaymentServiceInterface
 {
     public function processPayment(Order $order, User $user): bool
     {
         // Generate invoice PDF
-        $pdf = $this->generateInvoice($order, $user);
+        $pdf = $this->generateBill($order, $user);
 
         // Store the PDF
-        $invoicePath = 'invoices/invoice_'.$order->getId().'.pdf';
-        $pdf->save(storage_path('app/public/'.$invoicePath));
+        $billPath = 'bills/bill_'.$order->getId().'.pdf';
+        $pdf->save(storage_path('app/public/'.$billPath));
 
         // Update order with invoice path and status
-        $order->setInvoicePath($invoicePath);
+        $order->setInvoicePath($billPath);
         $order->setStatus(OrderStatus::PENDING->value); // Order is pending until payment is received
         $order->save();
 
@@ -49,15 +49,15 @@ class InvoicePaymentService implements PaymentServiceInterface
         ];
     }
 
-    private function generateInvoice(Order $order, User $user): PDFDocument
+    private function generateBill(Order $order, User $user): PDFDocument
     {
-        $data = [
+        $pdfData = [
             'order' => $order,
             'user' => $user,
             'orderedProducts' => $order->getOrderedProducts(),
             'date' => now()->format('F d, Y'),
         ];
 
-        return Pdf::loadView('invoices.order', $data);
+        return Pdf::loadView('pdf.bill', $pdfData);
     }
 }

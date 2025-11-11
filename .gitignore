@@ -22,6 +22,8 @@
 !/storage/app/public/products/.gitkeep
 /storage/app/public/invoices/*
 !/storage/app/public/invoices/.gitkeep
+/storage/app/public/bills/*
+!/storage/app/public/bills/.gitkeep
 /vendor
 Homestead.json
 Homestead.yaml

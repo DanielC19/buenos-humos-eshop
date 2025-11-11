@@ -6,7 +6,7 @@ namespace App\Providers;
 
 use App\Interfaces\PaymentServiceInterface;
 use App\Services\Payment\BalancePaymentService;
-use App\Services\Payment\InvoicePaymentService;
+use App\Services\Payment\BillPaymentService;
 use Illuminate\Support\ServiceProvider;
 use InvalidArgumentException;
 
@@ -19,7 +19,7 @@ class PaymentServiceProvider extends ServiceProvider
 
             return match ($paymentMethod) {
                 'balance' => new BalancePaymentService,
-                'invoice' => new InvoicePaymentService,
+                'invoice' => new BillPaymentService,
                 default => throw new InvalidArgumentException('Invalid payment method'),
             };
         });

@@ -10,6 +10,7 @@ use App\Models\Order;
 use App\Models\OrderedProduct;
 use App\Models\Product;
 use App\Services\CartService;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -79,6 +80,19 @@ class OrderController extends Controller
     {
         $order = Order::where('payment_id', $paymentId)->firstOrFail();
 
+        $pdfData = [
+            'order' => $order,
+            'user' => auth()->user(),
+            'orderedProducts' => $order->getOrderedProducts(),
+            'date' => now()->format('F d, Y'),
+        ];
+
+        $pdf = Pdf::loadView('pdf.invoice', $pdfData);
+
+        $invoicePath = 'invoices/invoice_'.$order->getId().'.pdf';
+        $pdf->save(storage_path('app/public/'.$invoicePath));
+
+        $order->setInvoicePath($invoicePath);
         $order->setStatus(OrderStatus::CONFIRMED->value);
         $order->save();
 
